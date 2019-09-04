@@ -1,0 +1,18 @@
+
+.card{
+    margin-left : 20vh;
+    margin-right: 20vh;
+    margin-bottom: 5px;
+}
+
+.card:first-of-type{
+    margin-top: 5vh;
+}
+
+.card:last-of-type{
+    margin-bottom: 5vh;
+}
+
+.success{
+    display: none;
+}
