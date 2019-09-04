@@ -12,17 +12,9 @@ $("#deployContract").click(function(){
     
   });
 
-$("#addBlock").click(function(){
-    AuctionHouse.addBlock();
-  })
-
-$("#concludeEscrow").click(function(){
-  AuctionHouse.concludeEscrow();
-})
-
 $("#auctionHouseContractAddressCopyBtn").click(function(){
   copyToClipboard("#auctionHouseContractAddress");
-})
+});
 
 
 function copyToClipboard(element) {
@@ -32,3 +24,43 @@ function copyToClipboard(element) {
   document.execCommand("copy");
   $temp.remove();
 }
+
+$("#acceptEscrow").click(function(){
+  App.acceptEscrow(AuctionHouse.dutchAuctionContract);
+});
+
+
+$("#refuseEscrow").click(function(){
+  App.refuseEscrow(AuctionHouse.dutchAuctionContract);
+});
+
+
+$("#concludeEscrow").click(function(){
+  App.concludeEscrow(AuctionHouse.dutchAuctionContract);
+});
+
+
+$("#addBlock").click(function(){
+  App.addBlock(AuctionHouse.dutchAuctionContract);
+});
+
+$("#getSeller").click(function(){
+  App.getSeller(AuctionHouse.dutchAuctionContract);
+});
+
+$("#getReservePrice").click(function(){
+  App.getReservePrice(AuctionHouse.dutchAuctionContract);
+});
+
+$("#getInitialPrice").click(function(){
+  App.getInitialPrice(AuctionHouse.dutchAuctionContract);
+});
+
+
+$("#getCurrentPrice").click(function(){
+  App.getCurrentPrice(AuctionHouse.dutchAuctionContract);
+});
+
+$("#getOpenedFor").click(function(){
+  App.getOpenedFor(AuctionHouse.dutchAuctionContract);
+});

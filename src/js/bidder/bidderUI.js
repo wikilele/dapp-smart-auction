@@ -34,3 +34,8 @@ $("#joinAuctionModal").click(function(){
   Bidder.connectToContract();
   $("#auctionCreatedModal").modal("hide");
 })
+
+
+$("#acceptEscrow").click(function(){
+  App.acceptEscrow(Bidder.dutchAuctionContract);
+});

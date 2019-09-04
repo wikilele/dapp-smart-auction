@@ -89,7 +89,7 @@ contract DutchAuction{
             simpleescrow.accept(msg.sender);
         }
         
-        function refusetEscrow() public  checkEscrowSender(){
+        function refuseEscrow() public  checkEscrowSender(){
             require(bidSubmitted == true);
             
             simpleescrow.refuse(msg.sender);

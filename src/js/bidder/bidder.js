@@ -2,10 +2,14 @@ const  bidderPrivateKey =  "12afbd86f1dfff78fbc01916eb5f2a8578be198d1dcec533a518
 
 
 Bidder = {
-    objectDescription: null,
-    dutchAuctionContractAddress : null,
-    dutchAuctionContract : null,
     wallet: null,
+    auctionContract : null,
+    auctionContractAddress : null,
+
+    objectDescription: null, // TODO handle better this
+    
+    
+    
 
     initWallet : function(){ 
         Bidder.wallet = new ethers.Wallet( bidderPrivateKey, App.provider);
@@ -57,15 +61,10 @@ Bidder = {
     },
 
 
-    getCurrentPrice: function(){
-        Bidder.dutchAuctionContract.getCurrentPrice().then((price) => {
-            console.log(price.toNumber());
-        });
-    },
 
     bid: function(bidValue){
         let overrides = {
-            gasLimit: 925993,
+            gasLimit: 925993, // todo check better
             value : ethers.utils.parseEther(bidValue)
         };
         Bidder.dutchAuctionContract.bid(overrides);

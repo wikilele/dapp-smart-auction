@@ -30,3 +30,9 @@ $("#submitAuction").click(function(){
     $("#submitAuctionSuccess").show();
 
   });
+
+
+  $("#acceptEscrow").click(function(){
+    App.acceptEscrow(Seller.dutchAuctionContract);
+  });
+  
