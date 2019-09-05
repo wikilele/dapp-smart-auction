@@ -20,9 +20,9 @@
       Smart Auction - AuctionHouse View
     </a>
   </nav>
-  <div class="row">
-    <div class="col-4 ">
-      <div class="card left-cards">
+  <div class="row justify-content-center">
+    <div class="col-3 ">
+      <div class="card ">
         <div class="card-header">
 
           Auction House Contract Address
@@ -38,7 +38,9 @@
         </div>
 
       </div>
-      <div class="card left-cards">
+    </div>
+    <div class="col-5">
+      <div class="card ">
         <div class="card-header">
           Subscribed Sellers and Bidders
         </div>
@@ -61,9 +63,8 @@
           </p>
         </div>
       </div>
-    </div>
-    <div class="col-6">
-      <div id="auctionCard" class="card right-cards">
+
+      <div id="auctionCard" class="card ">
         <div class="card-header">
           Current Auction <span id="newAuctionSubmitted" class="badge badge-success ">New</span>
         </div>
@@ -118,8 +119,10 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="col-3">
 
-      <div class="card right-cards">
+      <div class="card ">
         <div class="card-header">
           Contract Functions
         </div>
@@ -130,19 +133,57 @@
           <p class="card-text">
             Here you will see the result of the method call
           </p>
-          <a id="acceptEscrow" class="btn btn-primary">Accept Escrow</a>
-          <a id="refuseEscrow" class="btn btn-primary">Refuse Escrow</a>
-          <a id="concludeEscrow" class="btn btn-primary">Conclude Escrow</a>
-          <a id="getSeller" class="btn btn-primary">Get seller</a>
-          <a id="getReservePrice" class="btn btn-primary">Get Reserve Price</a>
-          <a id="getInitialPrice" class="btn btn-primary">Get Initial Price</a>
-          <a id="getCurrentPrice" class="btn btn-primary">Get Current Price</a>
-          <a id="getOpenedFor" class="btn btn-primary">Get Opened For</a>
-          <a id="addBlock" class="btn btn-primary">Add Block</a>
+
+          <ul class="list-group">
+            <li class="list-group-item">
+              <a id="acceptEscrow" class="btn btn-primary">Accept Escrow</a>
+              <span id="acceptEscrowResult">
+                <span id="acceptEscrowResultSuccess" class="badge badge-success ">New</span>
+              </span>
+            </li>
+            <li class="list-group-item">
+              <a id="refuseEscrow" class="btn btn-primary">Refuse Escrow</a>
+              <span id="refuseEscrowResult">
+                <span id="refuseEscrowResultSuccess" class="badge badge-success ">New</span>
+              </span>
+            </li>
+            <li class="list-group-item">
+              <a id="concludeEscrow" class="btn btn-primary">Conclude Escrow</a>
+              <span id="concludeEscrowResult">
+                <span id="concludeEscrowResultSuccess" class="badge badge-success ">New</span>
+              </span>
+            </li>
+            <li class="list-group-item">
+              <a id="getSeller" class="btn btn-primary">Get seller</a>
+              <span id="getSellerResult"></span>
+            </li>
+            <li class="list-group-item">
+              <a id="getReservePrice" class="btn btn-primary">Get Reserve Price</a>
+              <span id="getReservePriceResult"></span>
+            </li>
+            <li class="list-group-item">
+              <a id="getInitialPrice" class="btn btn-primary">Get Initial Price</a>
+              <span id="getInitialPriceResult"></span>
+            </li>
+            <li class="list-group-item">
+              <a id="getCurrentPrice" class="btn btn-primary">Get Current Price</a>
+              <span id="getCurrentPriceResult"></span>
+            </li>
+            <li class="list-group-item">
+              <a id="getOpenedFor" class="btn btn-primary">Get Opened For</a>
+              <span id="getOpendForResult"></span>
+            </li>
+            <li class="list-group-item">
+              <a id="addBlock" class="btn btn-primary">Add Block</a>
+              <span id="addBlockResult"></span>
+            </li>
+          </ul>
+
         </div>
       </div>
     </div>
   </div>
+  
 
 
 
@@ -168,6 +209,7 @@
 
   <!-- Our App script -->
   <script src="js/app.js"></script>
+  <script src="js/appUI.js"></script>
 
   <!-- bidder App related functions-->
   <script src="js/auctionhouse/auctionhouse.js"></script>

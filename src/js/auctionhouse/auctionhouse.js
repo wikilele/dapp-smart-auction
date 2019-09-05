@@ -55,17 +55,17 @@ class AuctionHouse extends User{
         });
 
         this.auctionHouseContract.on("NewAuction",(auctionAddress, auctionName, objectDesciption) =>{
-            auctionhouse.auctionDeployedSuccessfully(auctionAddress, auctionName, objectDesciption);
+            auctionhouseUI.auctionDeployedSuccessfully(auctionAddress, auctionName, objectDesciption);
         });
     }
 
     registerToAuctionEvents(){
         this.auctionContract.contract.on("Winner",(winnerAddress, bid)=>{
-            auctionhouseUi.notifyWinner();
+            auctionhouseUI.notifyWinner();
         });
 
         this.auctionContract.contract.on("NewBlock",(blockNumber)=>{
-            auctionhouseUi.newBlock(blockNumber);
+            auctionhouseUI.newBlock(blockNumber);
         });
     }
 }

@@ -53,17 +53,22 @@ class Bidder extends User{
 
     registerToAuctionEvents(){
         this.auctionContract.contract.on("Winner",(winnerAddress, bid)=>{
-            bidderUi.notifyWinner(winnerAddress, bid, this.wallet.address);
+            bidderUI.notifyWinner(winnerAddress, bid, this.wallet.address);
         });
 
         this.auctionContract.contract.on("NotEnoughMoney",(bidderAddress, bidSent, actualPrice)=>{
             if(bidderAddress == this.wallet.address)
-                bidderUi.notifyNotEnoughMoney(bidderAddress, bidSent, actualPrice);
+                bidderUI.notifyNotEnoughMoney(bidderAddress, bidSent, actualPrice);
         });
 
         this.auctionContract.contract.on("NewBlock",(blockNumber)=>{
 
             bidderUI.newBlock(blockNumber);
+        });
+
+        this.auctionContract.contract.on("EscrowAccepted",(address)=>{
+
+            console.log("Escrow Accepted!");
         });
     }
 

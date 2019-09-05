@@ -1,5 +1,7 @@
 $("#subscribeToAuctionHouse").click(function(){
   $("#subscribeToAuctionHouse").hide();
+  $("#subscribeToAuctionHouse").next().show();
+
   
   let address = $("#auctionHouseAddress").val();
   bidder.subscribeToAuctionHouse(address);

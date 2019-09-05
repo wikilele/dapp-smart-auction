@@ -17,10 +17,6 @@ $("#deployContract").click(function(){
   });
 
 
-$("#addBlock").click(function(){
-    auctionhouse.auctionContract.addBlock();
-});
-
 $("#auctionHouseContractAddressCopyBtn").click(function(){
   copyToClipboard("#auctionHouseContractAddress");
 });

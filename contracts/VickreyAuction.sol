@@ -1,22 +1,18 @@
 pragma solidity ^0.4.22;
-import "./SimpleEscrow.sol";
+
+import "./ISmartAuction.sol";
 
 
-contract VickreyAuction{
+contract VickreyAuction is ISmartAuction{
     // length of each of the 3 phases expressed in mined blocks
     uint256 commitmentPhaseLength;
     uint256 withdrawalPhaseLength;
     uint256 openingPahseLength;
     // finalize function can be called only one time
     bool finalizeCalled = false;
-    uint256 reservePrice;
     uint256 depositRequired;
-    address seller; 
     mapping(address => uint256) commitedEnvelops;
-    
-    // used for escrow
-    address escrowTrustedThirdParty;
-    SimpleEscrow simpleescrow;
+
     
     uint256 gracePeriod;
     
@@ -34,8 +30,7 @@ contract VickreyAuction{
     event SecondBid(address bidderAddress, uint256 value);
     event Winner(address winnerBidder, uint256 value);
     
-    // testing related event
-    event NewBlock(uint256 blockNum);
+
 
     
     constructor (uint256  _reservePrice,
@@ -196,12 +191,16 @@ contract VickreyAuction{
             require(finalizeCalled == true);
             
             simpleescrow.accept(msg.sender);
+
+            emit EscrowAccepted(msg.sender);
         }
         
         function refusetEscrow() public checkAuctionEnd() checkEscrowSender(){
             require(finalizeCalled == true);
             
             simpleescrow.refuse(msg.sender);
+
+            emit EscrowRefused(msg.sender);
         }
         
         function concludeEscrow() public checkAuctionEnd(){
@@ -210,15 +209,12 @@ contract VickreyAuction{
             require(msg.sender == escrowTrustedThirdParty);
             
             simpleescrow.conclude();
+
+            emit EscrowClosed();
         }
         
         // getters
-        function getReservePrice() public view returns(uint256){
-            return reservePrice;
-        }
-        function getSeller() public view returns(address){
-            return seller;
-        }
+
         
         function getDepositRequired() public view returns(uint256){
             return depositRequired;
@@ -246,14 +242,7 @@ contract VickreyAuction{
             return gracePeriod + commitmentPhaseLength + withdrawalPhaseLength + openingPahseLength - block.number;
         }
         
-        /*
-        * The function above are added only to test better the contract.
-        * In a real environment they should be removed
-        */
-        function addBlock() public{
-            emit NewBlock(block.number);
-        }
-        
+
         /*
         * Can be used to retrive the hash to be passed to the open function
         */

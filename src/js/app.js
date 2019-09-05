@@ -102,10 +102,6 @@ class DutchAuction extends Auction{
             //AuctionHouse.auctionHouseContract. notifyNewAuction(AuctionHouse.dutchAuctionContract.address,"DutchAuction", AuctionHouse.objectDescription);  
     }
 
-    getReservePrice(){
-        return this.contract.getReservePrice();
-    }
-
     getInitialPrice(){
         return this.contract.getInitialPrice();
     }
