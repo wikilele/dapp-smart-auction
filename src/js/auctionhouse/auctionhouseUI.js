@@ -1,5 +1,5 @@
 $("#deployContract").click(function(){
-
+    // choose her the kind of contract
     let strategy = $("#decreasingStrategy option:selected").text();
     let _reservePrice = $("#_reservePrice").val();
     let _initialPrice = $("#_initialPrice").val();
@@ -7,10 +7,14 @@ $("#deployContract").click(function(){
     let _seller = $("#_sellerAddress").val();
     let miningRate = $("#miningRate").val();
 
-    AuctionHouse.deployContracts(strategy,_reservePrice,_initialPrice, _openedForLength, _seller, miningRate);
-    
-    
+    auctionhouse.initDutchAuction( strategy,_reservePrice,_initialPrice, _openedForLength, _seller, miningRate);
+
   });
+
+
+$("#addBlock").click(function(){
+    auctionhouse.auctionContract.addBlock();
+});
 
 $("#auctionHouseContractAddressCopyBtn").click(function(){
   copyToClipboard("#auctionHouseContractAddress");
@@ -24,43 +28,4 @@ function copyToClipboard(element) {
   document.execCommand("copy");
   $temp.remove();
 }
-
-$("#acceptEscrow").click(function(){
-  App.acceptEscrow(AuctionHouse.dutchAuctionContract);
-});
-
-
-$("#refuseEscrow").click(function(){
-  App.refuseEscrow(AuctionHouse.dutchAuctionContract);
-});
-
-
-$("#concludeEscrow").click(function(){
-  App.concludeEscrow(AuctionHouse.dutchAuctionContract);
-});
-
-
-$("#addBlock").click(function(){
-  App.addBlock(AuctionHouse.dutchAuctionContract);
-});
-
-$("#getSeller").click(function(){
-  App.getSeller(AuctionHouse.dutchAuctionContract);
-});
-
-$("#getReservePrice").click(function(){
-  App.getReservePrice(AuctionHouse.dutchAuctionContract);
-});
-
-$("#getInitialPrice").click(function(){
-  App.getInitialPrice(AuctionHouse.dutchAuctionContract);
-});
-
-
-$("#getCurrentPrice").click(function(){
-  App.getCurrentPrice(AuctionHouse.dutchAuctionContract);
-});
-
-$("#getOpenedFor").click(function(){
-  App.getOpenedFor(AuctionHouse.dutchAuctionContract);
-});
+8

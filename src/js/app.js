@@ -1,6 +1,5 @@
 App = {
 
-    contracts : {},
     provider : null,
     url: 'http://localhost:8545',
 
@@ -12,51 +11,6 @@ App = {
         App.provider = new ethers.providers.Web3Provider(currentProvider);
 
     },
-    // function that can be called by all the parties
-    acceptEscrow: function(contract){
-        contract.acceptEscrow();
-    },
-
-    refuseEscrow: function(contract){
-        contract.refuseEscrow();
-    },
-
-    concludeEscrow: function(contract){
-        contract.concludeEscrow();
-    },
-
-    getSeller: function(contract){
-        contract.getSeller().then((seller) =>{
-            console.log("The seller is  " + seller);
-        });
-    },
-    getReservePrice: function(contract){
-        contract.getReservePrice().then((price) =>{
-            console.log("The reserve price is  " + price.toString() );
-        });
-    },
-
-    getInitialPrice: function(contract){
-        contract.getInitialPrice().then((price) => {
-            console.log("The initial price is  " + price.toString());
-        });
-    },
-
-    getCurrentPrice: function(contract){
-        contract.getCurrentPrice().then((price) => {
-            console.log("The current price is  " + price.toString());
-        });
-    },
-
-    getOpenedFor: function(contract){
-        contract.getOpenedFor().then((openedFor) => {
-            console.log("The auction will be opened for  " + openedFor.toString());
-        });
-    },
-    addBlock: function(contract){
-        contract.addBlock();
-
-    }
 }
 
 class Auction {
@@ -64,29 +18,22 @@ class Auction {
         this.type = type // DutchAuction or VickreyAuction
         this.contract = null;
         this.contractAddress = null;
+        this.objectDescription = null;
+    }
+
+    async getContractFactory(wallet){
+        // getting the json
+        let auctionJSON = await $.getJSON( this.type + ".json");
+
+        // Create an instance of a Contract Factory
+        return  new ethers.ContractFactory( auctionJSON.abi, auctionJSON.bytecode, wallet);
+     
     }
 
     deploy(){
-        (async function(){
-            // getting the json
-            let auctionJSON = await $.getJSON( type + ".json");
-
-            // Create an instance of a Contract Factory
-            let factory = new ethers.ContractFactory( auctionJSON.abi, auctionJSON.bytecode, AuctionHouse.wallet);
-
-        AuctionHouse.dutchAuctionContract = await factory.deploy(ethers.utils.parseEther(_reservePrice), ethers.utils.parseEther(_initialPrice), _openedForLength, _seller,  AuctionHouse.decreasingStrategyContract.address, miningRate);
-
-        console.log(AuctionHouse.dutchAuctionContract.address);
-
-        // The contract is NOT deployed yet; we must wait until it is mined
-        await AuctionHouse.dutchAuctionContract.deployed()
-        
-        AuctionHouse.auctionHouseContract. notifyNewAuction(AuctionHouse.dutchAuctionContract.address,"DutchAuction", AuctionHouse.objectDescription);
-
-        return AuctionHouse.registerEvents();
-        });
-        
+        throw "This method needs to be redefined in the subclasses";
     }
+
 
     acceptEscrow(){
         this.contract.acceptEscrow();
@@ -114,11 +61,46 @@ class Auction {
      
 }
 
+class DecreasingStrategy{
+    constructor(type){
+        this.type = type; // Linear, Logarithmic, InverseLogarithmic
+        this.strategy = null;
+    }
+
+    async deploy(wallet){
+        // deploying the choosen strategy
+        let decreasingStrategyJSON = await $.getJSON( this.type + "DecreasingStrategy.json");
+
+        let decreasingStrategyFactory = new ethers.ContractFactory( decreasingStrategyJSON.abi, decreasingStrategyJSON.bytecode, wallet );
+            
+        this.strategy = await decreasingStrategyFactory.deploy();
+            
+        await this.strategy.deployed();
+    }
+
+}
+
 class DutchAuction extends Auction{
     constructor(){
         super("DutchAuction");
     }
 
+    async deploy(wallet,_reservePrice, _initialPrice, _openedForLength, _seller,  decreasingStrategyAddress, miningRate){
+       
+            let factory = await this.getContractFactory(wallet);
+
+            _reservePrice = ethers.utils.parseEther(_reservePrice);
+            _initialPrice = ethers.utils.parseEther(_initialPrice);
+            this.contract = await factory.deploy(_reservePrice, _initialPrice, _openedForLength, _seller,  decreasingStrategyAddress, miningRate);
+
+            console.log(this.contract.address);
+            this.contractAddress = this.contract.address;
+
+            // The contract is NOT deployed yet; we must wait until it is mined
+            await this.contract.deployed()
+        
+            //AuctionHouse.auctionHouseContract. notifyNewAuction(AuctionHouse.dutchAuctionContract.address,"DutchAuction", AuctionHouse.objectDescription);  
+    }
 
     getReservePrice(){
         return this.contract.getReservePrice();
@@ -136,6 +118,23 @@ class DutchAuction extends Auction{
         return this.contract.getOpenedFor();
     }
 }
+
+class User{
+    constructor(privateKey){
+        this.wallet = new ethers.Wallet(privateKey, App.provider);
+        this.auctionContract = null;
+        this.auctionHouseContract = null;
+    }
+
+    registerToAuctionEvents(){
+        throw "this function must be rimplemented by subclasses";
+    }
+    registerToAuctionHouseEvents(){
+        throw "this function must be rimplemented by subclasses";
+    }
+}
+
+
 
 // Call init whenever the window loads
 $(function() {

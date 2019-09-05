@@ -1,7 +1,7 @@
 $("#subscribeToAuctionHouse").click(function(){
     
     let address = $("#auctionHouseAddress").val();
-    Seller.subscribeToAuctionHouse(address);
+    seller.subscribeToAuctionHouse(address);
 
     $("#subscribeToAuctionHouse").hide();
     $("#subscribeToAuctionHouseSuccess").show();
@@ -9,30 +9,14 @@ $("#subscribeToAuctionHouse").click(function(){
   });
 
 
-$("#acceptEscrow").click(function(){
-  Seller.acceptEscrow();
-});
-
-$(function() {
-    $(window).on('load', function () {
-       
-    });
-});
-
-
 $("#submitAuction").click(function(){
     
     let objectDescription = $("#objectDescription").val();
     console.log(objectDescription);
-    Seller.submitAuction(objectDescription);
+    seller.submitAuction(objectDescription);
 
     $("#submitAuction").hide();
     $("#submitAuctionSuccess").show();
 
   });
 
-
-  $("#acceptEscrow").click(function(){
-    App.acceptEscrow(Seller.dutchAuctionContract);
-  });
-  
