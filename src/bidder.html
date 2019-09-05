@@ -14,21 +14,22 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-light bg-light">
+  <nav class="navbar navbar-light ">
     <a class="navbar-brand" href="#">
       <img src="css/img/ethereumlogo.png" width="20" height="28" class="d-inline-block align-top" alt="">
       Smart Auction - Bidder View
     </a>
   </nav>
   <div class="row justify-content-center">
-    <div class="col-3">
+    <div class="col-6">
       <div class="card ">
         <div class="card-header">
-          
-            Subscribe to Auction House <span id="subscribeToAuctionHouseSuccess" class="badge badge-success">Success</span>
-          
+
+          Subscribe to Auction House <span id="subscribeToAuctionHouseSuccess"
+            class="badge badge-success">Success</span>
+
         </div>
-        <div  id="subscribeCard">
+        <div id="subscribeCard">
           <div class="card-body">
             <h5 class="card-title">Insert the AuctionHouse contract address to subscribe to the AuctionHouse</h5>
             <p class="card-text">
@@ -37,23 +38,23 @@
                 <input type="text" class="form-control " id="auctionHouseAddress">
               </div>
             </p>
-            <a id="subscribeToAuctionHouse" class="btn btn-primary">Subscribe</a>
+            <a id="subscribeToAuctionHouse" class="btn btn-dark ">Subscribe</a>
             <div class="spinner-border spinner" role="status">
               <span class="sr-only">Loading...</span>
             </div>
+
           </div>
         </div>
 
       </div>
-    </div>
-    <div class="col-5">
+
       <div class="card">
         <div class="card-header">
-          
-            Current Auction <span id="joinedNewAuctionSuccess" class="badge badge-success">Joined</span>
-          
+
+          Current Auction <span id="joinedNewAuctionSuccess" class="badge badge-success">Joined</span>
+
         </div>
-        <div  id="submitCard">
+        <div id="submitCard">
           <div class="card-body">
             <h5 class="card-title">Insert a bid value</h5>
             <p class="card-text">
@@ -62,13 +63,12 @@
                 <input type="number" class="form-control " id="bidValue" value="2">
               </div>
             </p>
-            <a id="bidButton" class="btn btn-primary">Bid</a>
+            <a id="bidButton" class="btn btn-dark ">Bid</a>
             <span id="bidSuccess" class="badge badge-success success">Success</span>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-3">
+
       <div class="card">
         <div class="card-header">
           Contract Functions
@@ -78,43 +78,43 @@
           <h5 class="card-title">List of contract functions</h5>
 
           <ul class="list-group">
-              <li class="list-group-item">
-                <a id="acceptEscrow" class="btn btn-primary">Accept Escrow</a>
-                <span id="acceptEscrowResult">
-                  <span id="acceptEscrowResultSuccess" class="badge badge-success ">accepted</span>
-                </span>
-              </li>
-              <li class="list-group-item">
-                <a id="refuseEscrow" class="btn btn-primary">Refuse Escrow</a>
-                <span id="refuseEscrowResult">
-                  <span id="refuseEscrowResultSuccess" class="badge badge-success ">refused</span>
-                </span>
-              </li>
-              <li class="list-group-item">
-                <a id="getSeller" class="btn btn-primary">Get seller</a>
-                <span id="getSellerResult"></span>
-              </li>
-              <li class="list-group-item">
-                <a id="getReservePrice" class="btn btn-primary">Get Reserve Price</a>
-                <span id="getReservePriceResult"></span>
-              </li>
-              <li class="list-group-item">
-                <a id="getInitialPrice" class="btn btn-primary">Get Initial Price</a>
-                <span id="getInitialPriceResult"></span>
-              </li>
-              <li class="list-group-item">
-                <a id="getCurrentPrice" class="btn btn-primary">Get Current Price</a>
-                <span id="getCurrentPriceResult"></span>
-              </li>
-              <li class="list-group-item">
-                <a id="getOpenedFor" class="btn btn-primary">Get Opened For</a>
-                <span id="getOpendForResult"></span>
-              </li>
-              <li class="list-group-item">
-                <a id="addBlock" class="btn btn-primary">Add Block</a>
-                <span id="addBlockResult"></span>
-              </li>
-            </ul>
+            <li class="list-group-item">
+              <a id="acceptEscrow" class="btn btn-dark">Accept Escrow</a>
+              <span id="acceptEscrowResult">
+                <span id="acceptEscrowResultSuccess" class="badge badge-success float-right">accepted</span>
+              </span>
+            </li>
+            <li class="list-group-item">
+              <a id="refuseEscrow" class="btn btn-dark">Refuse Escrow</a>
+              <span id="refuseEscrowResult">
+                <span id="refuseEscrowResultSuccess" class="badge badge-success float-right">refused</span>
+              </span>
+            </li>
+            <li class="list-group-item">
+              <a id="getSeller" class="btn btn-dark">Get seller</a>
+              <span class="float-right" id="getSellerResult"></span>
+            </li>
+            <li class="list-group-item">
+              <a id="getReservePrice" class="btn btn-dark">Get Reserve Price</a>
+              <span class="float-right" id="getReservePriceResult"></span>
+            </li>
+            <li class="list-group-item">
+              <a id="getInitialPrice" class="btn btn-dark">Get Initial Price</a>
+              <span class="float-right" id="getInitialPriceResult"></span>
+            </li>
+            <li class="list-group-item">
+              <a id="getCurrentPrice" class="btn btn-dark">Get Current Price</a>
+              <span class="float-right" id="getCurrentPriceResult"></span>
+            </li>
+            <li class="list-group-item">
+              <a id="getOpenedFor" class="btn btn-dark">Get Opened For</a>
+              <span class="float-right" id="getOpenedForResult"></span>
+            </li>
+            <li class="list-group-item">
+              <a id="addBlock" class="btn btn-dark">Add Block</a>
+              <span class="float-right" id="addBlockResult"></span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -178,7 +178,7 @@
   <script src="https://cdn.ethers.io/scripts/ethers-v4.min.js" charset="utf-8" type="text/javascript">
   </script>
 
-  <link rel="stylesheet" href="css/bidderstyle.css">
+  <link rel="stylesheet" href="css/style.css">
 
 
   <!-- Our App script -->

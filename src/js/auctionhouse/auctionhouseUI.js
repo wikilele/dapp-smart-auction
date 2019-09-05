@@ -19,6 +19,7 @@ $("#deployContract").click(function(){
 
 $("#auctionHouseContractAddressCopyBtn").click(function(){
   copyToClipboard("#auctionHouseContractAddress");
+
 });
 
 
@@ -28,6 +29,8 @@ function copyToClipboard(element) {
   $temp.val($(element).text()).select();
   document.execCommand("copy");
   $temp.remove();
+
+
 }
 
 auctionhouseUI = {
@@ -68,19 +71,29 @@ auctionhouseUI = {
 
   newBlock: function(blockNumber){
     console.log("Block added " + blockNumber);
+  },
+
+
+  escrowAccepted: function(){
+    console.log("Escrow Accepted!");
+  },
+  escrowRefused: function(){
+    console.log("Escrow Refused!");
+  },
+
+  escrowClosed: function(){
+    console.log("Escrow Closed!");
   }
 }
 
-
-$("#test").click(function(){
-  auctionhouseUI.newSellerSubscribed("0x123");
-})
 
 
 // Call init whenever the window loads
 $(function() {
   $(window).on('load', function () {
     $("#deployContract").hide();
+
+    $('[data-toggle="tooltip"]').tooltip()
 
   });
 });

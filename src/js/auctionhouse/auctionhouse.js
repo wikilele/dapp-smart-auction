@@ -61,11 +61,26 @@ class AuctionHouse extends User{
 
     registerToAuctionEvents(){
         this.auctionContract.contract.on("Winner",(winnerAddress, bid)=>{
-            auctionhouseUI.notifyWinner();
+            auctionhouseUI.notifyWinner(winnerAddress, bid);
         });
 
         this.auctionContract.contract.on("NewBlock",(blockNumber)=>{
             auctionhouseUI.newBlock(blockNumber);
+        });
+
+
+        this.auctionContract.contract.on("EscrowAccepted",(address)=>{
+            if (address == this.wallet.address)
+                auctionhouseUI.escrowAccepted();
+        });
+
+        this.auctionContract.contract.on("EscrowRefused",(address)=>{
+            if (address == this.wallet.address)
+                auctionhouseUI.escrowRefused();
+        });
+
+        this.auctionContract.contract.on("EscrowClosed",()=>{
+                auctionhouseUI.escrowClosed();
         });
     }
 }

@@ -1,6 +1,29 @@
+body{
+    background-color: #f8f9fa;
+    overflow-x: hidden;
+}
 
-.card:nth-of-type(1){
-    margin-left : 5vh;
+.btn{
+    cursor: pointer;
+    color: white !important;
+}
+
+
+
+.navbar{
+    background-color: lightgray;
+}
+
+.card-header{
+    background-color: lightgray;
+    border-color: grey;
+}
+.card{
+    border-color: grey;
+}
+
+.card{
+    margin-bottom: 5px;
 }
 
 .card:first-of-type{
@@ -8,9 +31,14 @@
 }
 
 .card:last-of-type{
-    margin-bottom: 5vh;
+    margin-bottom:  5vh;
 }
 
-.success{
+
+.badge-success{
+    display: none;
+}
+
+.spinner{
     display: none;
 }

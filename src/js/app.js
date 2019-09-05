@@ -44,7 +44,7 @@ class Auction {
     }
 
     concludeEscrow(){
-        contract.concludeEscrow();
+        this.contract.concludeEscrow();
     }
 
     getSeller(){

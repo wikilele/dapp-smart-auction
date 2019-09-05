@@ -31,6 +31,13 @@ class Seller extends User{
             if (sellerAddress == this.wallet.address)
             sellerUI.auctionSuccessfullySubmitted();         
         });
+
+        this.auctionHouseContract.on("NewAuction",(auctionAddress, auctionName, objectDesciption) =>{
+            this.auctionContract = new DutchAuction();
+            this.auctionContract.objectDescription = objectDesciption;
+            this.auctionContract.contractAddress = auctionAddress;
+            this.connectToContract();
+        });
     }
 
     submitAuction(objectDescription){
@@ -55,6 +62,21 @@ class Seller extends User{
 
         this.auctionContract.contract.on("NewBlock",(blockNumber)=>{
             sellerUI.newBlock(blockNumber);
+        });
+
+
+        this.auctionContract.contract.on("EscrowAccepted",(address)=>{
+            if (address == this.wallet.address)
+                sellerUI.escrowAccepted();
+        });
+
+        this.auctionContract.contract.on("EscrowRefused",(address)=>{
+            if (address == this.wallet.address)
+                sellerUI.escrowRefused();
+        });
+
+        this.auctionContract.contract.on("EscrowClosed",()=>{
+                sellerUI.escrowClosed();
         });
     }
 

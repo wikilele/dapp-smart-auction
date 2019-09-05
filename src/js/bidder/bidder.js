@@ -67,8 +67,17 @@ class Bidder extends User{
         });
 
         this.auctionContract.contract.on("EscrowAccepted",(address)=>{
+            if (address == this.wallet.address)
+                bidderUI.escrowAccepted();
+        });
 
-            console.log("Escrow Accepted!");
+        this.auctionContract.contract.on("EscrowRefused",(address)=>{
+            if (address == this.wallet.address)
+                bidderUI.escrowRefused();
+        });
+
+        this.auctionContract.contract.on("EscrowClosed",()=>{
+                bidderUI.escrowClosed();
         });
     }
 

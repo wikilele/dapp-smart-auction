@@ -14,32 +14,42 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-light bg-light">
-    <a id="test" class="navbar-brand" href="#">
+  <nav class="navbar navbar-light ">
+    <a class="navbar-brand" href="#">
       <img src="css/img/ethereumlogo.png" width="20" height="28" class="d-inline-block align-top" alt="">
       Smart Auction - AuctionHouse View
     </a>
   </nav>
   <div class="row justify-content-center">
-    <div class="col-3 ">
+    <div class="col-6 ">
       <div class="card ">
         <div class="card-header">
-
-          Auction House Contract Address
-
+                House Contract Address          
+              
         </div>
 
         <div class="card-body">
-          <h5 id="auctionHouseContractAddress" class="card-title"> -refresh the page if you don't see the address -
+
+          <h5 class="card-title">
+            <span id="auctionHouseContractAddress">
+              -refresh the page if you don't see the address -
+            </span>
+            <a id="auctionHouseContractAddressCopyBtn" class="btn btn-dark float-right" data-toggle="tooltip"
+            data-placement="right" title="Copy to clipboard">Copy</a> 
+
+            
           </h5>
 
-          <a id="auctionHouseContractAddressCopyBtn" class="btn btn-primary">Copy</a>
 
         </div>
 
+
       </div>
-    </div>
-    <div class="col-5">
+
+
+
+
+
       <div class="card ">
         <div class="card-header">
           Subscribed Sellers and Bidders
@@ -113,14 +123,13 @@
               </div>
             </div>
           </p>
-          <a id="deployContract" class="btn btn-primary">Deploy Contract</a>
+          <a id="deployContract" class="btn btn-dark ">Deploy Contract</a>
           <div class="spinner-border spinner" role="status">
             <span class="sr-only">Loading...</span>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-3">
+
 
       <div class="card ">
         <div class="card-header">
@@ -136,46 +145,46 @@
 
           <ul class="list-group">
             <li class="list-group-item">
-              <a id="acceptEscrow" class="btn btn-primary">Accept Escrow</a>
+              <a id="acceptEscrow" class="btn btn-dark">Accept Escrow</a>
               <span id="acceptEscrowResult">
-                <span id="acceptEscrowResultSuccess" class="badge badge-success ">New</span>
+                <span id="acceptEscrowResultSuccess" class="badge badge-success float-right">New</span>
               </span>
             </li>
             <li class="list-group-item">
-              <a id="refuseEscrow" class="btn btn-primary">Refuse Escrow</a>
+              <a id="refuseEscrow" class="btn btn-dark">Refuse Escrow</a>
               <span id="refuseEscrowResult">
-                <span id="refuseEscrowResultSuccess" class="badge badge-success ">New</span>
+                <span id="refuseEscrowResultSuccess" class="badge badge-success float-right">New</span>
               </span>
             </li>
             <li class="list-group-item">
-              <a id="concludeEscrow" class="btn btn-primary">Conclude Escrow</a>
+              <a id="concludeEscrow" class="btn btn-dark">Conclude Escrow</a>
               <span id="concludeEscrowResult">
-                <span id="concludeEscrowResultSuccess" class="badge badge-success ">New</span>
+                <span id="concludeEscrowResultSuccess" class="badge badge-success float-right">New</span>
               </span>
             </li>
             <li class="list-group-item">
-              <a id="getSeller" class="btn btn-primary">Get seller</a>
-              <span id="getSellerResult"></span>
+              <a id="getSeller" class="btn btn-dark">Get seller</a>
+              <span class="float-right" id="getSellerResult"></span>
             </li>
             <li class="list-group-item">
-              <a id="getReservePrice" class="btn btn-primary">Get Reserve Price</a>
-              <span id="getReservePriceResult"></span>
+              <a id="getReservePrice" class="btn btn-dark">Get Reserve Price</a>
+              <span class="float-right" id="getReservePriceResult"></span>
             </li>
             <li class="list-group-item">
-              <a id="getInitialPrice" class="btn btn-primary">Get Initial Price</a>
-              <span id="getInitialPriceResult"></span>
+              <a id="getInitialPrice" class="btn btn-dark">Get Initial Price</a>
+              <span class="float-right" id="getInitialPriceResult"></span>
             </li>
             <li class="list-group-item">
-              <a id="getCurrentPrice" class="btn btn-primary">Get Current Price</a>
-              <span id="getCurrentPriceResult"></span>
+              <a id="getCurrentPrice" class="btn btn-dark">Get Current Price</a>
+              <span class="float-right" id="getCurrentPriceResult"></span>
             </li>
             <li class="list-group-item">
-              <a id="getOpenedFor" class="btn btn-primary">Get Opened For</a>
-              <span id="getOpendForResult"></span>
+              <a id="getOpenedFor" class="btn btn-dark">Get Opened For</a>
+              <span class="float-right" id="getOpenedForResult"></span>
             </li>
             <li class="list-group-item">
-              <a id="addBlock" class="btn btn-primary">Add Block</a>
-              <span id="addBlockResult"></span>
+              <a id="addBlock" class="btn btn-dark">Add Block</a>
+              <span class="float-right" id="addBlockResult"></span>
             </li>
           </ul>
 
@@ -183,7 +192,7 @@
       </div>
     </div>
   </div>
-  
+
 
 
 
@@ -204,7 +213,7 @@
   <script src="https://cdn.ethers.io/scripts/ethers-v4.min.js" charset="utf-8" type="text/javascript">
   </script>
 
-  <link rel="stylesheet" href="css/auctionhousestyle.css">
+  <link rel="stylesheet" href="css/style.css">
 
 
   <!-- Our App script -->
@@ -221,66 +230,3 @@
 </body>
 
 </html>
-
-
-
-
-
-<!--
-
-<!DOCTYPE html>
-<body >
-<div id="background">
-    <div class="row">
-        <div id="main_container" class="col-md-8 col-md-offset-2 ">
-            <div id="title_container" class="row">
-                    <span id="role"> Auction House </span>
-            </div>
-
-        <div class="row">
-                <div class="col-md-6 col-md-offset-3 ">
-                <form>
-                    <div class="form-group">
-                        <label for="decreasingStrategy">Decreasing Strategy</label>
-                                <select class="form-control form-control-lg" id="decreasingStrategy">
-                                  <option>Linear</option>
-                                  <option>InverseLogarithmic</option>
-                                  <option>Logarithmic</option>
-                                </select>
-                              </div>
-                    <div class="form-group">
-                        <label for="_reservePrice">Reserve Price</label>
-                      <input type="number" class="form-control " id="_reservePrice" value="1">
-                    </div>
-                    <div class="form-group">
-                            <label for="_initialPrice">Initial Price</label>
-                          <input type="number" class="form-control " id="_initialPrice" value="5">
-                    </div>
-
-                    <div class="form-group">
-                            <label for="_openedForLength">Opened for Length</label>
-                          <input type="number" class="form-control " id="_openedForLength" value="8">
-                    </div>
-
-                    <div class="form-group">
-                            <label for="_sellerAddress">Seller Address</label>
-                          <input type="text" class="form-control " id="_sellerAddress" value="0xd6De99B202C3E07040E2a063D177e7a6D2fDf0d8">
-                    </div>
-
-                    <div class="form-group">
-                            <label for="miningRate">Mining Rate</label>
-                          <input type="number" class="form-control " id="miningRate" value="300">
-                    </div>
-                    
-                    
-                </form>
-                <button id="deployContract"  class="btn btn-primary">Deploy Contract</button>
-                <button id="addBlock"  class="btn btn-primary">Add Block</button>
-                <button id="concludeEscrow"  class="btn btn-primary">Conclude Escrow</button>
-            </div>
-        </div>
-
-        
-    </div>
-</div>
-</body> -->

@@ -46,6 +46,17 @@ bidderUI = {
 
   newBlock: function(blockNumber){
     console.log("Block added " + blockNumber);
+  },
+  
+  escrowAccepted: function(){
+    console.log("Escrow Accepted!");
+  },
+  escrowRefused: function(){
+    console.log("Escrow Refused!");
+  },
+
+  escrowClosed: function(){
+    console.log("Escrow Closed!");
   }
 }
 

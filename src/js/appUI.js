@@ -69,7 +69,7 @@ $("#getCurrentPrice").click(function(){
 
     if(user != null && user.auctionContract != null){
          user.auctionContract.getCurrentPrice().then((price)=>{
-            $("#getgCurrentPriceResult").text(price.toString());
+            $("#getCurrentPriceResult").text(price.toString());
         });
         
     }
