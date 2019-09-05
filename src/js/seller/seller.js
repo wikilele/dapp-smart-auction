@@ -24,12 +24,12 @@ class Seller extends User{
 
         this.auctionHouseContract.on("NewSellerSubscribed",(bidderAddress) =>{
             if(bidderAddress == this.wallet.address)    
-                console.log("You successfully subscribed!");
+                sellerUI.successfullySubscribed();
         });
 
         this.auctionHouseContract.on("AuctionSubmitted",(sellerAddress, objectDescription) =>{
             if (sellerAddress == this.wallet.address)
-                console.log("auction successfully submitted");          
+            sellerUI.auctionSuccessfullySubmitted();         
         });
     }
 
@@ -50,11 +50,11 @@ class Seller extends User{
 
     registerToAuctionEvents(){
         this.auctionContract.contract.on("Winner",(winnerAddress, bid)=>{
-            console.log(winnerAddress + " won bidding " + bid );
+            sellerUI.notifyWinner(winnerAddress,bid);
         });
 
         this.auctionContract.contract.on("NewBlock",(blockNumber)=>{
-            console.log("Block added " + blockNumber);
+            sellerUI.newBlock(blockNumber);
         });
     }
 

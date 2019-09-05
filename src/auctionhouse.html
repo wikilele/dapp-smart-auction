@@ -1,170 +1,183 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>AuctionHouse View</title>
-  </head>
-  <body>
-        <nav class="navbar navbar-light bg-light">
-                <a class="navbar-brand" href="#">
-                    <img src="css/img/ethereumlogo.png" width="20" height="28" class="d-inline-block align-top" alt="">
-                    Smart Auction - AuctionHouse View
-                </a>
-            </nav>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-            <div class="card">
-                <div class="card-header">
-                    
-                        Auction House Contract Address
+  <title>AuctionHouse View</title>
+</head>
 
+<body>
+  <nav class="navbar navbar-light bg-light">
+    <a id="test" class="navbar-brand" href="#">
+      <img src="css/img/ethereumlogo.png" width="20" height="28" class="d-inline-block align-top" alt="">
+      Smart Auction - AuctionHouse View
+    </a>
+  </nav>
+  <div class="row">
+    <div class="col-4 ">
+      <div class="card left-cards">
+        <div class="card-header">
+
+          Auction House Contract Address
+
+        </div>
+
+        <div class="card-body">
+          <h5 id="auctionHouseContractAddress" class="card-title"> -refresh the page if you don't see the address -
+          </h5>
+
+          <a id="auctionHouseContractAddressCopyBtn" class="btn btn-primary">Copy</a>
+
+        </div>
+
+      </div>
+      <div class="card left-cards">
+        <div class="card-header">
+          Subscribed Sellers and Bidders
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title">List of subscibed sellers and bidders</h5>
+          <p class="card-text">
+            <div class="row">
+              <div class="col-6">
+                <ul id="subscribedSellersList" class="list-group">
+                  <li class="list-group-item">Sellers' addresses</li>
+                </ul>
+              </div>
+              <div class="col-6">
+                <ul id="subscribedBiddersList" class="list-group">
+                  <li class="list-group-item">Bidders' addresses</li>
+                </ul>
+              </div>
+            </div>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div id="auctionCard" class="card right-cards">
+        <div class="card-header">
+          Current Auction <span id="newAuctionSubmitted" class="badge badge-success ">New</span>
+        </div>
+
+        <div class="card-body">
+          <h5 id="currentAuctionHeader" class="card-title">Interact here when an auction is submitted</h5>
+          <p id="currentAuctionObjectDescription" class="card-text">
+
+          </p>
+          <p class="card-text">
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="decreasingStrategy">Decreasing Strategy</label>
+                  <select class="form-control" id="decreasingStrategy">
+                    <option>Linear</option>
+                    <option>InverseLogarithmic</option>
+                    <option>Logarithmic</option>
+                  </select>
                 </div>
-
-                    <div class="card-body">
-                        <h5 id="auctionHouseContractAddress" class="card-title"> -refresh the page if you don't see the address - </h5>
-                        
-                        <a  id="auctionHouseContractAddressCopyBtn" class="btn btn-primary">Copy</a>
-                
-                    </div>
-            
-            </div>
-            <div class="card">
-              <div class="card-header">
-                Subscribed Sellers and Bidders
-              </div>
-                 
-              <div class="card-body">
-                <h5 class="card-title">List of subscibed sellers and bidders</h5>
-                  <p class="card-text">
-                    <div class="row">
-                      <div class="col-6">
-                        <ul id="subscribedSellersList" class="list-group">
-                          <li class="list-group-item">Sellers' addresses</li>
-                        </ul>
-                      </div>
-                      <div class="col-6">
-                        <ul id="subscribedBiddersList" class="list-group">
-                          <li class="list-group-item">Bidders' addresses</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </p>
-              </div>
-            </div>
-              
-              <div id="auctionCard" class="card">
-                  <div class="card-header">
-                    Current Auction
-                  </div>
-                     
-                  <div class="card-body">
-                    <h5 id="currentAuctionHeader" class="card-title">Interact here when an auction is submitted</h5>
-                    <p id="currentAuctionObjectDescription"class="card-text">
-                      tmp desciption
-                    </p>
-                    <p class="card-text">
-                        <div class="row">
-                          <div class="col-6">
-                              <div class="form-group">
-                                  <label for="decreasingStrategy">Decreasing Strategy</label>
-                                          <select class="form-control" id="decreasingStrategy">
-                                            <option>Linear</option>
-                                            <option>InverseLogarithmic</option>
-                                            <option>Logarithmic</option>
-                                          </select>
-                                        </div>
-                              <div class="form-group">
-                                  <label for="_reservePrice">Reserve Price</label>
-                                <input type="number" class="form-control " id="_reservePrice" value="1">
-                              </div>
-                              
-          
-                              <div class="form-group">
-                                      <label for="_openedForLength">Opened for Length</label>
-                                    <input type="number" class="form-control " id="_openedForLength" value="8">
-                              </div>
-                          </div>
-                          <div class="col-6">
-                              <div class="form-group">
-                                  <label for="_sellerAddress">Seller Address</label>
-                                <input type="text" class="form-control " id="_sellerAddress" value="0xd6De99B202C3E07040E2a063D177e7a6D2fDf0d8">
-                              </div>
-                              <div class="form-group">
-                                  <label for="_initialPrice">Initial Price</label>
-                                <input type="number" class="form-control " id="_initialPrice" value="5">
-                              </div>
-                              <div class="form-group">
-                                  <label for="miningRate">Mining Rate</label>
-                                <input type="number" class="form-control " id="miningRate" value="300">
-                              </div>
-                          </div>
-                        </div>
-                      </p>
-                      <a  id="deployContract" class="btn btn-primary">Deploy Contract</a>
-                  </div>
-              </div>
-                  
-              <div class="card">
-                  <div class="card-header">
-                    Contract Functions
-                  </div>
-                     
-                  <div class="card-body">
-                    <h5 class="card-title">List of contract functions</h5>
-                      
-                      <p class="card-text">
-                        Here you will see the result of the method call
-                      </p>
-                      <a  id="acceptEscrow" class="btn btn-primary">Accept Escrow</a>
-                      <a  id="refuseEscrow" class="btn btn-primary">Refuse Escrow</a>
-                      <a  id="concludeEscrow" class="btn btn-primary">Conclude Escrow</a>
-                      <a  id="getSeller" class="btn btn-primary">Get seller</a>
-                      <a  id="getReservePrice" class="btn btn-primary">Get Reserve Price</a>
-                      <a  id="getInitialPrice" class="btn btn-primary">Get Initial Price</a>
-                      <a  id="getCurrentPrice" class="btn btn-primary">Get Current Price</a>
-                      <a  id="getOpenedFor" class="btn btn-primary">Get Opened For</a>
-                      <a  id="addBlock" class="btn btn-primary">Add Block</a>
-                  </div>
+                <div class="form-group">
+                  <label for="_reservePrice">Reserve Price</label>
+                  <input type="number" class="form-control " id="_reservePrice" value="1">
                 </div>
 
 
+                <div class="form-group">
+                  <label for="_openedForLength">Opened for Length</label>
+                  <input type="number" class="form-control " id="_openedForLength" value="8">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="_sellerAddress">Seller Address</label>
+                  <input type="text" class="form-control " id="_sellerAddress"
+                    value="0xd6De99B202C3E07040E2a063D177e7a6D2fDf0d8">
+                </div>
+                <div class="form-group">
+                  <label for="_initialPrice">Initial Price</label>
+                  <input type="number" class="form-control " id="_initialPrice" value="5">
+                </div>
+                <div class="form-group">
+                  <label for="miningRate">Mining Rate</label>
+                  <input type="number" class="form-control " id="miningRate" value="300">
+                </div>
+              </div>
+            </div>
+          </p>
+          <a id="deployContract" class="btn btn-primary">Deploy Contract</a>
+          <div class="spinner-border spinner" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card right-cards">
+        <div class="card-header">
+          Contract Functions
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title">List of contract functions</h5>
+
+          <p class="card-text">
+            Here you will see the result of the method call
+          </p>
+          <a id="acceptEscrow" class="btn btn-primary">Accept Escrow</a>
+          <a id="refuseEscrow" class="btn btn-primary">Refuse Escrow</a>
+          <a id="concludeEscrow" class="btn btn-primary">Conclude Escrow</a>
+          <a id="getSeller" class="btn btn-primary">Get seller</a>
+          <a id="getReservePrice" class="btn btn-primary">Get Reserve Price</a>
+          <a id="getInitialPrice" class="btn btn-primary">Get Initial Price</a>
+          <a id="getCurrentPrice" class="btn btn-primary">Get Current Price</a>
+          <a id="getOpenedFor" class="btn btn-primary">Get Opened For</a>
+          <a id="addBlock" class="btn btn-primary">Add Block</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
 
 
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  
-    <!-- This exposes the library as a global variable: ethers -->
-    <script src="https://cdn.ethers.io/scripts/ethers-v4.min.js"
-    charset="utf-8"
-    type="text/javascript">
-    </script>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="css/style.css">
+  <!-- This exposes the library as a global variable: ethers -->
+  <script src="https://cdn.ethers.io/scripts/ethers-v4.min.js" charset="utf-8" type="text/javascript">
+  </script>
+
+  <link rel="stylesheet" href="css/auctionhousestyle.css">
 
 
-    <!-- Our App script -->
-    <script src="js/app.js"></script>
+  <!-- Our App script -->
+  <script src="js/app.js"></script>
 
-    <!-- bidder App related functions-->
-    <script src="js/auctionhouse/auctionhouse.js"></script>
+  <!-- bidder App related functions-->
+  <script src="js/auctionhouse/auctionhouse.js"></script>
 
-    <!-- bidder user interaction -->
-    <script src="js/auctionhouse/auctionhouseUI.js"></script>
+  <!-- bidder user interaction -->
+  <script src="js/auctionhouse/auctionhouseUI.js"></script>
 
 
 </body>
+
 </html>
 
 
@@ -229,10 +242,3 @@
     </div>
 </div>
 </body> -->
-
-
-
-
-
-
-

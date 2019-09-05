@@ -1,22 +1,45 @@
 $("#subscribeToAuctionHouse").click(function(){
-    
-    let address = $("#auctionHouseAddress").val();
-    seller.subscribeToAuctionHouse(address);
+  $("#subscribeToAuctionHouse").hide();
+  $("#subscribeToAuctionHouse").next().show();
 
-    $("#subscribeToAuctionHouse").hide();
-    $("#subscribeToAuctionHouseSuccess").show();
+
+  let address = $("#auctionHouseAddress").val();
+  seller.subscribeToAuctionHouse(address);   
 
   });
 
 
 $("#submitAuction").click(function(){
+
+    $("#submitAuction").hide();
+    $("#submitAuction").next().show(); //showing spinner
     
     let objectDescription = $("#objectDescription").val();
     console.log(objectDescription);
     seller.submitAuction(objectDescription);
 
-    $("#submitAuction").hide();
-    $("#submitAuctionSuccess").show();
-
   });
 
+
+  sellerUI = {
+
+    successfullySubscribed: function(){
+      $("#subscribeToAuctionHouse").next().hide();
+      $("#subscribeToAuctionHouseSuccess").show();
+    },
+
+    auctionSuccessfullySubmitted: function(){
+      $("#submitAuction").next().hide();
+      $("#submitAuctionSuccess").show();
+    },
+
+    notifyWinner: function(winnerAddress, bid){
+      console.log(winnerAddress + " won bidding " + bid );
+    },
+
+    newBlock: function(blockNumber){
+      console.log("Block added " + blockNumber);
+    }
+
+
+  }

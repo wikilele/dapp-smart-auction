@@ -27,17 +27,16 @@ class Bidder extends User{
 
         this.auctionHouseContract.on("NewBidderSubscribed",(bidderAddress) =>{
             if(bidderAddress == this.wallet.address)    
-                console.log("You successfully subscribed!");
+                bidderUI.successfullySubscribed();
         });
 
         this.auctionHouseContract.on("NewAuction",(auctionAddress, auctionName, objectDesciption) =>{
             this.auctionContract = new DutchAuction();
             this.auctionContract.objectDesciption = objectDesciption;
             this.auctionContract.contractAddress = auctionAddress;
-            $("#contractAddressModal").text(auctionAddress);
-            $("#auctionTypeModal").text(auctionName);
-            $("#objectDescriptionModal").text(objectDesciption);
-            $("#auctionCreatedModal").modal("toggle");
+
+            bidderUI.notifyNewAuction(auctionAddress, auctionName, objectDesciption);
+            
         });
     }
 
@@ -54,16 +53,17 @@ class Bidder extends User{
 
     registerToAuctionEvents(){
         this.auctionContract.contract.on("Winner",(winnerAddress, bid)=>{
-            console.log(winnerAddress + " won bidding " + bid );
+            bidderUi.notifyWinner(winnerAddress, bid, this.wallet.address);
         });
 
         this.auctionContract.contract.on("NotEnoughMoney",(bidderAddress, bidSent, actualPrice)=>{
             if(bidderAddress == this.wallet.address)
-                console.log("You bidded " + bidSent + " but the actual price was " + actualPrice );
+                bidderUi.notifyNotEnoughMoney(bidderAddress, bidSent, actualPrice);
         });
 
         this.auctionContract.contract.on("NewBlock",(blockNumber)=>{
-            console.log("Block added " + blockNumber);
+
+            bidderUI.newBlock(blockNumber);
         });
     }
 

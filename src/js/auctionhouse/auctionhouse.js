@@ -17,7 +17,8 @@ class AuctionHouse extends User{
 
         console.log(this.auctionHouseContract.address);
 
-        $("#auctionHouseContractAddress").text(this.auctionHouseContract.address);
+        auctionhouseUI.setAuctionHouseAddress(this.auctionHouseContract.address);
+
 
         return this.registerToAuctionHouseEvents();        
     }
@@ -30,42 +31,41 @@ class AuctionHouse extends User{
 
         await this.auctionContract.deploy(this.wallet,_reservePrice,_initialPrice, _openedForLength, _seller, decreasingStrategy.strategy.address, miningRate);
 
-        this.auctionHouseContract.notifyNewAuction(this.auctionContract.contractAddress, this.auctionContract.type, "this.auctionContract.objectDesciption");
+        this.registerToAuctionEvents();
 
-        return this.registerToAuctionEvents();
-
+        this.auctionHouseContract.notifyNewAuction(this.auctionContract.contractAddress, this.auctionContract.type, this.auctionContract.objectDesciption);
     }
 
     registerToAuctionHouseEvents(){
 
         this.auctionHouseContract.on("NewSellerSubscribed",(sellerAddress) =>{
-                $("#subscribedSellersList").append("<li class='list-group-item'>" + sellerAddress + "</li>");
+            auctionhouseUI.newSellerSubscribed(sellerAddress);
         });
 
         this.auctionHouseContract.on("NewBidderSubscribed",(bidderAddress) =>{
-                $("#subscribedBiddersList").append("<li class='list-group-item'>" + bidderAddress + "</li>");
+            auctionhouseUI.newBidderSubscribed(bidderAddress);
         });
 
         this.auctionHouseContract.on("AuctionSubmitted",(sellerAddress, objectDescription) =>{
             this.auctionContract = new DutchAuction();
             this.auctionContract.objectDesciption = objectDescription;
-            $("#currentAuctionHeader").text("A new Auction has been submitted!");
-            $("#currentAuctionObjectDescription").text(objectDescription);
-            $("#_sellerAddress").val(sellerAddress);          
+
+            auctionhouseUI.newAuctionSubmitted(sellerAddress,objectDescription);
+         
         });
 
         this.auctionHouseContract.on("NewAuction",(auctionAddress, auctionName, objectDesciption) =>{
-            console.log("new auction create " + auctionName + " description " + objectDesciption);
+            auctionhouse.auctionDeployedSuccessfully(auctionAddress, auctionName, objectDesciption);
         });
     }
 
     registerToAuctionEvents(){
         this.auctionContract.contract.on("Winner",(winnerAddress, bid)=>{
-            console.log(winnerAddress + " won bidding " + bid );
+            auctionhouseUi.notifyWinner();
         });
 
         this.auctionContract.contract.on("NewBlock",(blockNumber)=>{
-            console.log("Block added " + blockNumber);
+            auctionhouseUi.newBlock(blockNumber);
         });
     }
 }

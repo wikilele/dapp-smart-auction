@@ -1,164 +1,178 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Bidder View</title>
-  </head>
-  <body>
-        <nav class="navbar navbar-light bg-light">
-                <a class="navbar-brand" href="#">
-                    <img src="css/img/ethereumlogo.png" width="20" height="28" class="d-inline-block align-top" alt="">
-                    Smart Auction - Bidder View
-                </a>
-            </nav>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-            <div class="card">
-                <div class="card-header">
-                    <a  id="subscribeHeader" data-toggle="collapse" href="#subscribeCard" role="button" aria-expanded="false" aria-controls="subscribeCard">
-                        Subscribe to Auction House
-                    </a>
-                </div>
-                <div class="collapse show" id="subscribeCard">
-                    <div class="card-body">
-                        <h5 class="card-title">Insert the AuctionHouse contract address to subscribe to the AuctionHouse</h5>
-                        <p class="card-text">
-                            <div class="form-group">
-                                <label for="auctionHouseAddress">Contract Address</label>
-                                <input type="text" class="form-control " id="auctionHouseAddress" >
-                          </div>
-                        </p>
-                        <a  id="subscribeToAuctionHouse" class="btn btn-primary">Subscribe</a>
-                        <span id="subscribeToAuctionHouseSuccess" class="badge badge-success success">Success</span>
-                    </div>
-                </div>
-            
+  <title>Bidder View</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+      <img src="css/img/ethereumlogo.png" width="20" height="28" class="d-inline-block align-top" alt="">
+      Smart Auction - Bidder View
+    </a>
+  </nav>
+  <div class="row">
+    <div class="col-4">
+      <div class="card left-cards">
+        <div class="card-header">
+          
+            Subscribe to Auction House <span id="subscribeToAuctionHouseSuccess" class="badge badge-success">Success</span>
+          
+        </div>
+        <div  id="subscribeCard">
+          <div class="card-body">
+            <h5 class="card-title">Insert the AuctionHouse contract address to subscribe to the AuctionHouse</h5>
+            <p class="card-text">
+              <div class="form-group">
+                <label for="auctionHouseAddress">Contract Address</label>
+                <input type="text" class="form-control " id="auctionHouseAddress">
+              </div>
+            </p>
+            <a id="subscribeToAuctionHouse" class="btn btn-primary">Subscribe</a>
+            <div class="spinner-border spinner" role="status">
+              <span class="sr-only">Loading...</span>
             </div>
-            <div class="card">
-                    <div class="card-header">
-                        <a  data-toggle="collapse" href="#submitCard" role="button" aria-expanded="false" aria-controls="submitCard">
-                            Current Auction
-                        </a>
-                    </div>
-                    <div class="collapse show" id="submitCard">
-                        <div class="card-body">
-                            <h5 class="card-title">Insert a bid value</h5>
-                            <p class="card-text">
-                                <div class="form-group">
-                                    <label for="bidValue">Bid value</label>
-                                  <input type="number" class="form-control " id="bidValue" value="2">
-                            </div>
-                            </p>
-                            <a id="bidButton" class="btn btn-primary">Bid</a>
-                            <span id="bidSuccess" class="badge badge-success success">Success</span>
-                        </div>
-                    </div>
-            </div>
-    
-                    <div class="card">
-                            <div class="card-header">
-                              Contract Functions
-                            </div>
-                               
-                            <div class="card-body">
-                              <h5 class="card-title">List of contract functions</h5>
-                                
-                                <p class="card-text">
-                                  Here you will see the result of the method call
-                                </p>
-                                <a  id="acceptEscrow" class="btn btn-primary">Accept Escrow</a>
-                                <a  id="refuseEscrow" class="btn btn-primary">Refuse Escrow</a>
-                                <a  id="concludeEscrow" class="btn btn-primary">Conclude Escrow</a>
-                                <a  id="getSeller" class="btn btn-primary">Get seller</a>
-                                <a  id="getReservePrice" class="btn btn-primary">Get Reserve Price</a>
-                                <a  id="getInitialPrice" class="btn btn-primary">Get Initial Price</a>
-                                <a  id="getCurrentPrice" class="btn btn-primary">Get Current Price</a>
-                                <a  id="getOpenedFor" class="btn btn-primary">Get Opened For</a>
-                                <a  id="addBlock" class="btn btn-primary">Add Block</a>
-                            </div>
-                          </div>
+          </div>
+        </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="auctionCreatedModal" tabindex="-1" role="dialog" aria-labelledby="auctionCreatedModalTitle" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="auctionCreatedModalTitle">A new Auction has been created</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <h4> Contract Address</h4>
-                <p id="contractAddressModal"></p>
-              <h4> Auction Type</h4>
-              <p id="auctionTypeModal"></p>
-              <h4> Object Description</h4>
-              <p id="objectDescriptionModal"></p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button id="joinAuctionModal" type="button" class="btn btn-primary">Join</button>
-            </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <div class="card-header">
+          
+            Current Auction <span id="joinedNewAuctionSuccess" class="badge badge-success">Joined</span>
+          
+        </div>
+        <div  id="submitCard">
+          <div class="card-body">
+            <h5 class="card-title">Insert a bid value</h5>
+            <p class="card-text">
+              <div class="form-group">
+                <label for="bidValue">Bid value</label>
+                <input type="number" class="form-control " id="bidValue" value="2">
+              </div>
+            </p>
+            <a id="bidButton" class="btn btn-primary">Bid</a>
+            <span id="bidSuccess" class="badge badge-success success">Success</span>
           </div>
         </div>
       </div>
 
+      <div class="card">
+        <div class="card-header">
+          Contract Functions
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title">List of contract functions</h5>
+
+          <p class="card-text">
+            Here you will see the result of the method call
+          </p>
+          <a id="acceptEscrow" class="btn btn-primary">Accept Escrow</a>
+          <a id="refuseEscrow" class="btn btn-primary">Refuse Escrow</a>
+          <a id="concludeEscrow" class="btn btn-primary">Conclude Escrow</a>
+          <a id="getSeller" class="btn btn-primary">Get seller</a>
+          <a id="getReservePrice" class="btn btn-primary">Get Reserve Price</a>
+          <a id="getInitialPrice" class="btn btn-primary">Get Initial Price</a>
+          <a id="getCurrentPrice" class="btn btn-primary">Get Current Price</a>
+          <a id="getOpenedFor" class="btn btn-primary">Get Opened For</a>
+          <a id="addBlock" class="btn btn-primary">Add Block</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  
-    <!-- This exposes the library as a global variable: ethers -->
-    <script src="https://cdn.ethers.io/scripts/ethers-v4.min.js"
-    charset="utf-8"
-    type="text/javascript">
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
 
 
-    <!-- Our App script -->
-    <script src="js/app.js"></script>
 
-    <!-- bidder App related functions-->
-    <script src="js/bidder/bidder.js"></script>
 
-    <!-- bidder user interaction -->
-    <script src="js/bidder/bidderUI.js"></script>
+
+
+
+
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="auctionCreatedModal" tabindex="-1" role="dialog"
+    aria-labelledby="auctionCreatedModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="auctionCreatedModalTitle">A new Auction has been created</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h4> Contract Address</h4>
+          <p id="contractAddressModal"></p>
+          <h4> Auction Type</h4>
+          <p id="auctionTypeModal"></p>
+          <h4> Object Description</h4>
+          <p id="objectDescriptionModal"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="joinAuctionModal" type="button" class="btn btn-primary">Join</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+  <!-- This exposes the library as a global variable: ethers -->
+  <script src="https://cdn.ethers.io/scripts/ethers-v4.min.js" charset="utf-8" type="text/javascript">
+  </script>
+
+  <link rel="stylesheet" href="css/bidderstyle.css">
+
+
+  <!-- Our App script -->
+  <script src="js/app.js"></script>
+
+  <!-- bidder App related functions-->
+  <script src="js/bidder/bidder.js"></script>
+
+  <!-- bidder user interaction -->
+  <script src="js/bidder/bidderUI.js"></script>
 
 
 </body>
+
 </html>
 
 
 
 
-        
-        
+
+
 
 
 
@@ -173,10 +187,3 @@
                 <button id="getCurrentPrice"  class="btn btn-primary">Get current price</button>
 
 -->
-
-
-
-
-
-
-
