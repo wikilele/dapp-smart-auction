@@ -96,3 +96,13 @@ $("#addBlock").click(function(){
     }
 });
 
+
+$(window).on('load', function () {
+    $("#currentMetamaskAccount").text(ethereum.selectedAddress);
+
+    ethereum.on('accountsChanged', function (accounts) {
+        // Time to reload your interface with accounts[0]!
+        console.log("Account changed");
+        $("#currentMetamaskAccount").text(ethereum.selectedAddress);
+    }) 
+});

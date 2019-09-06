@@ -90,11 +90,11 @@ class Seller extends User{
 
 
 // Call init whenever the window loads
-$(function() {
-    $(window).on('load', function () {
-        seller = new Seller();
-    });
+
+$(window).on('load', function () {
+       seller = new Seller();
 });
+
 
 
 

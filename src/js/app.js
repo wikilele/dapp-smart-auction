@@ -22,10 +22,7 @@ App = {
             //web3 = new Web3(App.provider);
         }
 
-        ethereum.on('accountsChanged', function (accounts) {
-            // Time to reload your interface with accounts[0]!
-            console.log("Account changed");
-          })       
+             
          
     },
 }
@@ -134,6 +131,8 @@ class DutchAuction extends Auction{
 
 class User{
     constructor(){
+        this.signer = null;
+        this.pubKey = null;
         this.auctionContract = null;
         this.auctionHouseContract = null;
     }
@@ -149,8 +148,7 @@ class User{
 
 
 // Call init whenever the window loads
-$(function() {
-    $(window).on('load', function () {
-        App.initProvider();
-    });
+
+$(window).on('load', function () {
+    App.initProvider();
 });

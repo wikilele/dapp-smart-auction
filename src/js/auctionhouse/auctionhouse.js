@@ -88,11 +88,11 @@ class AuctionHouse extends User{
 // Call init whenever the window loads
 
 
-$(function() {
-    $(window).on('load', function () {
-        auctionhouse = new AuctionHouse();
-    });
+
+$(window).on('load', function () {
+    auctionhouse = new AuctionHouse();
 });
+
 
 
 

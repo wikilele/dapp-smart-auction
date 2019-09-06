@@ -114,10 +114,10 @@ auctionhouseUI = {
 
 
 // Call init whenever the window loads
-$(function() {
+
   $(window).on('load', function () {
     
     $('[data-toggle="tooltip"]').tooltip()
 
   });
-});
+

@@ -92,8 +92,7 @@ class Bidder extends User{
 }
 
 // Call init whenever the window loads
-$(function() {
-    $(window).on('load', function () {
-        bidder = new Bidder();
-    });
+
+$(window).on('load', function () {
+    bidder = new Bidder();
 });
