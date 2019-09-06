@@ -1,24 +1,24 @@
-const  bidderPrivateKey =  "12afbd86f1dfff78fbc01916eb5f2a8578be198d1dcec533a518a10510b9efd9";
+//const  bidderPrivateKey =  "12afbd86f1dfff78fbc01916eb5f2a8578be198d1dcec533a518a10510b9efd9";
 
 let bidder = null;
 
 class Bidder extends User{
-    constructor(privateKey){
-        super(privateKey);
+    constructor(){
+        super();
 
     }
 
     async subscribeToAuctionHouse(auctionHouseAddress){
         let c = await $.getJSON("AuctionHouse.json");
            
-        this.auctionHouseContract = new ethers.Contract(auctionHouseAddress, c.abi, this.wallet);
+        this.auctionHouseContract = new ethers.Contract(auctionHouseAddress, c.abi, App.provider.getSigner());
         
         console.log("connected to auction house");
 
-        this.auctionHouseContract.subscribeAsBidder();
         
+        this.registerToAuctionHouseEvents();
 
-        return this.registerToAuctionHouseEvents();
+        this.auctionHouseContract.subscribeAsBidder();
    
     }
 
@@ -26,7 +26,7 @@ class Bidder extends User{
     registerToAuctionHouseEvents(){
 
         this.auctionHouseContract.on("NewBidderSubscribed",(bidderAddress) =>{
-            if(bidderAddress == this.wallet.address)    
+            if(bidderAddress.toLowerCase() == ethereum.selectedAddress.toLowerCase())    
                 bidderUI.successfullySubscribed();
         });
 
@@ -44,7 +44,7 @@ class Bidder extends User{
         // Load the wallet to connect the contract with
       
         let c  = await $.getJSON("DutchAuction.json")
-        this.auctionContract.contract = new ethers.Contract(this.auctionContract.contractAddress, c.abi, this.wallet);
+        this.auctionContract.contract = new ethers.Contract(this.auctionContract.contractAddress, c.abi, App.provider.getSigner());
         console.log("connected");
   
         return this.registerToAuctionEvents();
@@ -53,11 +53,11 @@ class Bidder extends User{
 
     registerToAuctionEvents(){
         this.auctionContract.contract.on("Winner",(winnerAddress, bid)=>{
-            bidderUI.notifyWinner(winnerAddress, bid, this.wallet.address);
+            bidderUI.notifyWinner(winnerAddress, bid, ethereum.selectedAddress.toLowerCase());
         });
 
         this.auctionContract.contract.on("NotEnoughMoney",(bidderAddress, bidSent, actualPrice)=>{
-            if(bidderAddress == this.wallet.address)
+            if(bidderAddress.toLowerCase() == ethereum.selectedAddress.toLowerCase())
                 bidderUI.notifyNotEnoughMoney(bidderAddress, bidSent, actualPrice);
         });
 
@@ -67,12 +67,12 @@ class Bidder extends User{
         });
 
         this.auctionContract.contract.on("EscrowAccepted",(address)=>{
-            if (address == this.wallet.address)
+            if (address.toLowerCase() == ethereum.selectedAddress.toLowerCase())
                 bidderUI.escrowAccepted();
         });
 
         this.auctionContract.contract.on("EscrowRefused",(address)=>{
-            if (address == this.wallet.address)
+            if (address.toLowerCase() == ethereum.selectedAddress.toLowerCase())
                 bidderUI.escrowRefused();
         });
 
@@ -94,6 +94,6 @@ class Bidder extends User{
 // Call init whenever the window loads
 $(function() {
     $(window).on('load', function () {
-        bidder = new Bidder(bidderPrivateKey);
+        bidder = new Bidder();
     });
 });

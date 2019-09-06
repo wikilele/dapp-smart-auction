@@ -6,10 +6,27 @@ App = {
     initProvider : function() {
 
         // connecting to the provider
-        let currentProvider = new web3.providers.HttpProvider(App.url);
+        
+        if(typeof web3 != 'undefined') { // Check whether exists a provider, e.g Metamask
+            App.provider = new ethers.providers.Web3Provider(web3.currentProvider); 
+            //web3 = new Web3(App.provider);
+            try {
+                // Permission popup
+                ethereum.enable().then(async() => { console.log("DApp connected " );});
+            }
+            catch(error) { console.log(error); }
+        } else { // Otherwise, create a new local instance of Web3
+            let currentProvider = new web3.providers.HttpProvider(App.url);
+            App.provider = new ethers.providers.Web3Provider(currentProvider);
+    
+            //web3 = new Web3(App.provider);
+        }
 
-        App.provider = new ethers.providers.Web3Provider(currentProvider);
-
+        ethereum.on('accountsChanged', function (accounts) {
+            // Time to reload your interface with accounts[0]!
+            console.log("Account changed");
+          })       
+         
     },
 }
 
@@ -116,8 +133,7 @@ class DutchAuction extends Auction{
 }
 
 class User{
-    constructor(privateKey){
-        this.wallet = new ethers.Wallet(privateKey, App.provider);
+    constructor(){
         this.auctionContract = null;
         this.auctionHouseContract = null;
     }

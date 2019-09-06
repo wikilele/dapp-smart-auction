@@ -48,12 +48,11 @@
                 </div>
 
             </div>
-        
-            <div class="card ">
+
+            <div id="submitCard" class="card hide">
                 <div class="card-header">
 
-                    Submit Auction <span id="submitAuctionSuccess"
-                    class="badge badge-success ">Success</span>
+                    Submit Auction <span id="submitAuctionSuccess" class="badge badge-success ">Success</span>
 
                 </div>
 
@@ -66,15 +65,15 @@
                         </div>
                     </p>
                     <a id="submitAuction" class="btn btn-dark">Submit</a>
-                    
+
                     <div class="spinner-border spinner" role="status">
-                            <span class="sr-only">Loading...</span>
+                        <span class="sr-only">Loading...</span>
                     </div>
                 </div>
 
             </div>
-        
-            <div class="card">
+
+            <div id="contractFunctionsCard" class="card">
                 <div class="card-header">
                     Contract Functions
                 </div>
@@ -83,50 +82,72 @@
                     <h5 class="card-title">List of contract functions</h5>
 
                     <ul class="list-group">
-                            <li class="list-group-item">
-                              <a id="acceptEscrow" class="btn btn-dark">Accept Escrow</a>
-                              <span id="acceptEscrowResult">
-                                <span id="acceptEscrowResultSuccess" class="badge badge-success float-right">accepted</span>
-                              </span>
-                            </li>
-                            <li class="list-group-item">
-                              <a id="refuseEscrow" class="btn btn-dark">Refuse Escrow</a>
-                              <span id="refuseEscrowResult">
-                                <span id="refuseEscrowResultSuccess" class="badge badge-success float-right">refused</span>
-                              </span>
-                            </li>
+                        <li class="list-group-item">
+                            <a id="acceptEscrow" class="btn btn-dark">Accept Escrow</a>
+                            <span id="acceptEscrowResult">
+                                <span id="acceptEscrowResultSuccess"
+                                    class="badge badge-success float-right">accepted</span>
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            <a id="refuseEscrow" class="btn btn-dark">Refuse Escrow</a>
+                            <span id="refuseEscrowResult">
+                                <span id="refuseEscrowResultSuccess"
+                                    class="badge badge-success float-right">refused</span>
+                            </span>
+                        </li>
 
-                            <li class="list-group-item">
-                              <a id="getSeller" class="btn btn-dark">Get seller</a>
-                              <span  class="float-right" id="getSellerResult"></span>
-                            </li>
-                            <li class="list-group-item">
-                              <a id="getReservePrice" class="btn btn-dark">Get Reserve Price</a>
-                              <span class="float-right" id="getReservePriceResult"></span>
-                            </li>
-                            <li class="list-group-item">
-                              <a id="getInitialPrice" class="btn btn-dark">Get Initial Price</a>
-                              <span class="float-right" id="getInitialPriceResult"></span>
-                            </li>
-                            <li class="list-group-item">
-                              <a id="getCurrentPrice" class="btn btn-dark">Get Current Price</a>
-                              <span class="float-right" id="getCurrentPriceResult"></span>
-                            </li>
-                            <li class="list-group-item">
-                              <a id="getOpenedFor" class="btn btn-dark">Get Opened For</a>
-                              <span class="float-right" id="getOpenedForResult"></span>
-                            </li>
-                            <li class="list-group-item">
-                              <a id="addBlock" class="btn btn-dark">Add Block</a>
-                              <span class="float-right" id="addBlockResult"></span>
-                            </li>
-                          </ul>
-                
+                        <li class="list-group-item">
+                            <a id="getSeller" class="btn btn-dark">Get seller</a>
+                            <span class="float-right" id="getSellerResult"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <a id="getReservePrice" class="btn btn-dark">Get Reserve Price</a>
+                            <span class="float-right" id="getReservePriceResult"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <a id="getInitialPrice" class="btn btn-dark">Get Initial Price</a>
+                            <span class="float-right" id="getInitialPriceResult"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <a id="getCurrentPrice" class="btn btn-dark">Get Current Price</a>
+                            <span class="float-right" id="getCurrentPriceResult"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <a id="getOpenedFor" class="btn btn-dark">Get Opened For</a>
+                            <span class="float-right" id="getOpenedForResult"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <a id="addBlock" class="btn btn-dark">Add Block</a>
+                            <span class="float-right" id="addBlockResult"></span>
+                        </li>
+                    </ul>
+
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- notification Modal -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog"
+        aria-labelledby="notificationModalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationModalTitle">New message!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="notificationModalInfo"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

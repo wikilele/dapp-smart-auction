@@ -1,3 +1,11 @@
+$("#auctionHouseContractAddressDeployBtn").click(function(){
+  $("#auctionHouseContractAddressDeployBtn").hide();
+  $("#auctionHouseContractAddressDeployBtn").next().show(); // showing spinner
+  $("#auctionHouseContractAddress").text("");
+
+  auctionhouse.init();
+})
+
 $("#deployContract").click(function(){
 
     $("#deployContract").next().show();
@@ -35,11 +43,14 @@ function copyToClipboard(element) {
 
 auctionhouseUI = {
   setAuctionHouseAddress: function(address){
+
+    $("#auctionHouseContractAddressDeployBtn").next().hide();
+    $("#auctionHouseContractAddressCopyBtn").show();
     $("#auctionHouseContractAddress").text(address);
   },
 
   newAuctionSubmitted : function(sellerAddress,objectDescription){
-    $("#deployContract").show();
+    $("#auctionCard").show();
     $("#newAuctionSubmitted").show();
 
     $("#currentAuctionHeader").text("A new Auction has been submitted!");
@@ -63,26 +74,40 @@ auctionhouseUI = {
     $("#deployContract").next().hide();
     $("#newAuctionSubmitted").text("Success");
     $("#newAuctionSubmitted").show();
+
+    $("#contractFunctionsCard").show();
   },
 
   notifyWinner: function(winnerAddress, bid){
     console.log(winnerAddress + " won bidding " + bid );
+
+    $("#notificationModalInfo").text(winnerAddress + " won bidding " + bid);
+    $("#notificationModal").modal("toggle");
   },
 
   newBlock: function(blockNumber){
     console.log("Block added " + blockNumber);
+    $("#addBlockResult").text(blockNumber);
   },
 
 
   escrowAccepted: function(){
     console.log("Escrow Accepted!");
+    $("#acceptEscrowResultSuccess").show();
   },
   escrowRefused: function(){
     console.log("Escrow Refused!");
+    $("#refuseEscrowResultSuccess").show();
+    
   },
 
   escrowClosed: function(){
     console.log("Escrow Closed!");
+    $("#concludeEscrowResultSuccess").show();
+
+    $("#notificationModalInfo").text("Escrow Closed successfully");
+
+    $("#notificationModal").modal("toggle");
   }
 }
 
@@ -91,8 +116,7 @@ auctionhouseUI = {
 // Call init whenever the window loads
 $(function() {
   $(window).on('load', function () {
-    $("#deployContract").hide();
-
+    
     $('[data-toggle="tooltip"]').tooltip()
 
   });

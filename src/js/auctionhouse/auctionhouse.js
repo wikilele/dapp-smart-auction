@@ -1,16 +1,16 @@
-const auctionhousePrivateKey = "a0d9dab5fed44e095a2b021e2b4f87068b1d1488d9546eb6229a487f0885114c";
+//const auctionhousePrivateKey = "a0d9dab5fed44e095a2b021e2b4f87068b1d1488d9546eb6229a487f0885114c";
 
 let auctionhouse = null;
 
 class AuctionHouse extends User{
-    constructor(privateKey){
-        super(privateKey);
+    constructor(){
+        super();
         
     }
 
     async init(){
         let auctionHouseJSON = await $.getJSON( "AuctionHouse.json");
-        let auctionHouseFactory = new ethers.ContractFactory(auctionHouseJSON.abi, auctionHouseJSON.bytecode, this.wallet);
+        let auctionHouseFactory = new ethers.ContractFactory(auctionHouseJSON.abi, auctionHouseJSON.bytecode, App.provider.getSigner());
         this.auctionHouseContract = await auctionHouseFactory.deploy();
 
         await this.auctionHouseContract.deployed();
@@ -27,9 +27,9 @@ class AuctionHouse extends User{
     async initDutchAuction( strategy,_reservePrice,_initialPrice, _openedForLength, _seller, miningRate ){
 
         let decreasingStrategy = new DecreasingStrategy(strategy);
-        await decreasingStrategy.deploy(this.wallet);
+        await decreasingStrategy.deploy(App.provider.getSigner());
 
-        await this.auctionContract.deploy(this.wallet,_reservePrice,_initialPrice, _openedForLength, _seller, decreasingStrategy.strategy.address, miningRate);
+        await this.auctionContract.deploy(App.provider.getSigner(),_reservePrice,_initialPrice, _openedForLength, _seller, decreasingStrategy.strategy.address, miningRate);
 
         this.registerToAuctionEvents();
 
@@ -70,12 +70,12 @@ class AuctionHouse extends User{
 
 
         this.auctionContract.contract.on("EscrowAccepted",(address)=>{
-            if (address == this.wallet.address)
+            if (address.toLowerCase() == ethereum.selectedAddress.toLowerCase())
                 auctionhouseUI.escrowAccepted();
         });
 
         this.auctionContract.contract.on("EscrowRefused",(address)=>{
-            if (address == this.wallet.address)
+            if (address.toLowerCase() == ethereum.selectedAddress.toLowerCase())
                 auctionhouseUI.escrowRefused();
         });
 
@@ -86,10 +86,11 @@ class AuctionHouse extends User{
 }
 
 // Call init whenever the window loads
+
+
 $(function() {
     $(window).on('load', function () {
-        auctionhouse = new AuctionHouse(auctionhousePrivateKey);
-        auctionhouse.init();
+        auctionhouse = new AuctionHouse();
     });
 });
 

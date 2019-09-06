@@ -24,31 +24,25 @@
     <div class="col-6 ">
       <div class="card ">
         <div class="card-header">
-                House Contract Address          
-              
+          House Contract Address
+
         </div>
 
         <div class="card-body">
 
           <h5 class="card-title">
+            <a id="auctionHouseContractAddressDeployBtn" class="btn btn-dark " >Deploy</a>
+              <div class="spinner-border spinner" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
             <span id="auctionHouseContractAddress">
-              -refresh the page if you don't see the address -
+              Deploy the Auction House 
             </span>
-            <a id="auctionHouseContractAddressCopyBtn" class="btn btn-dark float-right" data-toggle="tooltip"
-            data-placement="right" title="Copy to clipboard">Copy</a> 
-
-            
+            <a id="auctionHouseContractAddressCopyBtn" class="btn btn-dark float-right hide" data-toggle="tooltip"
+              data-placement="right" title="Copy to clipboard">Copy</a>
           </h5>
-
-
         </div>
-
-
       </div>
-
-
-
-
 
       <div class="card ">
         <div class="card-header">
@@ -74,9 +68,10 @@
         </div>
       </div>
 
-      <div id="auctionCard" class="card ">
+      <div id="auctionCard" class="card hide">
         <div class="card-header">
-          Current Auction <span id="newAuctionSubmitted" class="badge badge-success ">New</span>
+          <span id="currentAuctionCardTitle"> Current Auction</span> <span id="newAuctionSubmitted"
+            class="badge badge-success ">New</span>
         </div>
 
         <div class="card-body">
@@ -131,7 +126,7 @@
       </div>
 
 
-      <div class="card ">
+      <div id="contractFunctionsCard" class="card ">
         <div class="card-header">
           Contract Functions
         </div>
@@ -147,19 +142,19 @@
             <li class="list-group-item">
               <a id="acceptEscrow" class="btn btn-dark">Accept Escrow</a>
               <span id="acceptEscrowResult">
-                <span id="acceptEscrowResultSuccess" class="badge badge-success float-right">New</span>
+                <span id="acceptEscrowResultSuccess" class="badge badge-success float-right">accepted</span>
               </span>
             </li>
             <li class="list-group-item">
               <a id="refuseEscrow" class="btn btn-dark">Refuse Escrow</a>
               <span id="refuseEscrowResult">
-                <span id="refuseEscrowResultSuccess" class="badge badge-success float-right">New</span>
+                <span id="refuseEscrowResultSuccess" class="badge badge-success float-right">refused</span>
               </span>
             </li>
             <li class="list-group-item">
               <a id="concludeEscrow" class="btn btn-dark">Conclude Escrow</a>
               <span id="concludeEscrowResult">
-                <span id="concludeEscrowResultSuccess" class="badge badge-success float-right">New</span>
+                <span id="concludeEscrowResultSuccess" class="badge badge-success float-right">closed</span>
               </span>
             </li>
             <li class="list-group-item">
@@ -194,6 +189,26 @@
   </div>
 
 
+  <!-- notification Modal -->
+  <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="notificationModalTitle">New message!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="notificationModalInfo"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 

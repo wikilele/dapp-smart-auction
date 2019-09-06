@@ -42,3 +42,11 @@ body{
 .spinner{
     display: none;
 }
+
+.hide{
+    display:none ;
+}
+
+#contractFunctionsCard{
+    display: none;
+}
