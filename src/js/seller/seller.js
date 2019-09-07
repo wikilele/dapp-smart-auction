@@ -23,12 +23,12 @@ class Seller extends User{
     registerToAuctionHouseEvents(){
 
         this.auctionHouseContract.on("NewSellerSubscribed",(sellerAddress) =>{
-            if(sellerAddress.toLowerCase() == ethereum.selectedAddress.toLowerCase())    
+            if(sellerAddress.toLowerCase() == this.pubKey)    
                 sellerUI.successfullySubscribed();
         });
 
         this.auctionHouseContract.on("AuctionSubmitted",(sellerAddress, objectDescription) =>{
-            if (sellerAddress.toLowerCase() == ethereum.selectedAddress.toLowerCase())
+            if (sellerAddress.toLowerCase() == this.pubKey)
             sellerUI.auctionSuccessfullySubmitted();         
         });
 
@@ -71,12 +71,12 @@ class Seller extends User{
 
 
         this.auctionContract.contract.on("EscrowAccepted",(address)=>{
-            if (address.toLowerCase() == ethereum.selectedAddress.toLowerCase())
+            if (address.toLowerCase() == this.pubKey)
                 sellerUI.escrowAccepted();
         });
 
         this.auctionContract.contract.on("EscrowRefused",(address)=>{
-            if (address.toLowerCase() == ethereum.selectedAddress.toLowerCase())
+            if (address.toLowerCase() == this.pubKey)
                 sellerUI.escrowRefused();
         });
 

@@ -70,12 +70,12 @@ class AuctionHouse extends User{
 
 
         this.auctionContract.contract.on("EscrowAccepted",(address)=>{
-            if (address.toLowerCase() == ethereum.selectedAddress.toLowerCase())
+            if (address.toLowerCase() == this.pubKey)
                 auctionhouseUI.escrowAccepted();
         });
 
         this.auctionContract.contract.on("EscrowRefused",(address)=>{
-            if (address.toLowerCase() == ethereum.selectedAddress.toLowerCase())
+            if (address.toLowerCase() == this.pubKey)
                 auctionhouseUI.escrowRefused();
         });
 

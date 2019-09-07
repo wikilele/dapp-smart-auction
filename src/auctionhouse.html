@@ -32,7 +32,7 @@
             <span id="currentMetamaskAccount">
 
             </span>
-            
+            <a id="metamaskAccountUsedBtn" class="btn btn-dark float-right">Use this account</a>
           </h5>
         </div>
       </div>
@@ -47,13 +47,13 @@
         <div class="card-body">
 
           <h5 class="card-title">
-            <a id="auctionHouseContractAddressDeployBtn" class="btn btn-dark ">Deploy</a>
-            <div class="spinner-border spinner" role="status">
+              <span id="auctionHouseContractAddress">
+                  Deploy the Auction House
+                </span>
+            <a id="auctionHouseContractAddressDeployBtn" class="btn btn-dark float-right" >Deploy</a>
+            <div class="spinner-border spinner float-right" role="status">
               <span class="sr-only">Loading...</span>
-            </div>
-            <span id="auctionHouseContractAddress">
-              Deploy the Auction House
-            </span>
+            </div>        
             <a id="auctionHouseContractAddressCopyBtn" class="btn btn-dark float-right hide" data-toggle="tooltip"
               data-placement="right" title="Copy to clipboard">Copy</a>
           </h5>
@@ -134,7 +134,7 @@
               </div>
             </div>
           </p>
-          <a id="deployContract" class="btn btn-dark ">Deploy Contract</a>
+          <a id="deployContract" class="btn btn-dark" >Deploy Contract</a>
           <div class="spinner-border spinner" role="status">
             <span class="sr-only">Loading...</span>
           </div>
@@ -203,15 +203,14 @@
       </div>
     </div>
   </div>
-
-
+  
   <!-- notification Modal -->
   <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalTitle"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="notificationModalTitle">New message!</h5>
+          <h5 class="modal-title" id="notificationModalTitle">Alert!</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -220,7 +219,7 @@
           <p id="notificationModalInfo"></p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+          <button id="notificationModalDismissBtn" type="button" class="btn btn-dark" data-dismiss="modal">Ok</button>
         </div>
       </div>
     </div>

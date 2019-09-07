@@ -26,7 +26,7 @@ class Bidder extends User{
     registerToAuctionHouseEvents(){
 
         this.auctionHouseContract.on("NewBidderSubscribed",(bidderAddress) =>{
-            if(bidderAddress.toLowerCase() == ethereum.selectedAddress.toLowerCase())    
+            if(bidderAddress.toLowerCase() == this.pubKey)    
                 bidderUI.successfullySubscribed();
         });
 
@@ -53,11 +53,11 @@ class Bidder extends User{
 
     registerToAuctionEvents(){
         this.auctionContract.contract.on("Winner",(winnerAddress, bid)=>{
-            bidderUI.notifyWinner(winnerAddress, bid, ethereum.selectedAddress.toLowerCase());
+            bidderUI.notifyWinner(winnerAddress, bid, this.pubKey);
         });
 
         this.auctionContract.contract.on("NotEnoughMoney",(bidderAddress, bidSent, actualPrice)=>{
-            if(bidderAddress.toLowerCase() == ethereum.selectedAddress.toLowerCase())
+            if(bidderAddress.toLowerCase() == this.pubKey)
                 bidderUI.notifyNotEnoughMoney(bidderAddress, bidSent, actualPrice);
         });
 
@@ -67,12 +67,12 @@ class Bidder extends User{
         });
 
         this.auctionContract.contract.on("EscrowAccepted",(address)=>{
-            if (address.toLowerCase() == ethereum.selectedAddress.toLowerCase())
+            if (address.toLowerCase() == this.pubKey)
                 bidderUI.escrowAccepted();
         });
 
         this.auctionContract.contract.on("EscrowRefused",(address)=>{
-            if (address.toLowerCase() == ethereum.selectedAddress.toLowerCase())
+            if (address.toLowerCase() == this.pubKey)
                 bidderUI.escrowRefused();
         });
 

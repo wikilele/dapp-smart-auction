@@ -131,7 +131,6 @@ class DutchAuction extends Auction{
 
 class User{
     constructor(){
-        this.signer = null;
         this.pubKey = null;
         this.auctionContract = null;
         this.auctionHouseContract = null;

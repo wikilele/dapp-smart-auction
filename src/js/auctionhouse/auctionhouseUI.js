@@ -123,7 +123,5 @@ $("#test").click(function(){
 
   $(window).on('load', function () {
     
-    $('[data-toggle="tooltip"]').tooltip()
-
   });
 

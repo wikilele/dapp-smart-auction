@@ -96,8 +96,36 @@ $("#addBlock").click(function(){
     }
 });
 
+$("#metamaskAccountUsedBtn").click(function(){
+    $("#metamaskAccountUsedBtn").hide();
+    // from now on the displayed address won't change
+    $("#currentMetamaskAccount").attr("id",ethereum.selectedAddress); 
+
+    let user = getUser();
+    user.pubKey = ethereum.selectedAddress.toLowerCase();
+});
+
+
+
+$(".btn")
+    .not("#metamaskAccountUsedBtn")
+    .not("#auctionHouseContractAddressCopyBtn")
+    .not("#notificationModalDismissBtn")
+    .mouseover(function(){
+    let user = getUser();
+    
+
+    if(user.pubKey != null && user.pubKey != ethereum.selectedAddress.toLowerCase()){
+        
+        $("#notificationModalInfo").text("Before you must change the address to that one you selected at the beginning!");
+        $("#notificationModal").modal("toggle");
+    }
+});
+
 
 $(window).on('load', function () {
+    $('[data-toggle="tooltip"]').tooltip();
+    
     $("#currentMetamaskAccount").text(ethereum.selectedAddress);
 
     ethereum.on('accountsChanged', function (accounts) {
