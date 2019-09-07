@@ -51,7 +51,7 @@ contract LinearDecreasingStrategy is IDecreasingStrategy {
                             uint256 reservePrice) public pure returns(uint256){
     
             uint256 y1 = initailPrice - reservePrice;
-            return  (elapsedTime*(-y1) + y1*totalTime)/totalTime;
+            return  (elapsedTime*(-y1) + y1*totalTime)/totalTime + reservePrice;
             }
     
 }
@@ -67,7 +67,7 @@ contract InverseLogarithmicDecreasingStrategy is IDecreasingStrategy{
             uint256 a = y2/log2(totalTime + 1);
             
             uint256 tmpval = a*log2(elapsedTime + 1); 
-            return y2 - tmpval;
+            return y2 - tmpval + reservePrice;
             }
                             
 }
@@ -81,7 +81,7 @@ contract LogarithmicDecreasingStrategy is IDecreasingStrategy{
             uint256 y2 = initailPrice - reservePrice;
             uint256 a = y2/log2(totalTime + 1);
             
-            return a*log2(totalTime - elapsedTime + 1);                    
+            return a*log2(totalTime - elapsedTime + 1) + reservePrice;                    
                                 
             }
     

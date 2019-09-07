@@ -104,5 +104,6 @@ $(window).on('load', function () {
         // Time to reload your interface with accounts[0]!
         console.log("Account changed");
         $("#currentMetamaskAccount").text(ethereum.selectedAddress);
+
     }) 
 });

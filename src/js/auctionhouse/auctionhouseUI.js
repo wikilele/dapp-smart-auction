@@ -111,7 +111,13 @@ auctionhouseUI = {
   }
 }
 
+$("#test").click(function(){
+  console.log("primo handler");
+})
 
+$("#test").click(function(){
+  console.log("secondo handler");
+})
 
 // Call init whenever the window loads
 
