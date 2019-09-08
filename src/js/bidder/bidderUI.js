@@ -1,95 +1,78 @@
-$("#metamaskAccountUsedBtn").click(function(){
+$("#metamaskAccountUsedBtn").click(function () {
+  // showing the card to subscribe to the AuctionHouse
   $("#subscribeToAuctionHouseCard").show();
 });
 
-
-$("#subscribeToAuctionHouse").click(function(){
+$("#subscribeToAuctionHouse").click(function () {
+  // subscribing to the AuctionHouse
   $("#subscribeToAuctionHouse").hide();
   $("#subscribeToAuctionHouse").next().show();
 
-  
   let address = $("#auctionHouseAddress").val();
   bidder.subscribeToAuctionHouse(address);
-
 
 });
 
 
-$("#bidButton").click(async function(){
-  $("#bidButton").next().show(); // showing spinner
+$("#bidButton").click(async function () {
+  // bidding
+  showSpinnerNextTo("#bidButton");
+
   $("#bidButton").hide();
-    let bidValue = $("#bidValue").val();
-    try{
-      bidder.bid(bidValue);
-    } catch(err){
-      appUI.notifyTransactionError("transaction reverted");
-      $("#bidButton").show();
-      $("#bidButton").next().hide(); // hiding spinner    
-    }
+  let bidValue = $("#bidValue").val();
+  try {
+    bidder.bid(bidValue);
+  } catch (err) {
+    // "reverting the UI" if something went wrong, alerting the user
+    appUI.notifyTransactionError("transaction reverted");
+    $("#bidButton").show();
+    hideSpinnerNextTo("#bidButton");
+  }
+});
 
-  });
 
+$("#joinAuctionModal").click(function () {
+  // joining the created Auction
+  bidder.connectToContract();
+  $("#auctionCreatedModal").modal("hide");
+  $("#currentAuctionCard").show();
+  $("#joinedNewAuctionSuccess").show();
 
-$("#joinAuctionModal").click(function(){
-    bidder.connectToContract();
-    $("#auctionCreatedModal").modal("hide");
-    $("#currentAuctionCard").show();
-    $("#joinedNewAuctionSuccess").show();
-
-    $("#contractFunctionsCard").show();
+  $("#contractFunctionsCard").show();
 })
 
 bidderUI = {
-  successfullySubscribed: function(){
-    $("#subscribeToAuctionHouse").next().hide();
+  // notify the user of a successful subscription to the AuctionHouse contract
+  successfullySubscribed: function () {
+    hideSpinnerNextTo("#subscribeToAuctionHouse");
     $("#subscribeToAuctionHouseSuccess").show();
   },
 
-  notifyNewAuction: function(auctionAddress, auctionName, objectDesciption){
+  // showing the modal to join the new auction
+  notifyNewAuction: function (auctionAddress, auctionName, objectDesciption) {
     $("#contractAddressModal").text(auctionAddress);
     $("#auctionTypeModal").text(auctionName);
     $("#objectDescriptionModal").text(objectDesciption);
     $("#auctionCreatedModal").modal("toggle");
   },
 
-  notifyWinner: function(winnerAddress, bid, yourAddress){
-    $("#bidButton").next().hide();
-    console.log(winnerAddress + " won bidding " + bid );
-    if(winnerAddress == yourAddress)
+  // showing the winner
+  notifyWinner: function (winnerAddress, bid, yourAddress) {
+    hideSpinnerNextTo("#bidButton");
+    console.log(winnerAddress + " won bidding " + bid);
+    if (winnerAddress == yourAddress)
       winnerAddress = "You";
 
     $("#notificationModalInfo").text(winnerAddress + " won bidding " + bid);
     $("#notificationModal").modal("toggle");
   },
 
-  notifyNotEnoughMoney: function(bidderAddress, bidSent, actualPrice){
-    $("#bidButton").next().hide(); // hiding spinner
+  // telling the user that his bid wasn't enough
+  notifyNotEnoughMoney: function (bidderAddress, bidSent, actualPrice) {
+    hideSpinnerNextTo("#bidButton");
     $("#bidButton").show();
-    console.log("You bidded " + bidSent + " but the actual price was " + actualPrice );
+    console.log("You bidded " + bidSent + " but the actual price was " + actualPrice);
     $("#notificationModalInfo").text("You bidded " + bidSent + " but the actual price was " + actualPrice);
-
-    $("#notificationModal").modal("toggle");
-  },
-
-  newBlock: function(blockNumber){
-    console.log("Block added " + blockNumber);
-    $("#addBlockResult").text(blockNumber);
-  },
-  
-  escrowAccepted: function(){
-    console.log("Escrow Accepted!");
-    $("#acceptEscrowResultSuccess").show();
-  },
-  escrowRefused: function(){
-    console.log("Escrow Refused!");
-    $("#refuseEscrowResultSuccess").show();
-  },
-
-  escrowClosed: function(){
-    console.log("Escrow Closed!");
-    $("#concludeEscrowResultSuccess").show();
-
-    $("#notificationModalInfo").text("Escrow Closed successfully");
 
     $("#notificationModal").modal("toggle");
   }

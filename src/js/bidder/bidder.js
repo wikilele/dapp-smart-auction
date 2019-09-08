@@ -1,100 +1,95 @@
-//const  bidderPrivateKey =  "12afbd86f1dfff78fbc01916eb5f2a8578be198d1dcec533a518a10510b9efd9";
-
+// variable storing the bidder (user) informations
 let bidder = null;
 
-class Bidder extends User{
-    constructor(){
+class Bidder extends User {
+    constructor() {
         super();
 
     }
 
-    async subscribeToAuctionHouse(auctionHouseAddress){
+    // connecting to the AuctionHouse 
+    async subscribeToAuctionHouse(auctionHouseAddress) {
         let c = await $.getJSON("AuctionHouse.json");
-           
+
         this.auctionHouseContract = new ethers.Contract(auctionHouseAddress, c.abi, App.provider.getSigner());
-        
+
         console.log("connected to auction house");
 
-        
         this.registerToAuctionHouseEvents();
 
         this.auctionHouseContract.subscribeAsBidder();
-   
+
     }
 
-
-    registerToAuctionHouseEvents(){
-
-        this.auctionHouseContract.on("NewBidderSubscribed",(bidderAddress) =>{
-            if(bidderAddress.toLowerCase() == this.pubKey)    
+    // subscribing to the AuctionHouse's events
+    registerToAuctionHouseEvents() {
+        this.auctionHouseContract.on("NewBidderSubscribed", (bidderAddress) => {
+            if (bidderAddress.toLowerCase() == this.pubKey)
                 bidderUI.successfullySubscribed();
         });
 
-        this.auctionHouseContract.on("NewAuction",(auctionAddress, auctionName, objectDesciption) =>{
+        this.auctionHouseContract.on("NewAuction", (auctionAddress, auctionName, objectDesciption) => {
             this.auctionContract = new DutchAuction();
             this.auctionContract.objectDesciption = objectDesciption;
             this.auctionContract.contractAddress = auctionAddress;
 
             bidderUI.notifyNewAuction(auctionAddress, auctionName, objectDesciption);
-            
         });
     }
 
-    async connectToContract(){
-        // Load the wallet to connect the contract with
-      
-        let c  = await $.getJSON("DutchAuction.json")
+    // connecting to the deployed contract
+    async connectToContract() {
+        let c = await $.getJSON("DutchAuction.json")
         this.auctionContract.contract = new ethers.Contract(this.auctionContract.contractAddress, c.abi, App.provider.getSigner());
         console.log("connected");
-  
+
         return this.registerToAuctionEvents();
     }
 
-
-    registerToAuctionEvents(){
-        this.auctionContract.contract.on("Winner",(winnerAddress, bid)=>{
+    // subscribing to the Auction's events
+    registerToAuctionEvents() {
+        this.auctionContract.contract.on("Winner", (winnerAddress, bid) => {
             bidderUI.notifyWinner(winnerAddress, bid, this.pubKey);
         });
 
-        this.auctionContract.contract.on("NotEnoughMoney",(bidderAddress, bidSent, actualPrice)=>{
-            if(bidderAddress.toLowerCase() == this.pubKey)
+        this.auctionContract.contract.on("NotEnoughMoney", (bidderAddress, bidSent, actualPrice) => {
+            if (bidderAddress.toLowerCase() == this.pubKey)
                 bidderUI.notifyNotEnoughMoney(bidderAddress, bidSent, actualPrice);
         });
 
-        this.auctionContract.contract.on("NewBlock",(blockNumber)=>{
-
-            bidderUI.newBlock(blockNumber);
+        this.auctionContract.contract.on("NewBlock", (blockNumber) => {
+            appUI.newBlock(blockNumber);
         });
 
-        this.auctionContract.contract.on("EscrowAccepted",(address)=>{
+        this.auctionContract.contract.on("EscrowAccepted", (address) => {
             if (address.toLowerCase() == this.pubKey)
-                bidderUI.escrowAccepted();
+                appUI.escrowAccepted();
         });
 
-        this.auctionContract.contract.on("EscrowRefused",(address)=>{
+        this.auctionContract.contract.on("EscrowRefused", (address) => {
             if (address.toLowerCase() == this.pubKey)
-                bidderUI.escrowRefused();
+                appUI.escrowRefused();
         });
 
-        this.auctionContract.contract.on("EscrowClosed",()=>{
-                bidderUI.escrowClosed();
+        this.auctionContract.contract.on("EscrowClosed", () => {
+            appUI.escrowClosed();
         });
     }
 
-    bid(bidValue){
+    // bidding a value to the Auction
+    bid(bidValue) {
         let overrides = {
-            gasLimit: 925993, // todo check better
-            value : ethers.utils.parseEther(bidValue)
+            gasLimit: 900000, // value based on the gas estimation done in the final-term
+            value: ethers.utils.parseEther(bidValue)
         };
 
         this.auctionContract.contract.bid(overrides);
-       
+
     }
 
 }
 
-// Call init whenever the window loads
-
+// called when the window loads
 $(window).on('load', function () {
     bidder = new Bidder();
 });

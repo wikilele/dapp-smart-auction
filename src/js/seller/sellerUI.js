@@ -1,82 +1,53 @@
-$("#metamaskAccountUsedBtn").click(function(){
+$("#metamaskAccountUsedBtn").click(function () {
+  // showing the card to subscribe to the AuctionHouse
   $("#subscribeToAuctionHouseCard").show();
 });
 
-$("#subscribeToAuctionHouse").click(function(){
+$("#subscribeToAuctionHouse").click(function () {
+  // subscribing to the AuctionHouse
   $("#subscribeToAuctionHouse").hide();
-  $("#subscribeToAuctionHouse").next().show();
-
+  showSpinnerNextTo("#subscribeToAuctionHouse");
 
   let address = $("#auctionHouseAddress").val();
-  seller.subscribeToAuctionHouse(address);   
-
-  });
-
-
-$("#submitAuction").click(function(){
-
-    $("#submitAuction").hide();
-    $("#submitAuction").next().show(); //showing spinner
-    
-    let objectDescription = $("#objectDescription").val();
-    console.log(objectDescription);
-    seller.submitAuction(objectDescription);
-
-  });
+  seller.subscribeToAuctionHouse(address);
+});
 
 
-  sellerUI = {
+$("#submitAuction").click(function () {
+  // submitting a new auction
+  $("#submitAuction").hide();
+  showSpinnerNextTo("#submitAuction");
 
-    successfullySubscribed: function(){
-      $("#subscribeToAuctionHouse").next().hide();
-      $("#subscribeToAuctionHouseSuccess").show();
-      $("#submitCard").show();
-    },
-
-    auctionSuccessfullySubmitted: function(){
-      $("#submitAuction").next().hide();
-      $("#submitAuctionSuccess").show();
-    },
-
-    newAuction: function(){
-      $("#contractFunctionsCard").show();
-    },
-
-    notifyWinner: function(winnerAddress, bid){
-      console.log(winnerAddress + " won bidding " + bid );
-
-      $("#notificationModalInfo").text(winnerAddress + " won bidding " + bid);
-      $("#notificationModal").modal("toggle");
-    },
-
-    newBlock: function(blockNumber){
-      console.log("Block added " + blockNumber);
-      $("#addBlockResult").text(blockNumber);
-    },
-
-    escrowAccepted: function(){
-      console.log("Escrow Accepted!");
-      $("#acceptEscrowResultSuccess").show();
-    },
-    escrowRefused: function(){
-      console.log("Escrow Refused!");
-      $("#refuseEscrowResultSuccess").show();
-    },
-
-    escrowClosed: function(){
-      console.log("Escrow Closed!");
-      $("#concludeEscrowResultSuccess").show();
+  let objectDescription = $("#objectDescription").val();
+  seller.submitAuction(objectDescription);
+});
 
 
-      $("#notificationModalInfo").text("Escrow Closed successfully");
-      $("#notificationModal").modal("toggle");
-    }
+sellerUI = {
+  // notify a successfull subscription to the AuctionHouse
+  successfullySubscribed: function () {
+    hideSpinnerNextTo("#subscribeToAuctionHouse");
+    $("#subscribeToAuctionHouseSuccess").show();
+    $("#submitCard").show();
+  },
 
+  // notify that the auction was successfully submitted
+  auctionSuccessfullySubmitted: function () {
+    hideSpinnerNextTo("#submitAuction");
+    $("#submitAuctionSuccess").show();
+  },
+
+  // showing the list of functions to interact with the contract
+  newAuction: function () {
+    $("#contractFunctionsCard").show();
+  },
+
+  // showing the winner address
+  notifyWinner: function (winnerAddress, bid) {
+    console.log(winnerAddress + " won bidding " + bid);
+
+    $("#notificationModalInfo").text(winnerAddress + " won bidding " + bid);
+    $("#notificationModal").modal("toggle");
   }
 
-
-$(function() {
-  $(window).on('load', function () {
-
-  });
-});
+}

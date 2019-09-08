@@ -1,134 +1,103 @@
-$("#metamaskAccountUsedBtn").click(function(){
-  $("#auctionHouseCard").show();
-  $("#sellersAndBiddersListCard").show();
-});
-
-
-$("#auctionHouseContractAddressDeployBtn").click(async function(){
-  
-  $("#auctionHouseContractAddressDeployBtn").hide();
-  $("#auctionHouseContractAddressDeployBtn").next().show(); // showing spinner
-  $("#auctionHouseContractAddress").text("");
-
-  auctionhouse.init();
-})
-
-$("#deployContract").click(async function(){
-
-    $("#deployContract").next().show(); // showing spinner
-    $("#deployContract").hide();
-    $("#newAuctionSubmitted").hide();
-
-    // choose her the kind of contract
-    let strategy = $("#decreasingStrategy option:selected").text();
-    let _reservePrice = $("#_reservePrice").val();
-    let _initialPrice = $("#_initialPrice").val();
-    let _openedForLength = $("#_openedForLength").val();
-    let _seller = $("#_sellerAddress").val();
-    let miningRate = $("#miningRate").val();
-    
-    try{
-      await auctionhouse.initDutchAuction( strategy,_reservePrice,_initialPrice, _openedForLength, _seller, miningRate);
-    }catch(err){
-      appUI.notifyTransactionError("transaction reverted");
-      
-      $("#deployContract").show();
-      $("#deployContract").next().hide(); //hiding spinner
-    }
-
-});
-
-
-$("#auctionHouseContractAddressCopyBtn").click(function(){
-  copyToClipboard("#auctionHouseContractAddress");
-
-});
-
-
+// copying the element to clipboard
 function copyToClipboard(element) {
   var $temp = $("<input>");
   $("body").append($temp);
   $temp.val($(element).text()).select();
   document.execCommand("copy");
   $temp.remove();
-
-
 }
 
-auctionhouseUI = {
-  setAuctionHouseAddress: function(address){
+$("#metamaskAccountUsedBtn").click(function () {
+  // showing the card to deploy the auction house and that one with the sellers and bidders lists
+  $("#auctionHouseCard").show();
+  $("#sellersAndBiddersListCard").show();
+});
 
-    $("#auctionHouseContractAddressDeployBtn").next().hide();
+$("#auctionHouseContractAddressDeployBtn").click(async function () {
+  // deploying the AuctionHouse contract
+  $("#auctionHouseContractAddressDeployBtn").hide();
+  showSpinnerNextTo("#auctionHouseContractAddressDeployBtn");
+  $("#auctionHouseContractAddress").text("");
+
+  auctionhouse.init();
+})
+
+$("#deployContract").click(async function () {
+  // deploying the Auction contract
+  showSpinnerNextTo("#deployContract");
+  $("#deployContract").hide();
+  $("#newAuctionSubmitted").hide();
+
+  // choose her the kind of contract
+  let strategy = $("#decreasingStrategy option:selected").text();
+  let _reservePrice = $("#_reservePrice").val();
+  let _initialPrice = $("#_initialPrice").val();
+  let _openedForLength = $("#_openedForLength").val();
+  let _seller = $("#_sellerAddress").val();
+  let miningRate = $("#miningRate").val();
+
+  try {
+    await auctionhouse.initDutchAuction(strategy, _reservePrice, _initialPrice, _openedForLength, _seller, miningRate);
+  } catch (err) {
+    console.log(err);
+    // "reverting the UI" if something went wrong, and notify the user
+    appUI.notifyTransactionError("transaction reverted");
+    $("#deployContract").show();
+    hideSpinnerNextTo("#deployContract");
+  }
+
+});
+
+$("#auctionHouseContractAddressCopyBtn").click(function () {
+  // copy the AuctionHouse contract's address to clipboard
+  copyToClipboard("#auctionHouseContractAddress");
+});
+
+auctionhouseUI = {
+  // displaying the AuctionHouse contract's address
+  setAuctionHouseAddress: function (address) {
+    hideSpinnerNextTo("#auctionHouseContractAddressDeployBtn");
     $("#auctionHouseContractAddressCopyBtn").show();
     $("#auctionHouseContractAddress").text(address);
   },
 
-  newAuctionSubmitted : function(sellerAddress,objectDescription){
+  // displaying the card to deploy a new auction
+  newAuctionSubmitted: function (sellerAddress, objectDescription) {
     $("#auctionCard").show();
     $("#newAuctionSubmitted").show();
 
     $("#currentAuctionHeader").text("A new Auction has been submitted!");
     $("#currentAuctionObjectDescription").text(objectDescription);
-    $("#_sellerAddress").val(sellerAddress); 
-
-  
+    $("#_sellerAddress").val(sellerAddress);
   },
 
-  newSellerSubscribed: function(sellerAddress){
+  // adding an address to the sellers' list
+  newSellerSubscribed: function (sellerAddress) {
     $("#subscribedSellersList").append("<li class='list-group-item'>" + sellerAddress + "</li>");
   },
 
-  newBidderSubscribed: function(bidderAddress){
+  // adding an address to the bidder's list
+  newBidderSubscribed: function (bidderAddress) {
     $("#subscribedBiddersList").append("<li class='list-group-item'>" + bidderAddress + "</li>");
   },
 
-
-  auctionDeployedSuccessfully: function(auctionAddress, auctionName, objectDesciption){
+  // notifying that the auction has been successfully deployed
+  auctionDeployedSuccessfully: function (auctionAddress, auctionName, objectDesciption) {
     console.log("new auction create " + auctionName + " description " + objectDesciption);
-    $("#deployContract").next().hide();
+
+    hideSpinnerNextTo("#deployContract");
     $("#newAuctionSubmitted").text("Success");
     $("#newAuctionSubmitted").show();
 
     $("#contractFunctionsCard").show();
   },
 
-  notifyWinner: function(winnerAddress, bid){
-    console.log(winnerAddress + " won bidding " + bid );
-
+  // showing the winner address
+  notifyWinner: function (winnerAddress, bid) {
     $("#notificationModalInfo").text(winnerAddress + " won bidding " + bid);
-    $("#notificationModal").modal("toggle");
-  },
-
-  newBlock: function(blockNumber){
-    console.log("Block added " + blockNumber);
-    $("#addBlockResult").text(blockNumber);
-  },
-
-
-  escrowAccepted: function(){
-    console.log("Escrow Accepted!");
-    $("#acceptEscrowResultSuccess").show();
-  },
-  escrowRefused: function(){
-    console.log("Escrow Refused!");
-    $("#refuseEscrowResultSuccess").show();
-    
-  },
-
-  escrowClosed: function(){
-    console.log("Escrow Closed!");
-    $("#concludeEscrowResultSuccess").show();
-
-    $("#notificationModalInfo").text("Escrow Closed successfully");
-
     $("#notificationModal").modal("toggle");
   }
 }
 
 
-// Call init whenever the window loads
-
-  $(window).on('load', function () {
-    
-  });
 

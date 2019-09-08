@@ -6,10 +6,9 @@ App = {
     initProvider : function() {
 
         // connecting to the provider
-        
         if(typeof web3 != 'undefined') { // Check whether exists a provider, e.g Metamask
+            // connecting to Metamask
             App.provider = new ethers.providers.Web3Provider(web3.currentProvider); 
-            //web3 = new Web3(App.provider);
             try {
                 // Permission popup
                 ethereum.enable().then(async() => { console.log("DApp connected " );});
@@ -18,12 +17,7 @@ App = {
         } else { // Otherwise, create a new local instance of Web3
             let currentProvider = new web3.providers.HttpProvider(App.url);
             App.provider = new ethers.providers.Web3Provider(currentProvider);
-    
-            //web3 = new Web3(App.provider);
         }
-
-             
-         
     },
 }
 
@@ -35,19 +29,18 @@ class Auction {
         this.objectDescription = null;
     }
 
-    async getContractFactory(wallet){
+    async getContractFactory(signer){
         // getting the json
         let auctionJSON = await $.getJSON( this.type + ".json");
 
         // Create an instance of a Contract Factory
-        return  new ethers.ContractFactory( auctionJSON.abi, auctionJSON.bytecode, wallet);
+        return  new ethers.ContractFactory( auctionJSON.abi, auctionJSON.bytecode, signer);
      
     }
 
     deploy(){
         throw "This method needs to be redefined in the subclasses";
     }
-
 
     async acceptEscrow(){
         await this.contract.acceptEscrow();
@@ -71,8 +64,7 @@ class Auction {
 
     addBlock(){
         this.contract.addBlock();
-    }
-     
+    }  
 }
 
 class DecreasingStrategy{
@@ -81,11 +73,11 @@ class DecreasingStrategy{
         this.strategy = null;
     }
 
-    async deploy(wallet){
+    async deploy(signer){
         // deploying the choosen strategy
         let decreasingStrategyJSON = await $.getJSON( this.type + "DecreasingStrategy.json");
 
-        let decreasingStrategyFactory = new ethers.ContractFactory( decreasingStrategyJSON.abi, decreasingStrategyJSON.bytecode, wallet );
+        let decreasingStrategyFactory = new ethers.ContractFactory( decreasingStrategyJSON.abi, decreasingStrategyJSON.bytecode, signer );
             
         this.strategy = await decreasingStrategyFactory.deploy();
             
@@ -99,21 +91,20 @@ class DutchAuction extends Auction{
         super("DutchAuction");
     }
 
-    async deploy(wallet,_reservePrice, _initialPrice, _openedForLength, _seller,  decreasingStrategyAddress, miningRate){
-       
-            let factory = await this.getContractFactory(wallet);
+    async deploy(signer,_reservePrice, _initialPrice, _openedForLength, _seller,  decreasingStrategyAddress, miningRate){
+        // deploying the DutchAuction
+        let factory = await this.getContractFactory(signer);
 
-            _reservePrice = ethers.utils.parseEther(_reservePrice);
-            _initialPrice = ethers.utils.parseEther(_initialPrice);
-            this.contract = await factory.deploy(_reservePrice, _initialPrice, _openedForLength, _seller,  decreasingStrategyAddress, miningRate);
+        _reservePrice = ethers.utils.parseEther(_reservePrice);
+        _initialPrice = ethers.utils.parseEther(_initialPrice);
+        this.contract = await factory.deploy(_reservePrice, _initialPrice, _openedForLength, _seller,  decreasingStrategyAddress, miningRate);
 
-            console.log(this.contract.address);
-            this.contractAddress = this.contract.address;
+        console.log(this.contract.address);
+        this.contractAddress = this.contract.address;
 
-            // The contract is NOT deployed yet; we must wait until it is mined
-            await this.contract.deployed()
+        // The contract is NOT deployed yet; we must wait until it is mined
+        await this.contract.deployed()
         
-            //AuctionHouse.auctionHouseContract. notifyNewAuction(AuctionHouse.dutchAuctionContract.address,"DutchAuction", AuctionHouse.objectDescription);  
     }
 
     getInitialPrice(){
@@ -145,9 +136,7 @@ class User{
 }
 
 
-
-// Call init whenever the window loads
-
+// called when the window loads
 $(window).on('load', function () {
     App.initProvider();
 });

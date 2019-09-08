@@ -14,19 +14,22 @@
 </head>
 
 <body>
+  <!-- navbar -->
   <nav class="navbar navbar-light ">
     <a  class="navbar-brand" href="#">
       <img src="css/img/ethereumlogo.png" width="20" height="28" class="d-inline-block align-top" alt="">
       Smart Auction - AuctionHouse View
     </a>
   </nav>
+
   <div class="row justify-content-center">
     <div class="col-6 ">
+
+       <!-- Card with Metamask's account currently selected -->
       <div class="card ">
         <div class="card-header">
-          Metamask Account Used
+          Metamask's Account Used
         </div>
-
         <div class="card-body">
           <h5 class="card-title">
             <span id="currentMetamaskAccount">
@@ -37,15 +40,12 @@
         </div>
       </div>
 
-
+      <!-- Card to deploy the AuctionHouse contract-->
       <div id="auctionHouseCard" class="card hide">
         <div class="card-header">
           House Contract Address
-
         </div>
-
         <div  class="card-body ">
-
           <h5 class="card-title">
               <span id="auctionHouseContractAddress">
                   Deploy the Auction House
@@ -60,11 +60,11 @@
         </div>
       </div>
 
+      <!-- Card with a list of sellers and bidders subscribed to the Auction House -->
       <div id="sellersAndBiddersListCard" class="card hide">
         <div class="card-header">
           Subscribed Sellers and Bidders
         </div>
-
         <div class="card-body">
           <h5 class="card-title">List of subscibed sellers and bidders</h5>
           <p class="card-text">
@@ -84,12 +84,12 @@
         </div>
       </div>
 
+      <!-- Card to deploy a new Auction once it has been submitted by a seller-->
       <div id="auctionCard" class="card hide">
         <div class="card-header">
           <span id="currentAuctionCardTitle"> Current Auction</span> <span id="newAuctionSubmitted"
             class="badge badge-success ">New</span>
         </div>
-
         <div class="card-body">
           <h5 id="currentAuctionHeader" class="card-title">Interact here when an auction is submitted</h5>
           <p id="currentAuctionObjectDescription" class="card-text">
@@ -110,8 +110,6 @@
                   <label for="_reservePrice">Reserve Price</label>
                   <input type="number" class="form-control " id="_reservePrice" value="1">
                 </div>
-
-
                 <div class="form-group">
                   <label for="_openedForLength">Opened for Length</label>
                   <input type="number" class="form-control " id="_openedForLength" value="8">
@@ -141,7 +139,7 @@
         </div>
       </div>
 
-
+      <!-- List of contract's functions to interact with it -->
       <div id="contractFunctionsCard" class="card ">
         <div class="card-header">
           Contract Functions
@@ -149,11 +147,6 @@
 
         <div class="card-body">
           <h5 class="card-title">List of contract functions</h5>
-
-          <p class="card-text">
-            Here you will see the result of the method call
-          </p>
-
           <ul class="list-group">
             <li class="list-group-item">
               <a id="acceptEscrow" class="btn btn-dark">Accept Escrow</a>
@@ -204,7 +197,9 @@
     </div>
   </div>
   
-  <!-- notification Modal -->
+
+
+  <!-- Modal for general notifications -->
   <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalTitle"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -227,8 +222,6 @@
 
 
 
-
-
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -243,8 +236,8 @@
   <script src="https://cdn.ethers.io/scripts/ethers-v4.min.js" charset="utf-8" type="text/javascript">
   </script>
 
+  <!-- css style file -->
   <link rel="stylesheet" href="css/style.css">
-
 
   <!-- Our App script -->
   <script src="js/app.js"></script>

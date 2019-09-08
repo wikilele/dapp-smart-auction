@@ -1,11 +1,12 @@
-//const sellerPrivateKey = "1009aede31276e121c6ad07f83bf5a7f9b9e6a009dbd59ea30630515e3b7fa87";
-
+// variable storing the sller (user) informations
 let seller = null;
+
 class Seller extends User{
     constructor(){
         super();
     }
 
+    // connecting to the AuctionHouse 
     async subscribeToAuctionHouse(auctionHouseAddress){
         let c = await $.getJSON("AuctionHouse.json");
            
@@ -16,10 +17,9 @@ class Seller extends User{
         this.registerToAuctionHouseEvents();
 
         this.auctionHouseContract.subscribeAsSeller();
-   
     }
 
-
+    // subscribing to the AuctionHouse's events
     registerToAuctionHouseEvents(){
 
         this.auctionHouseContract.on("NewSellerSubscribed",(sellerAddress) =>{
@@ -32,8 +32,7 @@ class Seller extends User{
             sellerUI.auctionSuccessfullySubmitted();         
         });
 
-        this.auctionHouseContract.on("NewAuction",(auctionAddress, auctionName, objectDesciption) =>{
-            
+        this.auctionHouseContract.on("NewAuction",(auctionAddress, auctionName, objectDesciption) =>{          
             // ASSUME the new auction is the one just submitted
             this.auctionContract = new DutchAuction();
             this.auctionContract.objectDescription = objectDesciption;
@@ -45,12 +44,13 @@ class Seller extends User{
 
     }
 
+    // submitting a new auction giving a description of the selled object
     submitAuction(objectDescription){
         this.auctionHouseContract.submitAuction(objectDescription);
     }
 
+    // connecting to the deployed contract
     async connectToContract(){
-        // Load the wallet to connect the contract with
       
         let c  = await $.getJSON("DutchAuction.json")
         this.auctionContract.contract = new ethers.Contract(this.auctionContract.contractAddress, c.abi, App.provider.getSigner());
@@ -59,38 +59,34 @@ class Seller extends User{
         return this.registerToAuctionEvents();
     }
 
-
+     // subscribing to the Auction's events
     registerToAuctionEvents(){
         this.auctionContract.contract.on("Winner",(winnerAddress, bid)=>{
             sellerUI.notifyWinner(winnerAddress,bid);
         });
 
         this.auctionContract.contract.on("NewBlock",(blockNumber)=>{
-            sellerUI.newBlock(blockNumber);
+            appUI.newBlock(blockNumber);
         });
-
 
         this.auctionContract.contract.on("EscrowAccepted",(address)=>{
             if (address.toLowerCase() == this.pubKey)
-                sellerUI.escrowAccepted();
+                appUI.escrowAccepted();
         });
 
         this.auctionContract.contract.on("EscrowRefused",(address)=>{
             if (address.toLowerCase() == this.pubKey)
-                sellerUI.escrowRefused();
+                appUI.escrowRefused();
         });
 
         this.auctionContract.contract.on("EscrowClosed",()=>{
-                sellerUI.escrowClosed();
+                appUI.escrowClosed();
         });
     }
 
 }
 
-
-
-// Call init whenever the window loads
-
+// called when the window loads
 $(window).on('load', function () {
        seller = new Seller();
 });

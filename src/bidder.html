@@ -14,34 +14,37 @@
 </head>
 
 <body>
+  <!-- navbar -->
   <nav class="navbar navbar-light ">
     <a class="navbar-brand" href="#">
       <img src="css/img/ethereumlogo.png" width="20" height="28" class="d-inline-block align-top" alt="">
       Smart Auction - Bidder View
     </a>
   </nav>
+
   <div class="row justify-content-center">
     <div class="col-6">
+
+      <!-- Card with Metamask's account currently selected -->
       <div class="card ">
         <div class="card-header">
-          Metamask Account Used
+          Metamask's Account Used
         </div>
-
         <div class="card-body">
           <h5 class="card-title">
             <span id="currentMetamaskAccount">
 
             </span>
-            <a id="metamaskAccountUsedBtn" class="btn btn-dark float-right " >Use this account</a>
+            <a id="metamaskAccountUsedBtn" class="btn btn-dark float-right ">Use this account</a>
           </h5>
         </div>
       </div>
+
+      <!-- Card to subscribe to the Auction House-->
       <div id="subscribeToAuctionHouseCard" class="card hide">
         <div class="card-header">
-
           Subscribe to Auction House <span id="subscribeToAuctionHouseSuccess"
             class="badge badge-success">Success</span>
-
         </div>
         <div id="subscribeCard">
           <div class="card-body">
@@ -59,14 +62,12 @@
 
           </div>
         </div>
-
       </div>
 
+      <!-- Card allowing to bid a value -->
       <div id="currentAuctionCard" class="card hide">
         <div class="card-header">
-
           Current Auction <span id="joinedNewAuctionSuccess" class="badge badge-success">Joined</span>
-
         </div>
         <div id="submitCard">
           <div class="card-body">
@@ -86,6 +87,7 @@
         </div>
       </div>
 
+      <!-- List of contract's functions to interact with it -->
       <div id="contractFunctionsCard" class="card">
         <div class="card-header">
           Contract Functions
@@ -140,18 +142,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-  <!-- auctionCreated Modal -->
+  <!-- Modal notifying a new created auction -->
   <div class="modal fade" id="auctionCreatedModal" tabindex="-1" role="dialog"
     aria-labelledby="auctionCreatedModalTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -180,7 +171,7 @@
 
 
 
-  <!-- notification Modal -->
+  <!-- Modal for general notifications -->
   <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalTitle"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -195,7 +186,7 @@
           <p id="notificationModalInfo"></p>
         </div>
         <div class="modal-footer">
-            <button id="notificationModalDismissBtn" type="button" class="btn btn-dark" data-dismiss="modal">Ok</button>
+          <button id="notificationModalDismissBtn" type="button" class="btn btn-dark" data-dismiss="modal">Ok</button>
         </div>
       </div>
     </div>
@@ -218,8 +209,8 @@
   <script src="https://cdn.ethers.io/scripts/ethers-v4.min.js" charset="utf-8" type="text/javascript">
   </script>
 
+  <!-- css style file -->
   <link rel="stylesheet" href="css/style.css">
-
 
   <!-- Our App script -->
   <script src="js/app.js"></script>
@@ -235,23 +226,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-                <button id="acceptEscrow"  class="btn btn-primary">AcceptEscrow</button>
-                <button id="getCurrentPrice"  class="btn btn-primary">Get current price</button>
-
--->
