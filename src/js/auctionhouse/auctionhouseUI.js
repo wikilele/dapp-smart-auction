@@ -1,4 +1,11 @@
-$("#auctionHouseContractAddressDeployBtn").click(function(){
+$("#metamaskAccountUsedBtn").click(function(){
+  $("#auctionHouseCard").show();
+  $("#sellersAndBiddersListCard").show();
+});
+
+
+$("#auctionHouseContractAddressDeployBtn").click(async function(){
+  
   $("#auctionHouseContractAddressDeployBtn").hide();
   $("#auctionHouseContractAddressDeployBtn").next().show(); // showing spinner
   $("#auctionHouseContractAddress").text("");
@@ -6,9 +13,9 @@ $("#auctionHouseContractAddressDeployBtn").click(function(){
   auctionhouse.init();
 })
 
-$("#deployContract").click(function(){
+$("#deployContract").click(async function(){
 
-    $("#deployContract").next().show();
+    $("#deployContract").next().show(); // showing spinner
     $("#deployContract").hide();
     $("#newAuctionSubmitted").hide();
 
@@ -19,10 +26,17 @@ $("#deployContract").click(function(){
     let _openedForLength = $("#_openedForLength").val();
     let _seller = $("#_sellerAddress").val();
     let miningRate = $("#miningRate").val();
+    
+    try{
+      await auctionhouse.initDutchAuction( strategy,_reservePrice,_initialPrice, _openedForLength, _seller, miningRate);
+    }catch(err){
+      appUI.notifyTransactionError("transaction reverted");
+      
+      $("#deployContract").show();
+      $("#deployContract").next().hide(); //hiding spinner
+    }
 
-    auctionhouse.initDutchAuction( strategy,_reservePrice,_initialPrice, _openedForLength, _seller, miningRate);
-
-  });
+});
 
 
 $("#auctionHouseContractAddressCopyBtn").click(function(){
@@ -111,13 +125,6 @@ auctionhouseUI = {
   }
 }
 
-$("#test").click(function(){
-  console.log("primo handler");
-})
-
-$("#test").click(function(){
-  console.log("secondo handler");
-})
 
 // Call init whenever the window loads
 

@@ -12,7 +12,7 @@ contract AuctionHouse{
     event AuctionSubmitted(address sellerAddress, string objectDesciption);
     
     
-    constructor () public payable{
+    constructor () public payable{       
         auctioneerAddress = msg.sender;
     }
     

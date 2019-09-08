@@ -86,7 +86,9 @@ class Bidder extends User{
             gasLimit: 925993, // todo check better
             value : ethers.utils.parseEther(bidValue)
         };
-       this.auctionContract.contract.bid(overrides);
+
+        this.auctionContract.contract.bid(overrides);
+       
     }
 
 }

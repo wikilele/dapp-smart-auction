@@ -50,7 +50,7 @@ contract DutchAuction is ISmartAuction{
         }
         
         modifier checkPeriod(){
-            require(gracePeriod < block.number && block.number <= gracePeriod + openedForLength, "not int the bid phase");_;
+            require(gracePeriod < block.number && block.number <= gracePeriod + openedForLength + 1, "not int the bid phase");_;
         }
         
         
@@ -58,7 +58,7 @@ contract DutchAuction is ISmartAuction{
         function bid() public payable checkPeriod(){
             require(msg.sender != seller && msg.sender != escrowTrustedThirdParty);
             require(bidSubmitted == false, "someone else has already bidded");
-            uint256 currentPrice = decrStratedy.getCurrentPrice(block.number - gracePeriod, openedForLength, initialPrice, reservePrice);
+            uint256 currentPrice = decrStratedy.getCurrentPrice(block.number - gracePeriod - 1, openedForLength, initialPrice, reservePrice);
             
             if(msg.value >= currentPrice){
                 bidSubmitted = true;
@@ -79,7 +79,7 @@ contract DutchAuction is ISmartAuction{
         }
         
         function acceptEscrow() public checkEscrowSender(){
-            require(bidSubmitted == true);
+            require(bidSubmitted == true, "bid not submitted");
             
             simpleescrow.accept(msg.sender);
             emit EscrowAccepted(msg.sender);
@@ -111,12 +111,12 @@ contract DutchAuction is ISmartAuction{
         }
         
         function getCurrentPrice() public view checkPeriod() returns(uint256){
-            return decrStratedy.getCurrentPrice(block.number- gracePeriod, openedForLength, initialPrice, reservePrice );
+            return decrStratedy.getCurrentPrice(block.number - gracePeriod - 1, openedForLength, initialPrice, reservePrice );
         }
         
         // getting the remaning number of block the auction will be opened for
         function getOpenedFor() public view checkPeriod returns(uint256){
-            return gracePeriod + openedForLength - block.number;
+            return gracePeriod + openedForLength - block.number + 1;
         }
         
  

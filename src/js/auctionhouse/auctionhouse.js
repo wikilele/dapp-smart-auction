@@ -11,9 +11,9 @@ class AuctionHouse extends User{
     async init(){
         let auctionHouseJSON = await $.getJSON( "AuctionHouse.json");
         let auctionHouseFactory = new ethers.ContractFactory(auctionHouseJSON.abi, auctionHouseJSON.bytecode, App.provider.getSigner());
+        
         this.auctionHouseContract = await auctionHouseFactory.deploy();
-
-        await this.auctionHouseContract.deployed();
+        await this.auctionHouseContract.deployed();            
 
         console.log(this.auctionHouseContract.address);
 
@@ -28,7 +28,7 @@ class AuctionHouse extends User{
 
         let decreasingStrategy = new DecreasingStrategy(strategy);
         await decreasingStrategy.deploy(App.provider.getSigner());
-
+        
         await this.auctionContract.deploy(App.provider.getSigner(),_reservePrice,_initialPrice, _openedForLength, _seller, decreasingStrategy.strategy.address, miningRate);
 
         this.registerToAuctionEvents();

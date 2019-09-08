@@ -8,28 +8,40 @@ function getUser(){
 }
 
 
-$("#acceptEscrow").click(function(){
+$("#acceptEscrow").click(async function(){
     let user = getUser();
 
     if(user != null && user.auctionContract != null){
-        user.auctionContract.acceptEscrow();
+        try{
+            await user.auctionContract.acceptEscrow();
+        }catch(err){
+            appUI.notifyTransactionError("transaction reverted");
+        }    
     }
 });
 
 
-$("#refuseEscrow").click(function(){
+$("#refuseEscrow").click(async function(){
     let user = getUser();
 
     if(user != null && user.auctionContract != null){
-        user.auctionContract.refuseEscrow();
+        try{
+            await user.auctionContract.refuseEscrow();
+        }catch(err){
+            appUI.notifyTransactionError("transaction reverted");
+        } 
     }
 });
 
-$("#concludeEscrow").click(function(){
+$("#concludeEscrow").click(async function(){
     let user = getUser();
 
     if(user != null && user.auctionContract != null){
-        user.auctionContract.concludeEscrow();
+        try{
+            await user.auctionContract.concludeEscrow();
+        }catch(err){
+            appUI.notifyTransactionError("transaction reverted");
+        } 
     }
 });
 
@@ -64,24 +76,29 @@ $("#getInitialPrice").click(function(){
     }
 });
 
-$("#getCurrentPrice").click(function(){
+$("#getCurrentPrice").click(async function(){
     let user = getUser();
 
     if(user != null && user.auctionContract != null){
-         user.auctionContract.getCurrentPrice().then((price)=>{
+        try{
+            let price = await  user.auctionContract.getCurrentPrice()
             $("#getCurrentPriceResult").text(price.toString());
-        });
-        
+        }catch(err){
+            
+        }        
     }
 });
 
-$("#getOpenedFor").click(function(){
+$("#getOpenedFor").click(async function(){
     let user = getUser();
 
     if(user != null && user.auctionContract != null){
-         user.auctionContract.getOpenedFor().then((openedfor)=>{
+        try{
+            let openedfor = await user.auctionContract.getOpenedFor();
             $("#getOpenedForResult").text(openedfor.toString());
-        });
+        }catch(err){
+            appUI.notifyTransactionError("transaction reverted");
+        }
         
     }
 });
@@ -121,6 +138,14 @@ $(".btn")
         $("#notificationModal").modal("toggle");
     }
 });
+
+
+appUI = {
+    notifyTransactionError: function(err){
+        $("#notificationModalInfo").text("Something went wrong! (probably your transaction has been reverted)");
+        $("#notificationModal").modal("toggle");
+    }
+}
 
 
 $(window).on('load', function () {

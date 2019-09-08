@@ -1,3 +1,8 @@
+$("#metamaskAccountUsedBtn").click(function(){
+  $("#subscribeToAuctionHouseCard").show();
+});
+
+
 $("#subscribeToAuctionHouse").click(function(){
   $("#subscribeToAuctionHouse").hide();
   $("#subscribeToAuctionHouse").next().show();
@@ -10,11 +15,18 @@ $("#subscribeToAuctionHouse").click(function(){
 });
 
 
-$("#bidButton").click(function(){
-    $("#bidButton").next().show(); // showing spinner
-    $("#bidButton").hide();
+$("#bidButton").click(async function(){
+  $("#bidButton").next().show(); // showing spinner
+  $("#bidButton").hide();
     let bidValue = $("#bidValue").val();
-    bidder.bid(bidValue);
+    try{
+      bidder.bid(bidValue);
+    } catch(err){
+      appUI.notifyTransactionError("transaction reverted");
+      $("#bidButton").show();
+      $("#bidButton").next().hide(); // hiding spinner    
+    }
+
   });
 
 

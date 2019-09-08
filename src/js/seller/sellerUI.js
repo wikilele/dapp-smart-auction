@@ -1,3 +1,7 @@
+$("#metamaskAccountUsedBtn").click(function(){
+  $("#subscribeToAuctionHouseCard").show();
+});
+
 $("#subscribeToAuctionHouse").click(function(){
   $("#subscribeToAuctionHouse").hide();
   $("#subscribeToAuctionHouse").next().show();

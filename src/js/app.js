@@ -49,16 +49,16 @@ class Auction {
     }
 
 
-    acceptEscrow(){
-        this.contract.acceptEscrow();
+    async acceptEscrow(){
+        await this.contract.acceptEscrow();
     }
 
-    refuseEscrow(){
-        this.contract.refuseEscrow();
+    async refuseEscrow(){
+        await this.contract.refuseEscrow();
     }
 
-    concludeEscrow(){
-        this.contract.concludeEscrow();
+    async concludeEscrow(){
+        await this.contract.concludeEscrow();
     }
 
     getSeller(){
@@ -120,12 +120,12 @@ class DutchAuction extends Auction{
         return this.contract.getInitialPrice();
     }
 
-    getCurrentPrice(){
-        return this.contract.getCurrentPrice();
+    async getCurrentPrice(){
+        return await this.contract.getCurrentPrice();
     }
 
-    getOpenedFor(){
-        return this.contract.getOpenedFor();
+    async getOpenedFor(){
+        return await this.contract.getOpenedFor();
     }
 }
 
