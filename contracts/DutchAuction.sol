@@ -78,14 +78,14 @@ contract DutchAuction is ISmartAuction{
             require(msg.sender == seller || msg.sender == firstBidAddress || msg.sender == escrowTrustedThirdParty);_;
         }
         
-        function acceptEscrow() public checkEscrowSender(){
+        function acceptEscrow() public checkEscrowSender() checkPeriod(){
             require(bidSubmitted == true, "bid not submitted");
             
             simpleescrow.accept(msg.sender);
             emit EscrowAccepted(msg.sender);
         }
         
-        function refuseEscrow() public  checkEscrowSender(){
+        function refuseEscrow() public  checkEscrowSender() checkPeriod(){
             require(bidSubmitted == true);
             
             simpleescrow.refuse(msg.sender);
@@ -93,7 +93,7 @@ contract DutchAuction is ISmartAuction{
             emit EscrowRefused(msg.sender);
         }
         
-        function concludeEscrow() public{
+        function concludeEscrow() public checkPeriod(){
             require(bidSubmitted == true);
             // only the trusted third party can conclude
             require(msg.sender == escrowTrustedThirdParty);
@@ -116,7 +116,12 @@ contract DutchAuction is ISmartAuction{
         
         // getting the remaning number of block the auction will be opened for
         function getOpenedFor() public view checkPeriod returns(uint256){
-            return gracePeriod + openedForLength - block.number + 1;
+            return int(gracePeriod + openedForLength - block.number + 1);
+        }
+
+        
+        function getGracePeriod() public view returns(int){
+            return  int(gracePeriod - block.number + 1);
         }
         
  
