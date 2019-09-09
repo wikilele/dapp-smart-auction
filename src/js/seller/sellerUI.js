@@ -1,6 +1,10 @@
 $("#metamaskAccountUsedBtn").click(function () {
   // showing the card to subscribe to the AuctionHouse
   $("#subscribeToAuctionHouseCard").show();
+
+  showSpinnerNextTo("#subscribeToAuctionHouse");
+
+  setTimeout(checkForAuctionHouseAddress, 1000);
 });
 
 $("#subscribeToAuctionHouse").click(function () {
@@ -8,7 +12,7 @@ $("#subscribeToAuctionHouse").click(function () {
   $("#subscribeToAuctionHouse").hide();
   showSpinnerNextTo("#subscribeToAuctionHouse");
 
-  let address = $("#auctionHouseAddress").val();
+  let address = $("#auctionHouseAddress").text();
   seller.subscribeToAuctionHouse(address);
 });
 

@@ -209,8 +209,38 @@ appUI = {
 
         $("#notificationModalInfo").text("Escrow Closed successfully");
         $("#notificationModal").modal("toggle");
+
+        // only visible to auctionhouse
+        $("#destroyContractListElement").show();
     }
 }
+
+// seller and bidder will periodically check if the auction has been deployed
+let addressDisplayed = false;
+function checkForAuctionHouseAddress(){
+  $.ajax({
+    type: "GET",
+    url: "auctionhouse/address",
+    dataType: 'json',
+    success: function (data) {
+      
+      if(data.contractAddress != ""){
+        console.log(data.contractAddress);
+        $("#auctionHouseAddress").text(data.contractAddress);
+        hideSpinnerNextTo("#subscribeToAuctionHouse");
+        $("#subscribeToAuctionHouse").show();
+        addressDisplayed = true;
+      }
+        
+    },
+    complete: function () {
+      if( addressDisplayed == false) 
+        setTimeout(checkForAuctionHouseAddress, 1000);
+    }
+  });
+}
+
+
 
 //called when window loads
 $(window).on('load', function () {

@@ -192,7 +192,7 @@ contract VickreyAuction is ISmartAuction{
             emit EscrowAccepted(msg.sender);
         }
         
-        function refusetEscrow() public checkAuctionEnd() checkEscrowSender(){
+        function refuseEscrow() public checkAuctionEnd() checkEscrowSender(){
             require(finalizeCalled == true);
             
             simpleescrow.refuse(msg.sender);

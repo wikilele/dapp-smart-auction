@@ -20,6 +20,15 @@ class AuctionHouse extends User {
         // diplaying the contract address
         auctionhouseUI.setAuctionHouseAddress(this.auctionHouseContract.address);
 
+        // sending the auction house address to the server so that it can be taken by the bidder and the seller
+        $.ajax({
+            type: "POST",
+            url: "auctionhouse/address",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({ "contractAddress": this.auctionHouseContract.address })
+        })
+
         return this.registerToAuctionHouseEvents();
     }
 
@@ -85,12 +94,12 @@ class AuctionHouse extends User {
         });
     }
 
-    async destroyContracts(){
+    async destroyContracts() {
         await this.auctionContract.contract.destroyContract();
 
         await this.decreasingStrategy.strategy.destroyContract();
         await this.auctionHouseContract.destroyContract();
-   }
+    }
 }
 
 // called when the window loads
