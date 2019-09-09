@@ -215,7 +215,7 @@ appUI = {
     }
 }
 
-// seller and bidder will periodically check if the auction has been deployed
+// seller and bidder will periodically check if the AuctionHouse has been deployed
 let addressDisplayed = false;
 function checkForAuctionHouseAddress(){
   $.ajax({

@@ -48,7 +48,7 @@ bidderUI = {
   // notify the user of a successful subscription to the AuctionHouse contract
   successfullySubscribed: function () {
     hideSpinnerNextTo("#subscribeToAuctionHouse");
-    $("#subscribeToAuctionHouseSuccess").show();
+    $("#subscribeToAuctionHouse").show();
   },
 
   // showing the modal to join the new auction
