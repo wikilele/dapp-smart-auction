@@ -12,9 +12,6 @@ contract VickreyAuction is ISmartAuction{
     bool finalizeCalled = false;
     uint256 depositRequired;
     mapping(address => uint256) commitedEnvelops;
-
-    
-    uint256 gracePeriod;
     
     uint256 firstBid;
     address firstBidAddress;
@@ -220,9 +217,9 @@ contract VickreyAuction is ISmartAuction{
             return depositRequired;
         }
         
-        function getTrustedThirdParty() public view returns(address){
-            return escrowTrustedThirdParty;
-        }
+        // function getTrustedThirdParty() public view returns(address){
+        //     return escrowTrustedThirdParty;
+        // }
         
         
         function getCommitmentPhaseLength() public view  checkCommitmentPahseLenght() returns(uint256){
@@ -246,22 +243,4 @@ contract VickreyAuction is ISmartAuction{
         }
         
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

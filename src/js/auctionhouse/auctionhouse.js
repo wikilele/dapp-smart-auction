@@ -4,6 +4,7 @@ let auctionhouse = null;
 class AuctionHouse extends User {
     constructor() {
         super();
+        this.decreasingStrategy = null;
     }
 
     // deploying the Auction House contract
@@ -25,10 +26,10 @@ class AuctionHouse extends User {
     // deploying the Dutch Auction
     async initDutchAuction(strategy, _reservePrice, _initialPrice, _openedForLength, _seller, miningRate) {
 
-        let decreasingStrategy = new DecreasingStrategy(strategy);
-        await decreasingStrategy.deploy(App.provider.getSigner());
+        this.decreasingStrategy = new DecreasingStrategy(strategy);
+        await this.decreasingStrategy.deploy(App.provider.getSigner());
 
-        await this.auctionContract.deploy(App.provider.getSigner(), _reservePrice, _initialPrice, _openedForLength, _seller, decreasingStrategy.strategy.address, miningRate);
+        await this.auctionContract.deploy(App.provider.getSigner(), _reservePrice, _initialPrice, _openedForLength, _seller, this.decreasingStrategy.strategy.address, miningRate);
 
         this.registerToAuctionEvents();
 
@@ -83,6 +84,13 @@ class AuctionHouse extends User {
             appUI.escrowClosed();
         });
     }
+
+    async destroyContracts(){
+        await this.auctionContract.contract.destroyContract();
+
+        await this.decreasingStrategy.strategy.destroyContract();
+        await this.auctionHouseContract.destroyContract();
+   }
 }
 
 // called when the window loads

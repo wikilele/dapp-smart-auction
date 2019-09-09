@@ -53,6 +53,10 @@ $("#auctionHouseContractAddressCopyBtn").click(function () {
   copyToClipboard("#auctionHouseContractAddress");
 });
 
+$("#destroyContract").click(async function(){
+  await auctionhouse.destroyContracts();
+})
+
 auctionhouseUI = {
   // displaying the AuctionHouse contract's address
   setAuctionHouseAddress: function (address) {

@@ -43,6 +43,10 @@ contract AuctionHouse{
         
         emit AuctionSubmitted(msg.sender, objectDescription);
     }
+
+    function destroyContract() public {
+        selfdestruct(msg.sender);
+    }
     
     
 }
