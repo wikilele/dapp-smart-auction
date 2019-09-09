@@ -2,3 +2,5 @@ node_modules
 Ganache-2.1.0.AppImage
 build
 report
+
+private.json

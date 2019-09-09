@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "ethers": "^4.0.36",
-    "lite-server": "^2.5.4"
+    "fs": "0.0.1-security",
+    "lite-server": "^2.5.4",
+    "truffle-hdwallet-provider": "^1.0.17"
   },
   "devDependencies": {},
   "scripts": {

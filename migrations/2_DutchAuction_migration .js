@@ -5,7 +5,7 @@ const DutchAuction = artifacts.require("DutchAuction");
 
 module.exports = function(deployer, network, accounts) {
 
-  const _reservePrice = 1;  // 1000000000000000000   //TODO capire perchè non accetta valori così grandi
+  const _reservePrice = 1;  // 1000000000000000000   
   const _initialPrice = 5;  // 5000000000000000000
   const _openedForLength = 8;
   const _seller = "0x889F40512A8E749B4De944B2deAF1B01F4CA4d17";
