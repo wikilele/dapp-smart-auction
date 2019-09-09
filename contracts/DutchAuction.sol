@@ -13,8 +13,6 @@ contract DutchAuction is ISmartAuction{
     // used for escrow
     address firstBidAddress;
 
-    
-    uint256 gracePeriod;
     bool bidSubmitted = false; 
     // events
     event AuctionCreated(uint32 availableIn); // getting the number of blocks corresponding to the grace period
@@ -115,15 +113,9 @@ contract DutchAuction is ISmartAuction{
         }
         
         // getting the remaning number of block the auction will be opened for
-        function getOpenedFor() public view checkPeriod returns(uint256){
+        function getOpenedFor() public view checkPeriod returns(int){
             return int(gracePeriod + openedForLength - block.number + 1);
-        }
-
-        
-        function getGracePeriod() public view returns(int){
-            return  int(gracePeriod - block.number + 1);
-        }
-        
+        }       
  
         
     }    

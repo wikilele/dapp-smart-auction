@@ -5,6 +5,8 @@ contract ISmartAuction{
     uint256 reservePrice;
     address seller; 
     
+    uint256 gracePeriod;
+
     address escrowTrustedThirdParty;
     SimpleEscrow simpleescrow;
     
@@ -26,6 +28,11 @@ contract ISmartAuction{
     function getReservePrice() public view returns (uint256){
         return reservePrice;
     }
+
+    // functions to know how many blocks are left to the end of each phase
+    function getGracePeriod() public view returns(int){
+        return  int(gracePeriod - block.number + 1);
+    }
     
     /*
     * The function above are added only to test better the contract.
@@ -33,6 +40,12 @@ contract ISmartAuction{
     */
     function addBlock() public{
         emit NewBlock(block.number);
+    }
+
+
+    function destroyContract()public {
+        simpleescrow.destroyContract();
+        selfdestruct(escrowTrustedThirdParty);
     }
         
 }

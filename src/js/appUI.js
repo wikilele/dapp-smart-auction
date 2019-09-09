@@ -104,6 +104,24 @@ $("#getCurrentPrice").click(async function () {
     }
 });
 
+// alling the getGracePeiod on the deployed contract
+// this function should be used to see if the auction is opened
+$("#getGracePeriod").click(async function(){
+    let user = getUser();
+
+    if (user != null && user.auctionContract != null) {
+        let gracep = await user.auctionContract.getGracePeriod();
+        if (gracep <= 0){
+            $("#getGracePeriodSuccess").show();
+            $("#getGracePeriodResult").hide();
+        }else{
+            $("#getGracePeriodResult").text(gracep.toString());
+        }
+        
+    }
+
+});
+
 // calling getOpenedFor on the deployed contract
 // alert is showed if the transaction is reverted
 $("#getOpenedFor").click(async function () {
@@ -112,9 +130,12 @@ $("#getOpenedFor").click(async function () {
     if (user != null && user.auctionContract != null) {
         try {
             let openedfor = await user.auctionContract.getOpenedFor();
+            $("#getOpenedForDanger").hide();
             $("#getOpenedForResult").text(openedfor.toString());
         } catch (err) {
             appUI.notifyTransactionError("transaction reverted");
+            $("#getOpenedForDanger").show();
+            $("#getOpenedForResult").hide();
         }
 
     }

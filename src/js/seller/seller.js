@@ -16,7 +16,12 @@ class Seller extends User{
 
         this.registerToAuctionHouseEvents();
 
-        this.auctionHouseContract.subscribeAsSeller();
+        try{
+            await this.auctionHouseContract.subscribeAsSeller();
+        }catch(err){
+            // already subscribed
+            appUI.notifyTransactionError("transaction reverted");
+        }
     }
 
     // subscribing to the AuctionHouse's events

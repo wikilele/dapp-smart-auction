@@ -38,6 +38,10 @@ body{
     display: none;
 }
 
+.badge-danger{
+    display: none;
+}
+
 .spinner{
     display: none;
 }

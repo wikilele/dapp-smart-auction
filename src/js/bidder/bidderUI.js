@@ -21,7 +21,7 @@ $("#bidButton").click(async function () {
   $("#bidButton").hide();
   let bidValue = $("#bidValue").val();
   try {
-    bidder.bid(bidValue);
+    await bidder.bid(bidValue);
   } catch (err) {
     // "reverting the UI" if something went wrong, alerting the user
     appUI.notifyTransactionError("transaction reverted");
@@ -60,11 +60,10 @@ bidderUI = {
   notifyWinner: function (winnerAddress, bid, yourAddress) {
     hideSpinnerNextTo("#bidButton");
     console.log(winnerAddress + " won bidding " + bid);
-    if (winnerAddress == yourAddress)
-      winnerAddress = "You";
 
     $("#notificationModalInfo").text(winnerAddress + " won bidding " + bid);
     $("#notificationModal").modal("toggle");
+
   },
 
   // telling the user that his bid wasn't enough
@@ -77,5 +76,4 @@ bidderUI = {
     $("#notificationModal").modal("toggle");
   }
 }
-
 

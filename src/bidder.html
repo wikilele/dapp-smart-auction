@@ -74,7 +74,7 @@
             <h5 class="card-title">Insert a bid value</h5>
             <p class="card-text">
               <div class="form-group">
-                <label for="bidValue">Bid value</label>
+                <label for="bidValue">Bid value (ether)</label>
                 <input type="number" class="form-control " id="bidValue" value="3">
               </div>
             </p>
@@ -126,8 +126,14 @@
               <span class="float-right" id="getCurrentPriceResult"></span>
             </li>
             <li class="list-group-item">
+              <a id="getGracePeriod" class="btn btn-dark">Get Grace Period</a>
+              <span class="float-right" id="getGracePeriodResult"></span>
+              <span id="getGracePeriodSuccess" class="badge badge-success float-right">Auction Started</span>
+            </li>
+            <li class="list-group-item">
               <a id="getOpenedFor" class="btn btn-dark">Get Opened For</a>
               <span class="float-right" id="getOpenedForResult"></span>
+              <span id="getOpenedForDanger" class="badge badge-danger float-right">Auction Closed</span>
             </li>
             <li class="list-group-item">
               <a id="addBlock" class="btn btn-dark">Add Block</a>

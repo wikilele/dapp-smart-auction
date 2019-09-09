@@ -16,9 +16,13 @@ class Bidder extends User {
         console.log("connected to auction house");
 
         this.registerToAuctionHouseEvents();
-
-        this.auctionHouseContract.subscribeAsBidder();
-
+        
+        try{
+            await this.auctionHouseContract.subscribeAsBidder();
+        }catch(err){
+            // already subscribed
+            appUI.notifyTransactionError("transaction reverted");
+        }
     }
 
     // subscribing to the AuctionHouse's events
@@ -77,13 +81,13 @@ class Bidder extends User {
     }
 
     // bidding a value to the Auction
-    bid(bidValue) {
+    async bid(bidValue) {
         let overrides = {
             gasLimit: 900000, // value based on the gas estimation done in the final-term
             value: ethers.utils.parseEther(bidValue)
         };
 
-        this.auctionContract.contract.bid(overrides);
+        await this.auctionContract.contract.bid(overrides);
 
     }
 

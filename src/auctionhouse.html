@@ -107,7 +107,7 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="_reservePrice">Reserve Price</label>
+                  <label for="_reservePrice">Reserve Price (ether)</label>
                   <input type="number" class="form-control " id="_reservePrice" value="1">
                 </div>
                 <div class="form-group">
@@ -122,7 +122,7 @@
                     value="0xd6De99B202C3E07040E2a063D177e7a6D2fDf0d8">
                 </div>
                 <div class="form-group">
-                  <label for="_initialPrice">Initial Price</label>
+                  <label for="_initialPrice">Initial Price (ether)</label>
                   <input type="number" class="form-control " id="_initialPrice" value="5">
                 </div>
                 <div class="form-group">
@@ -183,12 +183,23 @@
               <span class="float-right" id="getCurrentPriceResult"></span>
             </li>
             <li class="list-group-item">
+              <a id="getGracePeriod" class="btn btn-dark">Get Grace Period</a>
+              <span class="float-right" id="getGracePeriodResult"></span>
+              <span id="getGracePeriodSuccess" class="badge badge-success float-right">Auction Started</span>
+            </li>
+            <li class="list-group-item">
               <a id="getOpenedFor" class="btn btn-dark">Get Opened For</a>
               <span class="float-right" id="getOpenedForResult"></span>
+              <span id="getOpenedForDanger" class="badge badge-danger float-right">Auction Closed</span>
             </li>
             <li class="list-group-item">
               <a id="addBlock" class="btn btn-dark">Add Block</a>
               <span class="float-right" id="addBlockResult"></span>
+            </li>
+
+            <li id="destroyContractListElement" class="list-group-item">
+              <a id="destroyContract" class="btn btn-dark">destroyContract</a>
+              <span class="float-right" id="destroyContractResult"></span>
             </li>
           </ul>
 

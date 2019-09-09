@@ -62,6 +62,10 @@ class Auction {
         return this.contract.getReservePrice();
     }
 
+    async getGracePeriod(){
+        return await this.contract.getGracePeriod();
+    }
+
     addBlock(){
         this.contract.addBlock();
     }  

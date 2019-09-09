@@ -224,11 +224,6 @@ contract VickreyAuction is ISmartAuction{
             return escrowTrustedThirdParty;
         }
         
-        // functions to know how many blocks are left to the end of each phase
-        function getGracePeriod() public view returns(uint256){
-            require(block.number <= gracePeriod);
-            return gracePeriod - block.number;
-        }
         
         function getCommitmentPhaseLength() public view  checkCommitmentPahseLenght() returns(uint256){
             return gracePeriod + commitmentPhaseLength - block.number;

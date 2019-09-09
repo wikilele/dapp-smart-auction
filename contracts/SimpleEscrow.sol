@@ -90,6 +90,11 @@ contract SimpleEscrow{
     function getTrustedThirdParty()public view returns (address){
         return trustedThirdParty;
     } 
+
+
+    function destroyContract() public {
+        selfdestruct(msg.sender);
+    }
 }
 
 

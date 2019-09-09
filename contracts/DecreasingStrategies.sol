@@ -40,6 +40,10 @@ contract IDecreasingStrategy{
         }  
     }
 
+    function destroyContract() public{
+        selfdestruct(msg.sender);
+    }
+
 }
 
 
