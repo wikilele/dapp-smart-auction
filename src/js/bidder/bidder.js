@@ -32,12 +32,12 @@ class Bidder extends User {
                 bidderUI.successfullySubscribed();
         });
 
-        this.auctionHouseContract.on("NewAuction", (auctionAddress, auctionName, objectDesciption) => {
+        this.auctionHouseContract.on("NewAuction", (auctionAddress, auctionType, objectDesciption) => {
             this.auctionContract = new DutchAuction();
             this.auctionContract.objectDesciption = objectDesciption;
             this.auctionContract.contractAddress = auctionAddress;
 
-            bidderUI.notifyNewAuction(auctionAddress, auctionName, objectDesciption);
+            bidderUI.notifyNewAuction(auctionAddress, auctionType, objectDesciption);
         });
     }
 
@@ -47,6 +47,12 @@ class Bidder extends User {
         this.auctionContract.contract = new ethers.Contract(this.auctionContract.contractAddress, c.abi, App.provider.getSigner());
         console.log("connected");
 
+        // this is specific to DutchAuction
+        this.auctionContract.contract.on("NotEnoughMoney", (bidderAddress, bidSent, actualPrice) => {
+            if (bidderAddress.toLowerCase() == this.pubKey)
+                bidderUI.notifyNotEnoughMoney(bidderAddress, bidSent, actualPrice);
+        });
+
         return this.registerToAuctionEvents();
     }
 
@@ -54,11 +60,6 @@ class Bidder extends User {
     registerToAuctionEvents() {
         this.auctionContract.contract.on("Winner", (winnerAddress, bid) => {
             bidderUI.notifyWinner(winnerAddress, bid, this.pubKey);
-        });
-
-        this.auctionContract.contract.on("NotEnoughMoney", (bidderAddress, bidSent, actualPrice) => {
-            if (bidderAddress.toLowerCase() == this.pubKey)
-                bidderUI.notifyNotEnoughMoney(bidderAddress, bidSent, actualPrice);
         });
 
         this.auctionContract.contract.on("NewBlock", (blockNumber) => {
@@ -80,15 +81,30 @@ class Bidder extends User {
         });
     }
 
+    registerToVickreyAuctionEvents(){
+        this.auctionContract.contract.on("CommittedEnvelop", (bidderAddress) => {
+            console.log(bidderAddress);
+        });
+
+        this.auctionContract.contract.on("Withdraw", (bidderAddress) => {
+            console.log(bidderAddress);
+        });
+        this.auctionContract.contract.on("Open", (bidderAddress, value) => {
+            console.log("Open " + bidderAddress + " vaule " + value);
+        });
+
+        this.auctionContract.contract.on("FirstBid", (bidderAddress, value) => {
+            console.log("First bid" + bidderAddress + " vaule " + value);
+        });
+
+        this.auctionContract.contract.on("SecondBid", (bidderAddress, value) => {
+            console.log("second bid" + bidderAddress + " vaule " + value);
+        });
+    }
+
     // bidding a value to the Auction
     async bid(bidValue) {
-        let overrides = {
-            gasLimit: 900000, // value based on the gas estimation done in the final-term
-            value: ethers.utils.parseEther(bidValue)
-        };
-
-        await this.auctionContract.contract.bid(overrides);
-
+        await this.auctionContract.bid(bidValue);
     }
 
 }

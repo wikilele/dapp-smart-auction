@@ -17,7 +17,6 @@ contract DutchAuction is ISmartAuction{
     // events
     event AuctionCreated(uint32 availableIn); // getting the number of blocks corresponding to the grace period
     event NotEnoughMoney(address bidder, uint256 sent, uint256 price);
-    event Winner(address winnerBidder, uint256 bid);
     
     
     constructor (uint256  _reservePrice,

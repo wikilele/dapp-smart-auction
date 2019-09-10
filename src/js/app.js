@@ -111,6 +111,17 @@ class DutchAuction extends Auction{
         
     }
 
+    // bidding a value to the Auction
+    async bid(bidValue) {
+        let overrides = {
+            gasLimit: 900000, // value based on the gas estimation done in the final-term
+            value: ethers.utils.parseEther(bidValue)
+        };
+
+        await this.contract.bid(overrides);
+
+    }
+
     getInitialPrice(){
         return this.contract.getInitialPrice();
     }
@@ -121,6 +132,71 @@ class DutchAuction extends Auction{
 
     async getOpenedFor(){
         return await this.contract.getOpenedFor();
+    }
+}
+
+class VickreyAuction extends Auction{
+    constructor(){
+        super("VickreyAuction");
+    }
+
+    async deploy(signer, _reservePrice, _commitmentPhaseLength, _withdrawalPhaseLength, _openingPhaseLenght, _depositRequired, _seller, miningRate){
+        // deploying the DutchAuction
+        let factory = await this.getContractFactory(signer);
+
+        _reservePrice = ethers.utils.parseEther(_reservePrice);
+        _initialPrice = ethers.utils.parseEther(_depositRequired);
+        this.contract = await factory.deploy(_reservePrice, _commitmentPhaseLength, _withdrawalPhaseLength, _openingPhaseLenght, _depositRequired, _seller, miningRate);
+
+        console.log(this.contract.address);
+        this.contractAddress = this.contract.address;
+
+        // The contract is NOT deployed yet; we must wait until it is mined
+        await this.contract.deployed()
+    }
+
+    async commitBid(bid, nonce, depositRequired){
+        let overrides = {
+            gasLimit: 30000, // value based on the gas estimation done in the final-term
+            value: ethers.utils.parseEther(depositRequired)
+        };
+        // we use the utility provided by the contract so that we are sure that the parameters are passes correctly to the function
+        let envelop = await this.contract.doKeccak(bid,nonce);
+
+        await this.contract.commitBid(envelop,overrides);
+    }
+
+    async withdraw(){
+        await this.contract.withdraw();
+    }
+
+    async open(nonce, bid){
+        let overrides = {
+            gasLimit: 30000, // value based on the gas estimation done in the final-term
+            value: ethers.utils.parseEther(bid)
+        };
+
+        await this.contract.open(nonce,overrides);
+    }
+
+    async finalize(){
+        await this.contract.finalize();
+    }
+
+    async getDepositRequired(){
+        return await this.contract.getDepositRequired();
+    }
+
+    async getCommitmentPhaseLength(){
+        return await this.contract.getCommitmentPhaseLength();
+    }
+
+    async getWithdrawalPhaseLength(){
+        return await this.getWithdrawalPhaseLength();
+    }
+
+    async getOpeningPhaseLength(){
+        return await this.getOpeningPhaseLength();
     }
 }
 

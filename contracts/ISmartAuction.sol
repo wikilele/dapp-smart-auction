@@ -10,6 +10,8 @@ contract ISmartAuction{
     address escrowTrustedThirdParty;
     SimpleEscrow simpleescrow;
     
+    event Winner(address winnerBidder, uint256 value);
+
     event EscrowAccepted(address subj);
     event EscrowRefused(address subj);
     event EscrowClosed();

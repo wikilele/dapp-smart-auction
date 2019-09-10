@@ -38,9 +38,26 @@ class AuctionHouse extends User {
         this.decreasingStrategy = new DecreasingStrategy(strategy);
         await this.decreasingStrategy.deploy(App.provider.getSigner());
 
+        let objdescr = this.auctionContract.objectDesciption;
+        this.auctionContract = new DutchAuction();
+        this.auctionContract.objectDesciption = objdescr;
+        
         await this.auctionContract.deploy(App.provider.getSigner(), _reservePrice, _initialPrice, _openedForLength, _seller, this.decreasingStrategy.strategy.address, miningRate);
 
         this.registerToAuctionEvents();
+
+        this.auctionHouseContract.notifyNewAuction(this.auctionContract.contractAddress, this.auctionContract.type, this.auctionContract.objectDesciption);
+    }
+
+    async initVickreyAuction(_reservePrice, _commitmentPhaseLength,_withdrawalPhaseLength,_openingPhaseLength, _depositReuired, _seller, miningRate){
+        let objdescr = this.auctionContract.objectDesciption;
+        this.auctionContract = new VickreyAuction();
+        this.auctionContract.objectDesciption = objdescr;
+        
+        await this.auctionContract.deploy(App.provider.getSigner(), _reservePrice, _commitmentPhaseLength,_withdrawalPhaseLength,_openingPhaseLength, _depositReuired, _seller, miningRate);
+
+        this.registerToAuctionEvents();
+        this.registerToVickreyAuctionEvents();
 
         this.auctionHouseContract.notifyNewAuction(this.auctionContract.contractAddress, this.auctionContract.type, this.auctionContract.objectDesciption);
     }
@@ -57,7 +74,7 @@ class AuctionHouse extends User {
         });
 
         this.auctionHouseContract.on("AuctionSubmitted", (sellerAddress, objectDescription) => {
-            this.auctionContract = new DutchAuction();
+            this.auctionContract = new Auction("");
             this.auctionContract.objectDesciption = objectDescription;
 
             auctionhouseUI.newAuctionSubmitted(sellerAddress, objectDescription);
@@ -93,6 +110,28 @@ class AuctionHouse extends User {
             appUI.escrowClosed();
         });
     }
+
+    registerToVickreyAuctionEvents(){
+        this.auctionContract.contract.on("CommittedEnvelop", (bidderAddress) => {
+            console.log(bidderAddress);
+        });
+
+        this.auctionContract.contract.on("Withdraw", (bidderAddress) => {
+            console.log(bidderAddress);
+        });
+        this.auctionContract.contract.on("Open", (bidderAddress, value) => {
+            console.log("Open " + bidderAddress + " vaule " + value);
+        });
+
+        this.auctionContract.contract.on("FirstBid", (bidderAddress, value) => {
+            console.log("First bid" + bidderAddress + " vaule " + value);
+        });
+
+        this.auctionContract.contract.on("SecondBid", (bidderAddress, value) => {
+            console.log("second bid" + bidderAddress + " vaule " + value);
+        });
+    }
+
 
     async destroyContracts() {
         await this.auctionContract.contract.destroyContract();

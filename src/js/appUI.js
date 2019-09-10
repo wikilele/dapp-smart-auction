@@ -106,18 +106,18 @@ $("#getCurrentPrice").click(async function () {
 
 // alling the getGracePeiod on the deployed contract
 // this function should be used to see if the auction is opened
-$("#getGracePeriod").click(async function(){
+$("#getGracePeriod").click(async function () {
     let user = getUser();
 
     if (user != null && user.auctionContract != null) {
         let gracep = await user.auctionContract.getGracePeriod();
-        if (gracep <= 0){
+        if (gracep <= 0) {
             $("#getGracePeriodSuccess").show();
             $("#getGracePeriodResult").hide();
-        }else{
+        } else {
             $("#getGracePeriodResult").text(gracep.toString());
         }
-        
+
     }
 
 });
@@ -140,6 +140,76 @@ $("#getOpenedFor").click(async function () {
 
     }
 });
+
+
+// calling getDepositRequired on the deployed contract
+// alert is showed if the transaction is reverted
+$("#getDepositRequired").click(async function () {
+    let user = getUser();
+
+    if (user != null && user.auctionContract != null) {
+
+        let deposit = await user.auctionContract.getDepositRequired();
+        $("#getDepositRequiredResult").text(deposit.toString());
+    }
+});
+
+
+// calling getCommitmentPhaseLength on the deployed contract
+// alert is showed if the transaction is reverted
+$("#getCommitmentPhaseLength").click(async function () {
+    let user = getUser();
+
+    if (user != null && user.auctionContract != null) {
+        try {
+            let phasel = await user.auctionContract.getCommitmentPhaseLength();
+            $("#getCommitmentPhaseLengthResult").text(phasel.toString());
+            $("#getCommitmentPhaseLengthDanger").hide();
+        } catch (err) {
+            appUI.notifyTransactionError("transaction reverted");
+            $("#getCommitmentPhaseLengthDanger").show();
+        }
+
+    }
+});
+
+// calling getWithdrawalPhaseLength on the deployed contract
+// alert is showed if the transaction is reverted
+$("#getWithdrawalPhaseLength").click(async function () {
+    let user = getUser();
+
+    if (user != null && user.auctionContract != null) {
+        try {
+            let phasel = await user.auctionContract.getWithdrawalPhaseLength();
+            $("#getWithdrawalPhaseLengthResult").text(phasel.toString());
+            $("#getWithdrawalPhaseLengthDanger").hide();
+
+        } catch (err) {
+            appUI.notifyTransactionError("transaction reverted");
+            $("#getWithdrawalPhaseLengthDanger").show();
+        }
+    }
+});
+
+// calling getOpeningPhaseLength on the deployed contract
+// alert is showed if the transaction is reverted
+$("#getOpeningPhaseLength").click(async function () {
+    let user = getUser();
+
+    if (user != null && user.auctionContract != null) {
+        try {
+            let phasel = await user.auctionContract.getOpeningPhaseLength();
+            $("#getOpeningPhaseLengthResult").text(phasel.toString());
+            $("#getOpeningPhaseLengthDanger").hide();
+
+        } catch (err) {
+            appUI.notifyTransactionError("transaction reverted");
+            $("#getOpeningPhaseLengthDanger").show();
+        }
+
+    }
+});
+
 
 // calling add block
 // the block added will be notified by an event on the blockchain
@@ -217,27 +287,27 @@ appUI = {
 
 // seller and bidder will periodically check if the AuctionHouse has been deployed
 let addressDisplayed = false;
-function checkForAuctionHouseAddress(){
-  $.ajax({
-    type: "GET",
-    url: "auctionhouse/address",
-    dataType: 'json',
-    success: function (data) {
-      
-      if(data.contractAddress != ""){
-        console.log(data.contractAddress);
-        $("#auctionHouseAddress").text(data.contractAddress);
-        hideSpinnerNextTo("#subscribeToAuctionHouse");
-        $("#subscribeToAuctionHouse").show();
-        addressDisplayed = true;
-      }
-        
-    },
-    complete: function () {
-      if( addressDisplayed == false) 
-        setTimeout(checkForAuctionHouseAddress, 1000);
-    }
-  });
+function checkForAuctionHouseAddress() {
+    $.ajax({
+        type: "GET",
+        url: "auctionhouse/address",
+        dataType: 'json',
+        success: function (data) {
+
+            if (data.contractAddress != "") {
+                console.log(data.contractAddress);
+                $("#auctionHouseAddress").text(data.contractAddress);
+                hideSpinnerNextTo("#subscribeToAuctionHouse");
+                $("#subscribeToAuctionHouse").show();
+                addressDisplayed = true;
+            }
+
+        },
+        complete: function () {
+            if (addressDisplayed == false)
+                setTimeout(checkForAuctionHouseAddress, 1000);
+        }
+    });
 }
 
 

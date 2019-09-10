@@ -20,15 +20,12 @@ contract VickreyAuction is ISmartAuction{
     
     // events
     event AuctionCreated(uint32 availableIn); // getting the number of blocks corresponding to the grace period
-    event CommitedEnvelop(address bidderAddress);
+    event CommittedEnvelop(address bidderAddress);
     event Withdraw(address leavingBidderAddress);
     event Open(address bidderAddress, uint256 value);
     event FirstBid(address bidderAddress, uint256 value);
     event SecondBid(address bidderAddress, uint256 value);
-    event Winner(address winnerBidder, uint256 value);
     
-
-
     
     constructor (uint256  _reservePrice,
                 uint256 _commitmentPhaseLength,

@@ -22,28 +22,63 @@ $("#auctionHouseContractAddressDeployBtn").click(async function () {
   auctionhouse.init();
 })
 
+$("#auctionType").change(function () {
+  let type = $("#auctionType option:selected").text();
+  if (type == "Dutch") {
+    $(".dutch").show();
+    $(".vickrey").hide();
+  } else {
+    $(".vickrey").show();
+    $(".dutch").hide();
+  }
+})
+
+
 $("#deployContract").click(async function () {
   // deploying the Auction contract
   showSpinnerNextTo("#deployContract");
   $("#deployContract").hide();
   $("#newAuctionSubmitted").hide();
 
-  // choose her the kind of contract
-  let strategy = $("#decreasingStrategy option:selected").text();
-  let _reservePrice = $("#_reservePrice").val();
-  let _initialPrice = $("#_initialPrice").val();
-  let _openedForLength = $("#_openedForLength").val();
-  let _seller = $("#_sellerAddress").val();
-  let miningRate = $("#miningRate").val();
+  let auctionType = $("#auctionType option:selected").text();
 
-  try {
-    await auctionhouse.initDutchAuction(strategy, _reservePrice, _initialPrice, _openedForLength, _seller, miningRate);
-  } catch (err) {
-    console.log(err);
-    // "reverting the UI" if something went wrong, and notify the user
-    appUI.notifyTransactionError("transaction reverted");
-    $("#deployContract").show();
-    hideSpinnerNextTo("#deployContract");
+  if (auctionType == "Dutch") {
+    // deploying DutchAuction
+    let strategy = $("#decreasingStrategy option:selected").text();
+    let _reservePrice = $("#_reservePrice").val();
+    let _initialPrice = $("#_initialPrice").val();
+    let _openedForLength = $("#_openedForLength").val();
+    let _seller = $("#_sellerAddress").val();
+    let miningRate = $("#miningRate").val();
+
+    try {
+      await auctionhouse.initDutchAuction(strategy, _reservePrice, _initialPrice, _openedForLength, _seller, miningRate);
+    } catch (err) {
+      console.log(err);
+      // "reverting the UI" if something went wrong, and notify the user
+      appUI.notifyTransactionError("transaction reverted");
+      $("#deployContract").show();
+      hideSpinnerNextTo("#deployContract");
+    }
+
+  } else { // deploying VickreyAuction
+    let _reservePrice = $("#_reservePrice").val();
+    let _depositReuired = $("#_depositRequired").val();
+    let _commitmentPhaseLength = $("#_commitmentPhaseLength").val();
+    let _withdrawalPhaseLength = $("#_withdrawalPhaseLength").val();
+    let _openingPhaseLength = $("#_openingPhaseLength").val();
+    let _seller = $("#_sellerAddress").val();
+    let miningRate = $("#miningRate").val();
+
+    try {
+      await auctionhouse.initVickreyAuction(_reservePrice, _commitmentPhaseLength,_withdrawalPhaseLength,_openingPhaseLength, _depositReuired, _seller, miningRate);
+    } catch (err) {
+      console.log(err);
+      // "reverting the UI" if something went wrong, and notify the user
+      appUI.notifyTransactionError("transaction reverted");
+      $("#deployContract").show();
+      hideSpinnerNextTo("#deployContract");
+    }
   }
 
 });
@@ -53,7 +88,7 @@ $("#auctionHouseContractAddressCopyBtn").click(function () {
   copyToClipboard("#auctionHouseContractAddress");
 });
 
-$("#destroyContract").click(async function(){
+$("#destroyContract").click(async function () {
   await auctionhouse.destroyContracts();
 })
 

@@ -16,7 +16,7 @@
 <body>
   <!-- navbar -->
   <nav class="navbar navbar-light ">
-    <a  class="navbar-brand" href="#">
+    <a class="navbar-brand" href="#">
       <img src="css/img/ethereumlogo.png" width="20" height="28" class="d-inline-block align-top" alt="">
       Smart Auction - AuctionHouse View
     </a>
@@ -25,7 +25,7 @@
   <div class="row justify-content-center">
     <div class="col-6 ">
 
-       <!-- Card with Metamask's account currently selected -->
+      <!-- Card with Metamask's account currently selected -->
       <div class="card ">
         <div class="card-header">
           Metamask's Account Used
@@ -45,15 +45,15 @@
         <div class="card-header">
           House Contract Address
         </div>
-        <div  class="card-body ">
+        <div class="card-body ">
           <h5 class="card-title">
-              <span id="auctionHouseContractAddress">
-                  Deploy the Auction House
-                </span>
-            <a id="auctionHouseContractAddressDeployBtn" class="btn btn-dark float-right" >Deploy</a>
+            <span id="auctionHouseContractAddress">
+              Deploy the Auction House
+            </span>
+            <a id="auctionHouseContractAddressDeployBtn" class="btn btn-dark float-right">Deploy</a>
             <div class="spinner-border spinner float-right" role="status">
               <span class="sr-only">Loading...</span>
-            </div>        
+            </div>
             <!-- <a id="auctionHouseContractAddressCopyBtn" class="btn btn-dark float-right hide" data-toggle="tooltip"
               data-placement="right" title="Copy to clipboard">Copy</a> -->
           </h5>
@@ -85,7 +85,7 @@
       </div>
 
       <!-- Card to deploy a new Auction once it has been submitted by a seller-->
-      <div id="auctionCard" class="card hide">
+      <div id="auctionCard" class="card">
         <div class="card-header">
           <span id="currentAuctionCardTitle"> Current Auction</span> <span id="newAuctionSubmitted"
             class="badge badge-success ">New</span>
@@ -95,10 +95,17 @@
           <p id="currentAuctionObjectDescription" class="card-text">
 
           </p>
+          <div class="form-group">
+            <label for="auctionType">Auction Type</label>
+            <select class="form-control" id="auctionType">
+              <option>Dutch</option>
+              <option>Vickrey</option>
+            </select>
+          </div>
           <p class="card-text">
             <div class="row">
               <div class="col-6">
-                <div class="form-group">
+                <div class="form-group dutch">
                   <label for="decreasingStrategy">Decreasing Strategy</label>
                   <select class="form-control" id="decreasingStrategy">
                     <option>Linear</option>
@@ -110,18 +117,35 @@
                   <label for="_reservePrice">Reserve Price (ether)</label>
                   <input type="number" class="form-control " id="_reservePrice" value="1">
                 </div>
-                <div class="form-group">
+                <div class="form-group dutch">
                   <label for="_openedForLength">Opened for Length</label>
                   <input type="number" class="form-control " id="_openedForLength" value="8">
                 </div>
+                <div class="form-group vickrey">
+                    <label for="_commitmentPhaseLength">Commitment phase length</label>
+                    <input type="number" class="form-control " id="_commitmentPhaseLength" value="3">
+                </div>
+                <div class="form-group vickrey">
+                    <label for="_withdrawalPhaseLength">Withdrawal phase length</label>
+                    <input type="number" class="form-control " id="_withdrawalPhaseLength" value="2">
+                </div>
+                <div class="form-group vickrey">
+                    <label for="_openingPhaseLength">Opening phase length</label>
+                    <input type="number" class="form-control " id="_openingPhaseLength" value="3">
+                </div> 
               </div>
               <div class="col-6">
+                <div class="form-group vickrey">
+                  <label for="_depositRequired">Deposit Reuired </label>
+                  <input type="text" class="form-control " id="_depositReuired"
+                    value="4">
+                </div>
                 <div class="form-group">
                   <label for="_sellerAddress">Seller Address</label>
                   <input type="text" class="form-control " id="_sellerAddress"
                     value="0xd6De99B202C3E07040E2a063D177e7a6D2fDf0d8">
                 </div>
-                <div class="form-group">
+                <div class="form-group dutch">
                   <label for="_initialPrice">Initial Price (ether)</label>
                   <input type="number" class="form-control " id="_initialPrice" value="5">
                 </div>
@@ -132,7 +156,7 @@
               </div>
             </div>
           </p>
-          <a id="deployContract" class="btn btn-dark" >Deploy Contract</a>
+          <a id="deployContract" class="btn btn-dark">Deploy Contract</a>
           <div class="spinner-border spinner" role="status">
             <span class="sr-only">Loading...</span>
           </div>
@@ -171,32 +195,55 @@
               <span class="float-right" id="getSellerResult"></span>
             </li>
             <li class="list-group-item">
-              <a id="getReservePrice" class="btn btn-dark">Get Reserve Price</a>
-              <span class="float-right" id="getReservePriceResult"></span>
-            </li>
-            <li class="list-group-item">
-              <a id="getInitialPrice" class="btn btn-dark">Get Initial Price</a>
-              <span class="float-right" id="getInitialPriceResult"></span>
-            </li>
-            <li class="list-group-item">
-              <a id="getCurrentPrice" class="btn btn-dark">Get Current Price</a>
-              <span class="float-right" id="getCurrentPriceResult"></span>
-            </li>
-            <li class="list-group-item">
               <a id="getGracePeriod" class="btn btn-dark">Get Grace Period</a>
               <span class="float-right" id="getGracePeriodResult"></span>
               <span id="getGracePeriodSuccess" class="badge badge-success float-right">Auction Started</span>
             </li>
             <li class="list-group-item">
+              <a id="getReservePrice" class="btn btn-dark">Get Reserve Price</a>
+              <span class="float-right" id="getReservePriceResult"></span>
+            </li>
+            <!-- Dutch specific functions-->
+            <li class="list-group-item dutch">
+              <a id="getInitialPrice" class="btn btn-dark">Get Initial Price</a>
+              <span class="float-right" id="getInitialPriceResult"></span>
+            </li>
+            <li class="list-group-item dutch ">
+              <a id="getCurrentPrice" class="btn btn-dark">Get Current Price</a>
+              <span class="float-right" id="getCurrentPriceResult"></span>
+            </li>
+            <li class="list-group-item dutch">
               <a id="getOpenedFor" class="btn btn-dark">Get Opened For</a>
               <span class="float-right" id="getOpenedForResult"></span>
               <span id="getOpenedForDanger" class="badge badge-danger float-right">Auction Closed</span>
             </li>
+            <!-- Vickrey specific functions -->
+            <li class="list-group-item vickrey">
+              <a id="getDepositRequired" class="btn btn-dark">Get Deposit Required</a>
+              <span class="float-right" id="getDepositRequiredResult"></span>
+            </li>
+            <li class="list-group-item vickrey">
+              <a id="getCommitmentPhaseLength" class="btn btn-dark">Get Commitment Phase Length</a>
+              <span class="float-right" id="getCommitmentPhaseLengthResult"></span>
+              <span id="getCommitmentPhaseLengthDanger" class="badge badge-danger float-right">Commitment phase
+                closed</span>
+            </li>
+            <li class="list-group-item vickrey">
+              <a id="getWithdrawalPhaseLength" class="btn btn-dark">Get Withdrawal Phase Length</a>
+              <span class="float-right" id="getWithdrawalPhaseLengthResult"></span>
+              <span id="getWithdrawalPhaseLengthDanger" class="badge badge-danger float-right">Withdrawal phase
+                closed</span>
+            </li>
+            <li class="list-group-item vickrey">
+              <a id="getOpeningPhaseLength" class="btn btn-dark">Get Opening Phase Length</a>
+              <span class="float-right" id="getOpeningPhaseLengthResult"></span>
+              <span id="getOpeningPhaseLengthDanger" class="badge badge-danger float-right">Opening phase closed</span>
+            </li>
+            <!-- ------- -->
             <li class="list-group-item">
               <a id="addBlock" class="btn btn-dark">Add Block</a>
               <span class="float-right" id="addBlockResult"></span>
             </li>
-
             <li id="destroyContractListElement" class="list-group-item hide">
               <a id="destroyContract" class="btn btn-danger">destroyContract</a>
               <span class="float-right" id="destroyContractResult"></span>
@@ -207,7 +254,7 @@
       </div>
     </div>
   </div>
-  
+
 
 
   <!-- Modal for general notifications -->

@@ -53,3 +53,7 @@ body{
 #contractFunctionsCard{
     display: none;
 }
+
+.vickrey{
+    display: none;
+}
