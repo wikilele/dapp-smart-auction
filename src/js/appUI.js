@@ -1,11 +1,17 @@
 // @return the defined user, it can be the auctionhouse or the bidder or the seller
 function getUser() {
-    if (typeof auctionhouse !== 'undefined') return auctionhouse;
+    if (typeof auctioneer !== 'undefined') return auctioneer;
     else if (typeof bidder !== 'undefined') return bidder;
     else if (typeof seller !== 'undefined') return seller;
     else {
         throw "No user is defined";
     }
+}
+
+// showing an alert if transaction fails
+function notifyTransactionError(err) {
+    $("#notificationModalInfo").text("Something went wrong! (probably your transaction has been reverted)");
+    $("#notificationModal").modal("toggle");
 }
 
 // showing/hiding a spinner next to the passed element
@@ -24,7 +30,7 @@ $("#acceptEscrow").click(async function () {
         try {
             await user.auctionContract.acceptEscrow();
         } catch (err) {
-            appUI.notifyTransactionError("transaction reverted");
+            notifyTransactionError("transaction reverted");
         }
     }
 });
@@ -37,7 +43,7 @@ $("#refuseEscrow").click(async function () {
         try {
             await user.auctionContract.refuseEscrow();
         } catch (err) {
-            appUI.notifyTransactionError("transaction reverted");
+            notifyTransactionError("transaction reverted");
         }
     }
 });
@@ -50,7 +56,7 @@ $("#concludeEscrow").click(async function () {
         try {
             await user.auctionContract.concludeEscrow();
         } catch (err) {
-            appUI.notifyTransactionError("transaction reverted");
+            notifyTransactionError("transaction reverted");
         }
     }
 });
@@ -99,7 +105,7 @@ $("#getCurrentPrice").click(async function () {
             let price = await user.auctionContract.getCurrentPrice()
             $("#getCurrentPriceResult").text(price.toString());
         } catch (err) {
-            appUI.notifyTransactionError("transaction reverted");
+            notifyTransactionError("transaction reverted");
         }
     }
 });
@@ -133,7 +139,7 @@ $("#getOpenedFor").click(async function () {
             $("#getOpenedForDanger").hide();
             $("#getOpenedForResult").text(openedfor.toString());
         } catch (err) {
-            appUI.notifyTransactionError("transaction reverted");
+            notifyTransactionError("transaction reverted");
             $("#getOpenedForDanger").show();
             $("#getOpenedForResult").hide();
         }
@@ -166,7 +172,7 @@ $("#getCommitmentPhaseLength").click(async function () {
             $("#getCommitmentPhaseLengthResult").text(phasel.toString());
             $("#getCommitmentPhaseLengthDanger").hide();
         } catch (err) {
-            appUI.notifyTransactionError("transaction reverted");
+            notifyTransactionError("transaction reverted");
             $("#getCommitmentPhaseLengthDanger").show();
         }
 
@@ -185,7 +191,7 @@ $("#getWithdrawalPhaseLength").click(async function () {
             $("#getWithdrawalPhaseLengthDanger").hide();
 
         } catch (err) {
-            appUI.notifyTransactionError("transaction reverted");
+            notifyTransactionError("transaction reverted");
             $("#getWithdrawalPhaseLengthDanger").show();
         }
     }
@@ -203,7 +209,7 @@ $("#getOpeningPhaseLength").click(async function () {
             $("#getOpeningPhaseLengthDanger").hide();
 
         } catch (err) {
-            appUI.notifyTransactionError("transaction reverted");
+            notifyTransactionError("transaction reverted");
             $("#getOpeningPhaseLengthDanger").show();
         }
 
@@ -249,42 +255,6 @@ $(".btn")
         }
     });
 
-
-appUI = {
-    // showing an alert if transaction fails
-    notifyTransactionError: function (err) {
-        $("#notificationModalInfo").text("Something went wrong! (probably your transaction has been reverted)");
-        $("#notificationModal").modal("toggle");
-    },
-
-    // displaying the just added block number
-    newBlock: function (blockNumber) {
-        console.log("Block added " + blockNumber);
-        $("#addBlockResult").text(blockNumber);
-    },
-
-    // notify that the escrow has been accepted
-    escrowAccepted: function () {
-        $("#acceptEscrowResultSuccess").show();
-    },
-
-    // notify that the escrow has been refused
-    escrowRefused: function () {
-        $("#refuseEscrowResultSuccess").show();
-    },
-
-    // notify that the escrow has been concluded
-    escrowClosed: function () {
-        $("#concludeEscrowResultSuccess").show();
-
-        $("#notificationModalInfo").text("Escrow Closed successfully");
-        $("#notificationModal").modal("toggle");
-
-        // only visible to auctionhouse
-        $("#destroyContractListElement").show();
-    }
-}
-
 // seller and bidder will periodically check if the AuctionHouse has been deployed
 let addressDisplayed = false;
 function checkForAuctionHouseAddress() {
@@ -309,7 +279,6 @@ function checkForAuctionHouseAddress() {
         }
     });
 }
-
 
 
 //called when window loads

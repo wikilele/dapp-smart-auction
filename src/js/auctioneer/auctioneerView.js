@@ -19,7 +19,7 @@ $("#auctionHouseContractAddressDeployBtn").click(async function () {
   showSpinnerNextTo("#auctionHouseContractAddressDeployBtn");
   $("#auctionHouseContractAddress").text("");
 
-  auctionhouse.init();
+  auctioneer.init();
 })
 
 $("#auctionType").change(function () {
@@ -41,6 +41,7 @@ $("#deployContract").click(async function () {
   $("#newAuctionSubmitted").hide();
 
   let auctionType = $("#auctionType option:selected").text();
+  let objectDescription = $("#currentAuctionObjectDescription").text();
 
   if (auctionType == "Dutch") {
     // deploying DutchAuction
@@ -52,11 +53,11 @@ $("#deployContract").click(async function () {
     let miningRate = $("#miningRate").val();
 
     try {
-      await auctionhouse.initDutchAuction(strategy, _reservePrice, _initialPrice, _openedForLength, _seller, miningRate);
+      await auctioneer.initDutchAuction(strategy, _reservePrice, _initialPrice, _openedForLength, _seller, miningRate,  objectDescription);
     } catch (err) {
       console.log(err);
       // "reverting the UI" if something went wrong, and notify the user
-      appUI.notifyTransactionError("transaction reverted");
+      notifyTransactionError("transaction reverted");
       $("#deployContract").show();
       hideSpinnerNextTo("#deployContract");
     }
@@ -71,11 +72,11 @@ $("#deployContract").click(async function () {
     let miningRate = $("#miningRate").val();
 
     try {
-      await auctionhouse.initVickreyAuction(_reservePrice, _commitmentPhaseLength,_withdrawalPhaseLength,_openingPhaseLength, _depositReuired, _seller, miningRate);
+      await auctioneer.initVickreyAuction(_reservePrice, _commitmentPhaseLength,_withdrawalPhaseLength,_openingPhaseLength, _depositReuired, _seller, miningRate, objectDescription);
     } catch (err) {
       console.log(err);
       // "reverting the UI" if something went wrong, and notify the user
-      appUI.notifyTransactionError("transaction reverted");
+      notifyTransactionError("transaction reverted");
       $("#deployContract").show();
       hideSpinnerNextTo("#deployContract");
     }
@@ -89,54 +90,9 @@ $("#auctionHouseContractAddressCopyBtn").click(function () {
 });
 
 $("#destroyContract").click(async function () {
-  await auctionhouse.destroyContracts();
+  await auctioneer.destroyContracts();
 })
 
-auctionhouseUI = {
-  // displaying the AuctionHouse contract's address
-  setAuctionHouseAddress: function (address) {
-    hideSpinnerNextTo("#auctionHouseContractAddressDeployBtn");
-    $("#auctionHouseContractAddressCopyBtn").show();
-    $("#auctionHouseContractAddress").text(address);
-  },
-
-  // displaying the card to deploy a new auction
-  newAuctionSubmitted: function (sellerAddress, objectDescription) {
-    $("#auctionCard").show();
-    $("#newAuctionSubmitted").show();
-
-    $("#currentAuctionHeader").text("A new Auction has been submitted!");
-    $("#currentAuctionObjectDescription").text(objectDescription);
-    $("#_sellerAddress").val(sellerAddress);
-  },
-
-  // adding an address to the sellers' list
-  newSellerSubscribed: function (sellerAddress) {
-    $("#subscribedSellersList").append("<li class='list-group-item'>" + sellerAddress + "</li>");
-  },
-
-  // adding an address to the bidder's list
-  newBidderSubscribed: function (bidderAddress) {
-    $("#subscribedBiddersList").append("<li class='list-group-item'>" + bidderAddress + "</li>");
-  },
-
-  // notifying that the auction has been successfully deployed
-  auctionDeployedSuccessfully: function (auctionAddress, auctionName, objectDesciption) {
-    console.log("new auction create " + auctionName + " description " + objectDesciption);
-
-    hideSpinnerNextTo("#deployContract");
-    $("#newAuctionSubmitted").text("Success");
-    $("#newAuctionSubmitted").show();
-
-    $("#contractFunctionsCard").show();
-  },
-
-  // showing the winner address
-  notifyWinner: function (winnerAddress, bid) {
-    $("#notificationModalInfo").text(winnerAddress + " won bidding " + bid);
-    $("#notificationModal").modal("toggle");
-  }
-}
 
 
 

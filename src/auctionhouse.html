@@ -85,7 +85,7 @@
       </div>
 
       <!-- Card to deploy a new Auction once it has been submitted by a seller-->
-      <div id="auctionCard" class="card">
+      <div id="auctionCard" class="card hide">
         <div class="card-header">
           <span id="currentAuctionCardTitle"> Current Auction</span> <span id="newAuctionSubmitted"
             class="badge badge-success ">New</span>
@@ -93,7 +93,7 @@
         <div class="card-body">
           <h5 id="currentAuctionHeader" class="card-title">Interact here when an auction is submitted</h5>
           <p id="currentAuctionObjectDescription" class="card-text">
-
+            
           </p>
           <div class="form-group">
             <label for="auctionType">Auction Type</label>
@@ -300,12 +300,13 @@
   <!-- Our App script -->
   <script src="js/app.js"></script>
   <script src="js/appUI.js"></script>
+  <script src="js/UI.js"></script>
+  <script src="js/Auction.js"></script>
 
-  <!-- bidder App related functions-->
-  <script src="js/auctionhouse/auctionhouse.js"></script>
-
-  <!-- bidder user interaction -->
-  <script src="js/auctionhouse/auctionhouseUI.js"></script>
+  <!-- auctioneer App related functions-->
+  <script src="js/auctioneer/Auctioneer.js"></script>
+  <script src="js/auctioneer/AuctioneerUI.js"></script>
+  <script src="js/auctioneer/auctioneerView.js"></script>
 
 
 </body>
