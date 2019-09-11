@@ -10,7 +10,7 @@ function getUser() {
 
 // showing an alert if transaction fails
 function notifyTransactionError(err) {
-    $("#notificationModalInfo").text("Something went wrong! (probably your transaction has been reverted)");
+    $("#notificationModalInfo").text("Something went wrong! " + err);
     $("#notificationModal").modal("toggle");
 }
 
@@ -22,13 +22,43 @@ function hideSpinnerNextTo(element) {
     $(element).next().hide();
 }
 
+
+// seller and bidder will periodically check if the AuctionHouse has been deployed
+let addressDisplayed = false;
+function checkForAuctionHouseAddress() {
+    $.ajax({
+        type: "GET",
+        url: "auctionhouse/address",
+        dataType: 'json',
+        success: function (data) {
+
+            if (data.contractAddress != "") {
+                console.log(data.contractAddress);
+                $("#auctionHouseAddress").text(data.contractAddress);
+                hideSpinnerNextTo("#subscribeToAuctionHouse");
+                $("#subscribeToAuctionHouse").show();
+                addressDisplayed = true;
+            }
+
+        },
+        complete: function () {
+            if (addressDisplayed == false)
+                setTimeout(checkForAuctionHouseAddress, 1000);
+        }
+    });
+}
+
+
+
 // accepting the escrow, alert is showed if the transaction is reverted
+var escrowAccepted = false;
 $("#acceptEscrow").click(async function () {
     let user = getUser();
 
     if (user != null && user.auctionContract != null) {
         try {
             await user.auctionContract.acceptEscrow();
+            escrowAccepted = true;
         } catch (err) {
             notifyTransactionError("transaction reverted");
         }
@@ -139,11 +169,9 @@ $("#getOpenedFor").click(async function () {
             $("#getOpenedForDanger").hide();
             $("#getOpenedForResult").text(openedfor.toString());
         } catch (err) {
-            notifyTransactionError("transaction reverted");
             $("#getOpenedForDanger").show();
             $("#getOpenedForResult").hide();
         }
-
     }
 });
 
@@ -255,30 +283,6 @@ $(".btn")
         }
     });
 
-// seller and bidder will periodically check if the AuctionHouse has been deployed
-let addressDisplayed = false;
-function checkForAuctionHouseAddress() {
-    $.ajax({
-        type: "GET",
-        url: "auctionhouse/address",
-        dataType: 'json',
-        success: function (data) {
-
-            if (data.contractAddress != "") {
-                console.log(data.contractAddress);
-                $("#auctionHouseAddress").text(data.contractAddress);
-                hideSpinnerNextTo("#subscribeToAuctionHouse");
-                $("#subscribeToAuctionHouse").show();
-                addressDisplayed = true;
-            }
-
-        },
-        complete: function () {
-            if (addressDisplayed == false)
-                setTimeout(checkForAuctionHouseAddress, 1000);
-        }
-    });
-}
 
 
 //called when window loads

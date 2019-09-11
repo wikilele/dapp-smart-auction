@@ -60,10 +60,18 @@ class Auctioneer extends User { // auctioneer
 
 
     async destroyContracts() {
-        await this.auctionContract.contract.destroyContract();
+        await this.auctionContract.destroy();
+        if (this.decreasingStrategy != null) 
+            await this.decreasingStrategydestroy();
+        await this.auctionHouse.destroy(); 
 
-        await this.decreasingStrategy.strategy.destroyContract();
-        await this.auctionHouseContract.destroyContract(); // TODO change this
+        $.ajax({
+            type: "POST",
+            url: "auctionhouse/address",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({ "contractAddress": "" })
+        })
     }
 }
 

@@ -50,18 +50,16 @@
             <span id="auctionHouseContractAddress">
               Deploy the Auction House
             </span>
-            <a id="auctionHouseContractAddressDeployBtn" class="btn btn-dark float-right">Deploy</a>
+            <a id="auctionHouseContractAddressDeployBtn" class="btn btn-dark float-right hide">Deploy</a>
             <div class="spinner-border spinner float-right" role="status">
               <span class="sr-only">Loading...</span>
             </div>
-            <!-- <a id="auctionHouseContractAddressCopyBtn" class="btn btn-dark float-right hide" data-toggle="tooltip"
-              data-placement="right" title="Copy to clipboard">Copy</a> -->
           </h5>
         </div>
       </div>
 
       <!-- Card with a list of sellers and bidders subscribed to the Auction House -->
-      <div id="sellersAndBiddersListCard" class="card hide">
+      <!-- <div id="sellersAndBiddersListCard" class="card hide">
         <div class="card-header">
           Subscribed Sellers and Bidders
         </div>
@@ -82,7 +80,7 @@
             </div>
           </p>
         </div>
-      </div>
+      </div> -->
 
       <!-- Card to deploy a new Auction once it has been submitted by a seller-->
       <div id="auctionCard" class="card hide">
@@ -172,16 +170,10 @@
         <div class="card-body">
           <h5 class="card-title">List of contract functions</h5>
           <ul class="list-group">
-            <li class="list-group-item">
+            <li id="acceptEscrowListElem" class="list-group-item">
               <a id="acceptEscrow" class="btn btn-dark">Accept Escrow</a>
               <span id="acceptEscrowResult">
                 <span id="acceptEscrowResultSuccess" class="badge badge-success float-right">accepted</span>
-              </span>
-            </li>
-            <li class="list-group-item">
-              <a id="refuseEscrow" class="btn btn-dark">Refuse Escrow</a>
-              <span id="refuseEscrowResult">
-                <span id="refuseEscrowResultSuccess" class="badge badge-success float-right">refused</span>
               </span>
             </li>
             <li class="list-group-item">

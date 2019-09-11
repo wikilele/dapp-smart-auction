@@ -18,7 +18,8 @@ class Bidder extends User {
             await this.auctionHouseContract.subscribeAsBidder();
         }catch(err){
             // already subscribed
-            notifyTransactionError("transaction reverted");
+            notifyTransactionError("Probably that address is already subscribed");
+            bidderUI.newBidderSubscribed(this.pubKey);
         }
     }
 

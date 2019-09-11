@@ -25,6 +25,10 @@ class Auction {
         throw "This method needs to be redefined in the subclasses";
     }
 
+    async destroy(){
+        this.contract.destroyContract();
+    }
+
     registerToEvents(ui){
         this.contract.on("Winner", (winnerAddress, bid) => {
             ui.notifyWinner(winnerAddress, bid);
@@ -91,6 +95,10 @@ class DecreasingStrategy{
         this.strategy = await decreasingStrategyFactory.deploy();
             
         await this.strategy.deployed();
+    }
+
+    async destroy(){
+        this.strategy.destroyContract();
     }
 
 }
@@ -260,6 +268,10 @@ class AuctionHouse{
         
         this.contract = new ethers.Contract(auctionHouseAddress, c.abi, signer);
         console.log("connected to auction house");
+    }
+
+    async destroy(){
+        this.contract.destroyContract();
     }
 
     registerToEvents(ui){

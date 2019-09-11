@@ -44,14 +44,18 @@ class SellerUI extends UserInterface {
 
     // notify that the escrow has been accepted
     escrowAccepted(address) {
-        if(address.toLowerCase() == seller.pubKey)
+        if(address.toLowerCase() == seller.pubKey){
             $("#acceptEscrowResultSuccess").show();
+            $("#refuseEscrowListElem").hide();
+        }    
     }
 
     // notify that the escrow has been refused
     escrowRefused(address) {
-        if(address.toLowerCase() == seller.pubKey)
+        if(address.toLowerCase() == seller.pubKey){
             $("#refuseEscrowResultSuccess").show();
+            $("#acceptEscrowListElem").hide();
+        }
     }
 
     // notify that the escrow has been concluded

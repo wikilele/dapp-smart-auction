@@ -17,7 +17,8 @@ class Seller extends User{
             await this.auctionHouseContract.subscribeAsSeller();
         }catch(err){
             // already subscribed
-            notifyTransactionError("transaction reverted");
+            notifyTransactionError("Probably that address is already subscribed");
+            sellerUI.newSellerSubscribed(this.pubKey);
         }
     }
 

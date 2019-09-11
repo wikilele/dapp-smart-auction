@@ -90,7 +90,7 @@ contract VickreyAuction is ISmartAuction{
             require(commitedEnvelops[msg.sender] == 0, "you already called this function");
             
             commitedEnvelops[msg.sender] = envelop;
-            emit CommitedEnvelop(msg.sender);
+            emit CommittedEnvelop(msg.sender);
         }
         
         

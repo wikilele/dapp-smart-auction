@@ -44,14 +44,18 @@ class BidderUI extends UserInterface {
 
     // notify that the escrow has been accepted
     escrowAccepted(address) {
-        if(address.toLowerCase() == bidder.pubKey)
+        if(address.toLowerCase() == bidder.pubKey){
             $("#acceptEscrowResultSuccess").show();
+            $("#refuseEscrowListElem").hide();
+        }    
     }
 
     // notify that the escrow has been refused
     escrowRefused(address) {
-        if(address.toLowerCase() == bidder.pubKey)
+        if(address.toLowerCase() == bidder.pubKey){
             $("#refuseEscrowResultSuccess").show();
+            $("#acceptEscrowListElem").hide();
+        }
     }
 
     // notify that the escrow has been concluded

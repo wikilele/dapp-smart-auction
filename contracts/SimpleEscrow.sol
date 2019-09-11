@@ -15,6 +15,8 @@ contract SimpleEscrow{
     
     bool winnerBidderRefused = false;
     bool sellerRefused = false;
+
+    bool escrowClosed = false;
     
     
     constructor (address _seller, address _bidder, address _trustedThirdParty) public payable {
@@ -41,20 +43,37 @@ contract SimpleEscrow{
     }
 
     function accept(address addr) public checkSender() checkBalance() {
-        if (addr == seller) sellerAccepted = true;
-        else if (addr == winnerBidder) winnerBidderAccepted = true;
-        else if (addr == trustedThirdParty) thirdPartyAccepted = true;
-        
+        if (addr == seller){
+            require(sellerAccepted == false, "seller already accepted");
+            require(sellerRefused == false, "seller has refused");
+
+            sellerAccepted = true;
+        } else if (addr == winnerBidder){
+            require(winnerBidderAccepted == false, "winner bidder already accepted");
+            require(winnerBidderRefused == false, "winner biddder has refused");
+
+            winnerBidderAccepted = true;
+        } else if(addr == trustedThirdParty){
+            require(thirdPartyAccepted == false, "third party already accepted");
+            
+            thirdPartyAccepted = true;  
+        } 
     }
     
     function refuse(address addr) public checkSender() {
-        if (addr == seller) sellerRefused = true;
-        else if (addr == winnerBidder) winnerBidderRefused = true;
-        
-
+        if (addr == seller) {
+            require(sellerAccepted == false, "seller has accepted");
+            require(sellerRefused == false, "seller already refused");
+            sellerRefused = true;
+        } else if (addr == winnerBidder){
+            require(winnerBidderAccepted == false, "winner bidder has accepted");
+            require(winnerBidderRefused == false, "winner biddder already refused");
+            winnerBidderRefused = true;
+        } 
     }
     
     function conclude() public checkSender() checkBalance(){
+        require(escrowClosed == false,"escrow already closed");
         // gonna list all the possible cases
         if (sellerAccepted && winnerBidderAccepted)
             seller.transfer(address(this).balance);
@@ -66,7 +85,7 @@ contract SimpleEscrow{
         else if (sellerRefused && winnerBidderRefused)
             winnerBidder.transfer(address(this).balance);
         
-        
+        escrowClosed = true;
     }
     
     // checking if the address is a contract address

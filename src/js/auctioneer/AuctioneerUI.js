@@ -5,17 +5,18 @@ class AuctioneerUI extends UserInterface {
 
     // adding an address to the sellers' list
     newSellerSubscribed(sellerAddress) {
-        $("#subscribedSellersList").append("<li class='list-group-item'>" + sellerAddress + "</li>");
+        //$("#subscribedSellersList").append("<li class='list-group-item'>" + sellerAddress + "</li>");
     }
 
     // adding an address to the bidder's list
     newBidderSubscribed(bidderAddress) {
-        $("#subscribedBiddersList").append("<li class='list-group-item'>" + bidderAddress + "</li>");
+        //$("#subscribedBiddersList").append("<li class='list-group-item'>" + bidderAddress + "</li>");
     }
 
     // displaying the card to deploy a new auction
     newAuctionSubmitted(sellerAddress, objectDescription) {
         $("#auctionCard").show();
+        $("#newAuctionSubmitted").text("New");
         $("#newAuctionSubmitted").show();
 
         $("#currentAuctionHeader").text("A new Auction has been submitted!");
@@ -47,14 +48,18 @@ class AuctioneerUI extends UserInterface {
 
     // notify that the escrow has been accepted
     escrowAccepted(address) {
-        if(address.toLowerCase() == auctioneer.pubKey)
+        if(address.toLowerCase() == auctioneer.pubKey){
             $("#acceptEscrowResultSuccess").show();
+            $("#refuseEscrowListElem").hide();
+        }    
     }
 
     // notify that the escrow has been refused
     escrowRefused(address) {
-        if(address.toLowerCase() == auctioneer.pubKey)
+        if(address.toLowerCase() == auctioneer.pubKey){
             $("#refuseEscrowResultSuccess").show();
+            $("#acceptEscrowListElem").hide();
+        }
     }
 
     // notify that the escrow has been concluded
@@ -99,7 +104,7 @@ class AuctioneerUI extends UserInterface {
     // displaying the AuctionHouse contract's address
     setAuctionHouseAddress(address) {
         hideSpinnerNextTo("#auctionHouseContractAddressDeployBtn");
-        $("#auctionHouseContractAddressCopyBtn").show();
+
         $("#auctionHouseContractAddress").text(address);
     }
 }

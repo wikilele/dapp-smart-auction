@@ -11,6 +11,25 @@ $("#metamaskAccountUsedBtn").click(function () {
   // showing the card to deploy the auction house and that one with the sellers and bidders lists
   $("#auctionHouseCard").show();
   $("#sellersAndBiddersListCard").show();
+
+  showSpinnerNextTo("#auctionHouseContractAddressDeployBtn");
+  // checking if there is already an auction deployed
+  $.ajax({
+    type: "GET",
+    url: "auctionhouse/address",
+    dataType: 'json',
+    success: function (data) {
+
+      if (data.contractAddress != "") {
+        auctioneerUI.setAuctionHouseAddress(data.contractAddress);
+        
+      } else{
+        hideSpinnerNextTo("#auctionHouseContractAddressDeployBtn");
+        $("#auctionHouseContractAddressDeployBtn").show();
+      }
+
+    }
+  });
 });
 
 $("#auctionHouseContractAddressDeployBtn").click(async function () {
@@ -53,7 +72,7 @@ $("#deployContract").click(async function () {
     let miningRate = $("#miningRate").val();
 
     try {
-      await auctioneer.initDutchAuction(strategy, _reservePrice, _initialPrice, _openedForLength, _seller, miningRate,  objectDescription);
+      await auctioneer.initDutchAuction(strategy, _reservePrice, _initialPrice, _openedForLength, _seller, miningRate, objectDescription);
     } catch (err) {
       console.log(err);
       // "reverting the UI" if something went wrong, and notify the user
@@ -72,7 +91,7 @@ $("#deployContract").click(async function () {
     let miningRate = $("#miningRate").val();
 
     try {
-      await auctioneer.initVickreyAuction(_reservePrice, _commitmentPhaseLength,_withdrawalPhaseLength,_openingPhaseLength, _depositReuired, _seller, miningRate, objectDescription);
+      await auctioneer.initVickreyAuction(_reservePrice, _commitmentPhaseLength, _withdrawalPhaseLength, _openingPhaseLength, _depositReuired, _seller, miningRate, objectDescription);
     } catch (err) {
       console.log(err);
       // "reverting the UI" if something went wrong, and notify the user

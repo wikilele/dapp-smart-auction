@@ -1,5 +1,4 @@
 var express = require('express');
-var opn = require('opn');
 var app = express();
 const path = require('path');
 const router = express.Router();
@@ -27,6 +26,7 @@ app.get("/seller",function(req,res){
 app.post("/auctionhouse/address",function(req,res){
     auctionHouseContractAddress = req.body.contractAddress;
     console.log(auctionHouseContractAddress);
+    res.sendStatus(200);
 })
 
 app.get("/auctionhouse/address",function(req,res){
@@ -41,5 +41,5 @@ app.use('/', router);
 app.listen(process.env.port || 3002);
 
 console.log('Running at Port 3002');
+console.log('http://localhost:3002/');
 
-// opn("http://localhost:3002/");
