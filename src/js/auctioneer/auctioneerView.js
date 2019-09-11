@@ -22,7 +22,7 @@ $("#metamaskAccountUsedBtn").click(function () {
 
       if (data.contractAddress != "") {
         auctioneerUI.setAuctionHouseAddress(data.contractAddress);
-        
+        auctioneer.connectToAuctionHouse(data.contractAddress);
       } else{
         hideSpinnerNextTo("#auctionHouseContractAddressDeployBtn");
         $("#auctionHouseContractAddressDeployBtn").show();

@@ -28,6 +28,14 @@ class Auctioneer extends User { // auctioneer
         this.auctionHouse.registerToEvents(auctioneerUI);
     }
 
+    // connecting to the deployed contract
+    async connectToAuctionHouse(address) {
+        this.auctionHouse = new AuctionHouse();
+        await this.auctionHouse.connect(App.provider.getSigner(),address );
+
+        this.auctionHouse.registerToEvents(auctioneerUI);
+    }
+
 
     // deploying the Dutch Auction
     async initDutchAuction(strategy, _reservePrice, _initialPrice, _openedForLength, _seller, miningRate, _objectDesciption) {
