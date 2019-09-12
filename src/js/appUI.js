@@ -48,7 +48,15 @@ function checkForAuctionHouseAddress() {
     });
 }
 
-
+function changeViewBasedOn(auctionType){
+    if (auctionType == "VickreyAuction"){     
+        $(".vickrey").show(); // or attr diplay block
+        $(".dutch").hide();
+    } else {
+        $(".vickrey").hide(); 
+        $(".dutch").show();
+    }
+}
 
 // accepting the escrow, alert is showed if the transaction is reverted
 var escrowAccepted = false;
@@ -198,9 +206,11 @@ $("#getCommitmentPhaseLength").click(async function () {
         try {
             let phasel = await user.auctionContract.getCommitmentPhaseLength();
             $("#getCommitmentPhaseLengthResult").text(phasel.toString());
+            $("#getCommitmentPhaseLengthResult").show();
             $("#getCommitmentPhaseLengthDanger").hide();
         } catch (err) {
-            notifyTransactionError("transaction reverted");
+            // notifyTransactionError("transaction reverted");
+            $("#getCommitmentPhaseLengthResult").hide();
             $("#getCommitmentPhaseLengthDanger").show();
         }
 
@@ -215,11 +225,14 @@ $("#getWithdrawalPhaseLength").click(async function () {
     if (user != null && user.auctionContract != null) {
         try {
             let phasel = await user.auctionContract.getWithdrawalPhaseLength();
+            console.log("withdrawal length" + phasel);
             $("#getWithdrawalPhaseLengthResult").text(phasel.toString());
+            $("#getWithdrawalPhaseLengthResult").show(); 
             $("#getWithdrawalPhaseLengthDanger").hide();
 
         } catch (err) {
-            notifyTransactionError("transaction reverted");
+            // notifyTransactionError("transaction reverted");
+            $("#getWithdrawalPhaseLengthResult").hide();
             $("#getWithdrawalPhaseLengthDanger").show();
         }
     }
@@ -234,10 +247,12 @@ $("#getOpeningPhaseLength").click(async function () {
         try {
             let phasel = await user.auctionContract.getOpeningPhaseLength();
             $("#getOpeningPhaseLengthResult").text(phasel.toString());
+            $("#getOpeningPhaseLengthResult").show();
             $("#getOpeningPhaseLengthDanger").hide();
 
         } catch (err) {
-            notifyTransactionError("transaction reverted");
+            // notifyTransactionError("transaction reverted");
+            $("#getOpeningPhaseLengthResult").hide();
             $("#getOpeningPhaseLengthDanger").show();
         }
 

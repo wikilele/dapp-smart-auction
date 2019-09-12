@@ -65,7 +65,9 @@ class Auctioneer extends User { // auctioneer
         this.auctionHouse.notifyNewAuction(this.auctionContract.contractAddress, this.auctionContract.type, this.auctionContract.objectDesciption);
     }
 
-
+    async finalize(){
+        await this.auctionContract.finalize();
+    }
 
     async destroyContracts() {
         await this.auctionContract.destroy();

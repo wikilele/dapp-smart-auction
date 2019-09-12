@@ -91,13 +91,13 @@
         <div class="card-body">
           <h5 id="currentAuctionHeader" class="card-title">Interact here when an auction is submitted</h5>
           <p id="currentAuctionObjectDescription" class="card-text">
-            
+
           </p>
           <div class="form-group">
             <label for="auctionType">Auction Type</label>
             <select class="form-control" id="auctionType">
-              <option>Dutch</option>
-              <option>Vickrey</option>
+              <option>DutchAuction</option>
+              <option>VickreyAuction</option>
             </select>
           </div>
           <p class="card-text">
@@ -120,23 +120,22 @@
                   <input type="number" class="form-control " id="_openedForLength" value="8">
                 </div>
                 <div class="form-group vickrey">
-                    <label for="_commitmentPhaseLength">Commitment phase length</label>
-                    <input type="number" class="form-control " id="_commitmentPhaseLength" value="3">
+                  <label for="_commitmentPhaseLength">Commitment phase length</label>
+                  <input type="number" class="form-control " id="_commitmentPhaseLength" value="3">
                 </div>
                 <div class="form-group vickrey">
-                    <label for="_withdrawalPhaseLength">Withdrawal phase length</label>
-                    <input type="number" class="form-control " id="_withdrawalPhaseLength" value="2">
+                  <label for="_withdrawalPhaseLength">Withdrawal phase length</label>
+                  <input type="number" class="form-control " id="_withdrawalPhaseLength" value="2">
                 </div>
                 <div class="form-group vickrey">
-                    <label for="_openingPhaseLength">Opening phase length</label>
-                    <input type="number" class="form-control " id="_openingPhaseLength" value="3">
-                </div> 
+                  <label for="_openingPhaseLength">Opening phase length</label>
+                  <input type="number" class="form-control " id="_openingPhaseLength" value="3">
+                </div>
               </div>
               <div class="col-6">
                 <div class="form-group vickrey">
-                  <label for="_depositRequired">Deposit Reuired </label>
-                  <input type="text" class="form-control " id="_depositReuired"
-                    value="4">
+                  <label for="_depositRequired">Deposit Required (ether)</label>
+                  <input type="text" class="form-control " id="_depositRequired" value="4">
                 </div>
                 <div class="form-group">
                   <label for="_sellerAddress">Seller Address</label>
@@ -162,7 +161,7 @@
       </div>
 
       <!-- List of contract's functions to interact with it -->
-      <div id="contractFunctionsCard" class="card ">
+      <div id="contractFunctionsCard" class="card hide">
         <div class="card-header">
           Contract Functions
         </div>
@@ -230,6 +229,10 @@
               <a id="getOpeningPhaseLength" class="btn btn-dark">Get Opening Phase Length</a>
               <span class="float-right" id="getOpeningPhaseLengthResult"></span>
               <span id="getOpeningPhaseLengthDanger" class="badge badge-danger float-right">Opening phase closed</span>
+            </li>
+            <li class="list-group-item vickrey">
+              <a id="finalize" class="btn btn-dark">Finalize auction</a>
+              <span id="finalizeSuccess" class="badge badge-success float-right">finalized</span>
             </li>
             <!-- ------- -->
             <li class="list-group-item">

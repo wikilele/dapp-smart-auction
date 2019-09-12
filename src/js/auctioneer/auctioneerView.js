@@ -1,12 +1,3 @@
-// copying the element to clipboard
-function copyToClipboard(element) {
-  var $temp = $("<input>");
-  $("body").append($temp);
-  $temp.val($(element).text()).select();
-  document.execCommand("copy");
-  $temp.remove();
-}
-
 $("#metamaskAccountUsedBtn").click(function () {
   // showing the card to deploy the auction house and that one with the sellers and bidders lists
   $("#auctionHouseCard").show();
@@ -21,9 +12,11 @@ $("#metamaskAccountUsedBtn").click(function () {
     success: function (data) {
 
       if (data.contractAddress != "") {
+        // an AuctionHouse already exists
         auctioneerUI.setAuctionHouseAddress(data.contractAddress);
         auctioneer.connectToAuctionHouse(data.contractAddress);
       } else{
+        // the AuctionHouse needs to be deployed
         hideSpinnerNextTo("#auctionHouseContractAddressDeployBtn");
         $("#auctionHouseContractAddressDeployBtn").show();
       }
@@ -43,13 +36,8 @@ $("#auctionHouseContractAddressDeployBtn").click(async function () {
 
 $("#auctionType").change(function () {
   let type = $("#auctionType option:selected").text();
-  if (type == "Dutch") {
-    $(".dutch").show();
-    $(".vickrey").hide();
-  } else {
-    $(".vickrey").show();
-    $(".dutch").hide();
-  }
+
+  changeViewBasedOn(type);
 })
 
 
@@ -83,7 +71,7 @@ $("#deployContract").click(async function () {
 
   } else { // deploying VickreyAuction
     let _reservePrice = $("#_reservePrice").val();
-    let _depositReuired = $("#_depositRequired").val();
+    let _depositRequired = $("#_depositRequired").val();
     let _commitmentPhaseLength = $("#_commitmentPhaseLength").val();
     let _withdrawalPhaseLength = $("#_withdrawalPhaseLength").val();
     let _openingPhaseLength = $("#_openingPhaseLength").val();
@@ -91,7 +79,7 @@ $("#deployContract").click(async function () {
     let miningRate = $("#miningRate").val();
 
     try {
-      await auctioneer.initVickreyAuction(_reservePrice, _commitmentPhaseLength, _withdrawalPhaseLength, _openingPhaseLength, _depositReuired, _seller, miningRate, objectDescription);
+      await auctioneer.initVickreyAuction(_reservePrice, _commitmentPhaseLength, _withdrawalPhaseLength, _openingPhaseLength, _depositRequired, _seller, miningRate, objectDescription);
     } catch (err) {
       console.log(err);
       // "reverting the UI" if something went wrong, and notify the user
@@ -103,10 +91,13 @@ $("#deployContract").click(async function () {
 
 });
 
-$("#auctionHouseContractAddressCopyBtn").click(function () {
-  // copy the AuctionHouse contract's address to clipboard
-  copyToClipboard("#auctionHouseContractAddress");
-});
+$("#finalize").click(async function(){
+  try{
+    await auctioneer.finalize();
+  } catch(err) {
+    notifyTransactionError("transaction reverted");
+  }
+})
 
 $("#destroyContract").click(async function () {
   await auctioneer.destroyContracts();

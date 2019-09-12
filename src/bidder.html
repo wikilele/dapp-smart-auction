@@ -50,7 +50,7 @@
           <div class="card-body">
             <h5 class="card-title">Waiting the AuctionHouse contract address to subscribe to the AuctionHouse</h5>
             <p class="card-text">
-                <div id="auctionHouseAddress"> </div>
+              <div id="auctionHouseAddress"> </div>
             </p>
             <a id="subscribeToAuctionHouse" class="btn btn-dark hide">Subscribe</a>
             <div class="spinner-border spinner" role="status">
@@ -74,18 +74,30 @@
                 <label for="bidValue">Bid value (ether)</label>
                 <input type="number" class="form-control " id="bidValue" value="3">
               </div>
+              <div class="form-group vickrey">
+                <label for="nonceChoosen">Nonce</label>
+                <input type="number" class="form-control " id="nonceChoosen" value="42">
+              </div>
+              <div class="form-group vickrey">
+                <label for="depositRequired">Deposit Required</label>
+                <input type="number" class="form-control " id="depositRequired" value="4">
+              </div>
             </p>
+
             <a id="bidButton" class="btn btn-dark ">Bid</a>
-            <div class="spinner-border spinner" role="status">
+            <a id="withdrawButton" class="btn btn-dark vickrey">Withdraw</a>
+            <a id="openButton" class="btn btn-dark vickrey">Open</a>
+
+            <div id="biddingSpinner" class="spinner-border spinner float-right" role="status">
               <span class="sr-only">Loading...</span>
             </div>
-
           </div>
         </div>
       </div>
 
+
       <!-- List of contract's functions to interact with it -->
-      <div id="contractFunctionsCard" class="card">
+      <div id="contractFunctionsCard" class="card hide">
         <div class="card-header">
           Contract Functions
         </div>
@@ -141,12 +153,14 @@
             <li class="list-group-item vickrey">
               <a id="getCommitmentPhaseLength" class="btn btn-dark">Get Commitment Phase Length</a>
               <span class="float-right" id="getCommitmentPhaseLengthResult"></span>
-              <span id="getCommitmentPhaseLengthDanger" class="badge badge-danger float-right">Commitment phase closed</span>
+              <span id="getCommitmentPhaseLengthDanger" class="badge badge-danger float-right">Commitment phase
+                closed</span>
             </li>
             <li class="list-group-item vickrey">
               <a id="getWithdrawalPhaseLength" class="btn btn-dark">Get Withdrawal Phase Length</a>
               <span class="float-right" id="getWithdrawalPhaseLengthResult"></span>
-              <span id="getWithdrawalPhaseLengthDanger" class="badge badge-danger float-right">Withdrawal phase closed</span>
+              <span id="getWithdrawalPhaseLengthDanger" class="badge badge-danger float-right">Withdrawal phase
+                closed</span>
             </li>
             <li class="list-group-item vickrey">
               <a id="getOpeningPhaseLength" class="btn btn-dark">Get Opening Phase Length</a>
@@ -237,16 +251,16 @@
   <!-- css style file -->
   <link rel="stylesheet" href="css/style.css">
 
-<!-- Our App script -->
-<script src="js/app.js"></script>
-<script src="js/appUI.js"></script>
-<script src="js/UI.js"></script>
-<script src="js/Auction.js"></script>
+  <!-- Our App script -->
+  <script src="js/app.js"></script>
+  <script src="js/appUI.js"></script>
+  <script src="js/UI.js"></script>
+  <script src="js/Auction.js"></script>
 
-<!-- bidder App related functions-->
-<script src="js/bidder/Bidder.js"></script>
-<script src="js/bidder/BidderUI.js"></script>
-<script src="js/bidder/bidderView.js"></script>
+  <!-- bidder App related functions-->
+  <script src="js/bidder/Bidder.js"></script>
+  <script src="js/bidder/BidderUI.js"></script>
+  <script src="js/bidder/bidderView.js"></script>
 
 
 </body>

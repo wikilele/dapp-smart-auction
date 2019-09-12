@@ -24,7 +24,12 @@ class Seller extends User{
 
 
     notifyNewAuction(auctionAddress, auctionType, objectDesciption){
-        this.auctionContract = new DutchAuction();  // depends on auction type
+        if(auctionType == "VickreyAuction"){
+            this.auctionContract = new VickreyAuction();
+        } else {
+            this.auctionContract = new DutchAuction();  
+        }
+        
         this.auctionContract.objectDescription = objectDesciption;
         this.auctionContract.contractAddress = auctionAddress;
         this.connectToContract();

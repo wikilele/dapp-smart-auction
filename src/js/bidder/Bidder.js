@@ -24,7 +24,11 @@ class Bidder extends User {
     }
 
     notifyNewAuction(auctionAddress, auctionType, objectDesciption){
-        this.auctionContract = new DutchAuction();  // depends on auction type
+        if(auctionType == "VickreyAuction"){
+            this.auctionContract = new VickreyAuction();
+        } else {
+            this.auctionContract = new DutchAuction();  
+        }
         this.auctionContract.objectDescription = objectDesciption;
         this.auctionContract.contractAddress = auctionAddress;
     }
@@ -38,6 +42,17 @@ class Bidder extends User {
     // bidding a value to the Auction
     async bid(bidValue) {
         await this.auctionContract.bid(bidValue);
+    }
+    async bid(bidValue, nonce, deposit){
+        await this.auctionContract.commitBid(bidValue,nonce,deposit);
+    }
+
+    async withdraw(){
+        await this.auctionContract.withdraw();
+    }
+
+    async open(nonce, bid){
+        await this.auctionContract.open(nonce,bid);
     }
 
 }

@@ -19,6 +19,8 @@ class BidderUI extends UserInterface {
     auctionDeployedSuccessfully(auctionAddress, auctionType, objectDesciption) {
         
         bidder.notifyNewAuction(auctionAddress, auctionType, objectDesciption);
+        
+        changeViewBasedOn(auctionType);
         // showing the modal to join the new auction
         $("#contractAddressModal").text(auctionAddress);
         $("#auctionTypeModal").text(auctionType);
@@ -84,23 +86,37 @@ class BidderUI extends UserInterface {
     // Vickrey events
 
     notifyCommittedEnvelop(bidderAddress) {
-        throw "This function needs to be implemented in the subclasses";
+        console.log("Envelop commited " + bidderAddress);
+        if(bidderAddress.toLowerCase() == bidder.pubKey){
+            $("#withdrawButton").show();
+            $("#openButton").show();
+
+            $("#biddingSpinner").hide();
+        }
     }
 
     notifyWithdraw(bidderAddress) {
-        throw "This function needs to be implemented in the subclasses";
+        console.log("Withdrawal " + bidderAddress);
+        if(bidderAddress.toLowerCase() == bidder.pubKey){
+
+            $("#biddingSpinner").hide();
+        }
     }
 
     notifyOpen(bidderAddress, value) {
-        throw "This function needs to be implemented in the subclasses";
+        console.log("Open " + bidderAddress + " bid " + value);
+        if(bidderAddress.toLowerCase() == bidder.pubKey){
+
+            $("#biddingSpinner").hide();
+        }
     }
 
     notifyFirstBid(bidderAddress, value) {
-        throw "This function needs to be implemented in the subclasses";
+        console.log("Open " + bidderAddress + " bid " + value);
     }
 
     notifySecondBid(bidderAddress, value) {
-        throw "This function needs to be implemented in the subclasses";
+        console.log("Open " + bidderAddress + " bid " + value);
     }
 }
 

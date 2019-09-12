@@ -24,6 +24,7 @@ class SellerUI extends UserInterface {
     auctionDeployedSuccessfully(auctionAddress, auctionType, objectDesciption) {
         seller.notifyNewAuction(auctionAddress, auctionType, objectDesciption);
         
+        changeViewBasedOn(auctionType);
         // showing the list of functions to interact with the contract
         $("#contractFunctionsCard").show();
     }
@@ -72,23 +73,23 @@ class SellerUI extends UserInterface {
     // Vickrey events
 
     notifyCommittedEnvelop(bidderAddress) {
-        throw "This function needs to be implemented in the subclasses";
+        console.log("Envelop commited " + bidderAddress);
     }
 
     notifyWithdraw(bidderAddress) {
-        throw "This function needs to be implemented in the subclasses";
+        console.log("Withdrawal " + bidderAddress);
     }
 
     notifyOpen(bidderAddress, value) {
-        throw "This function needs to be implemented in the subclasses";
+        console.log("Open " + bidderAddress + " bid " + value);
     }
 
     notifyFirstBid(bidderAddress, value) {
-        throw "This function needs to be implemented in the subclasses";
+        console.log("Open " + bidderAddress + " bid " + value);
     }
 
     notifySecondBid(bidderAddress, value) {
-        throw "This function needs to be implemented in the subclasses";
+        console.log("Open " + bidderAddress + " bid " + value);
     }
 }
 

@@ -24,8 +24,10 @@ class AuctioneerUI extends UserInterface {
         $("#_sellerAddress").val(sellerAddress);
     }
 
-    auctionDeployedSuccessfully(auctionAddress, auctionName, objectDesciption) {
-        console.log("new auction create " + auctionName + " description " + objectDesciption);
+    auctionDeployedSuccessfully(auctionAddress, auctionType, objectDesciption) {
+        console.log("new auction create " + auctionType + " description " + objectDesciption);
+        
+        changeViewBasedOn(auctionType);
 
         hideSpinnerNextTo("#deployContract");
         $("#newAuctionSubmitted").text("Success");
@@ -38,6 +40,10 @@ class AuctioneerUI extends UserInterface {
     notifyWinner(winnerAddress, bid) {
         $("#notificationModalInfo").text(winnerAddress + " won bidding " + bid);
         $("#notificationModal").modal("toggle");
+
+        if(auctioneer.contractAuction.type == "VickreyAuction"){
+            $("#finalizeSuccess").show();
+        }
     }
 
     // displaying the just added block number
@@ -79,23 +85,23 @@ class AuctioneerUI extends UserInterface {
     // Vickrey events
 
     notifyCommittedEnvelop(bidderAddress) {
-        throw "This function needs to be implemented in the subclasses";
+        console.log("Envelop commited " + bidderAddress);
     }
 
     notifyWithdraw(bidderAddress) {
-        throw "This function needs to be implemented in the subclasses";
+        console.log("Withdrawal " + bidderAddress);
     }
 
     notifyOpen(bidderAddress, value) {
-        throw "This function needs to be implemented in the subclasses";
+        console.log("Open " + bidderAddress + " bid " + value);
     }
 
     notifyFirstBid(bidderAddress, value) {
-        throw "This function needs to be implemented in the subclasses";
+        console.log("Open " + bidderAddress + " bid " + value);
     }
 
     notifySecondBid(bidderAddress, value) {
-        throw "This function needs to be implemented in the subclasses";
+        console.log("Open " + bidderAddress + " bid " + value);
     }
 
 

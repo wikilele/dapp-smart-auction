@@ -137,7 +137,7 @@ class DutchAuction extends Auction{
     // bidding a value to the Auction
     async bid(bidValue) {
         let overrides = {
-            gasLimit: 900000, // value based on the gas estimation done in the final-term
+            gasLimit: 900000, // value based on the gas estimation done by metamask
             value: ethers.utils.parseEther(bidValue)
         };
 
@@ -168,7 +168,7 @@ class VickreyAuction extends Auction{
         let factory = await this.getContractFactory(signer);
 
         _reservePrice = ethers.utils.parseEther(_reservePrice);
-        _initialPrice = ethers.utils.parseEther(_depositRequired);
+        _depositRequired = ethers.utils.parseEther(_depositRequired);
         this.contract = await factory.deploy(_reservePrice, _commitmentPhaseLength, _withdrawalPhaseLength, _openingPhaseLenght, _depositRequired, _seller, miningRate);
 
         console.log(this.contract.address);
@@ -182,33 +182,33 @@ class VickreyAuction extends Auction{
         super.registerToEvents(ui);
 
         this.contract.on("CommittedEnvelop", (bidderAddress) => {
-            console.log(bidderAddress);
+            ui.notifyCommittedEnvelop(bidderAddress);
         });
 
         this.contract.on("Withdraw", (bidderAddress) => {
-            console.log(bidderAddress);
+            ui.notifyWithdraw(bidderAddress);
         });
         this.contract.on("Open", (bidderAddress, value) => {
-            console.log("Open " + bidderAddress + " vaule " + value);
+            ui.notifyOpen(bidderAddress,value);
         });
 
         this.contract.on("FirstBid", (bidderAddress, value) => {
-            console.log("First bid" + bidderAddress + " vaule " + value);
+            ui.notifyFirstBid(bidderAddress,value);
         });
 
         this.contract.on("SecondBid", (bidderAddress, value) => {
-            console.log("second bid" + bidderAddress + " vaule " + value);
+            ui.notifySecondBid(bidderAddress,value);
         });
     }
 
     async commitBid(bid, nonce, depositRequired){
         let overrides = {
-            gasLimit: 30000, // value based on the gas estimation done in the final-term
+            gasLimit: 50000, // value based on the gas estimation done by metamask
             value: ethers.utils.parseEther(depositRequired)
         };
         // we use the utility provided by the contract so that we are sure that the parameters are passes correctly to the function
         let envelop = await this.contract.doKeccak(bid,nonce);
-
+        
         await this.contract.commitBid(envelop,overrides);
     }
 
@@ -218,10 +218,9 @@ class VickreyAuction extends Auction{
 
     async open(nonce, bid){
         let overrides = {
-            gasLimit: 30000, // value based on the gas estimation done in the final-term
+            gasLimit: 50000, // value based on the gas estimation done by metamask
             value: ethers.utils.parseEther(bid)
         };
-
         await this.contract.open(nonce,overrides);
     }
 
@@ -238,11 +237,11 @@ class VickreyAuction extends Auction{
     }
 
     async getWithdrawalPhaseLength(){
-        return await this.getWithdrawalPhaseLength();
+        return await this.contract.getWithdrawalPhaseLength();
     }
 
     async getOpeningPhaseLength(){
-        return await this.getOpeningPhaseLength();
+        return await this.contract.getOpeningPhaseLength();
     }
 }
 
