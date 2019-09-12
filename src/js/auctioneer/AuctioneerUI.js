@@ -41,7 +41,7 @@ class AuctioneerUI extends UserInterface {
         $("#notificationModalInfo").text(winnerAddress + " won bidding " + bid);
         $("#notificationModal").modal("toggle");
 
-        if(auctioneer.contractAuction.type == "VickreyAuction"){
+        if(auctioneer.auctionContract.type == "VickreyAuction"){
             $("#finalizeSuccess").show();
         }
     }

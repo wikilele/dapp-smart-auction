@@ -224,7 +224,10 @@ class VickreyAuction extends Auction{
     }
 
     async finalize(){
-        await this.contract.finalize();
+        let overrides = {
+            gasLimit: 6000000
+        };
+        await this.contract.finalize(overrides);
     }
 
     async getDepositRequired(){
