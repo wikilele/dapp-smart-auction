@@ -207,8 +207,7 @@ class VickreyAuction extends Auction{
             value: ethers.utils.parseEther(depositRequired)
         };
         // we use the utility provided by the contract so that we are sure that the parameters are passes correctly to the function
-        let envelop = await this.contract.doKeccak(bid,nonce);
-        
+        let envelop = await this.contract.doKeccak( ethers.utils.parseEther(bid),nonce);
         await this.contract.commitBid(envelop,overrides);
     }
 
@@ -218,7 +217,7 @@ class VickreyAuction extends Auction{
 
     async open(nonce, bid){
         let overrides = {
-            gasLimit: 50000, // value based on the gas estimation done by metamask
+            gasLimit: 60000, // value based on the gas estimation done by metamask
             value: ethers.utils.parseEther(bid)
         };
         await this.contract.open(nonce,overrides);

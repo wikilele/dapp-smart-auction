@@ -112,11 +112,11 @@ class BidderUI extends UserInterface {
     }
 
     notifyFirstBid(bidderAddress, value) {
-        console.log("Open " + bidderAddress + " bid " + value);
+        console.log("First bid " + bidderAddress + " bid " + value);
     }
 
     notifySecondBid(bidderAddress, value) {
-        console.log("Open " + bidderAddress + " bid " + value);
+        console.log("second bid " + bidderAddress + " bid " + value);
     }
 }
 
