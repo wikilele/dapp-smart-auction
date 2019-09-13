@@ -26,7 +26,7 @@ class Auction {
     }
 
     async destroy(){
-        this.contract.destroyContract();
+        await this.contract.destroyContract();
     }
 
     registerToEvents(ui){
@@ -98,7 +98,7 @@ class DecreasingStrategy{
     }
 
     async destroy(){
-        this.strategy.destroyContract();
+        await this.strategy.destroyContract();
     }
 
 }
@@ -137,7 +137,7 @@ class DutchAuction extends Auction{
     // bidding a value to the Auction
     async bid(bidValue) {
         let overrides = {
-            gasLimit: 6000000, // value based on the gas estimation done by metamask
+            gasLimit: 6000000, 
             value: ethers.utils.parseEther(bidValue)
         };
 
@@ -203,7 +203,7 @@ class VickreyAuction extends Auction{
 
     async commitBid(bid, nonce, depositRequired){
         let overrides = {
-            gasLimit: 50000, // value based on the gas estimation done by metamask
+            gasLimit: 50000, 
             value: ethers.utils.parseEther(depositRequired)
         };
         // we use the utility provided by the contract so that we are sure that the parameters are passes correctly to the function
@@ -217,7 +217,7 @@ class VickreyAuction extends Auction{
 
     async open(nonce, bid){
         let overrides = {
-            gasLimit: 60000, // value based on the gas estimation done by metamask
+            gasLimit: 60000, 
             value: ethers.utils.parseEther(bid)
         };
         await this.contract.open(nonce,overrides);
@@ -272,7 +272,7 @@ class AuctionHouse{
     }
 
     async destroy(){
-        this.contract.destroyContract();
+        await this.contract.destroyContract();
     }
 
     registerToEvents(ui){
