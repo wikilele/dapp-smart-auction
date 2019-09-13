@@ -1,6 +1,13 @@
 node_modules
 Ganache-2.1.0.AppImage
 build
-report
+
+
+report/*.png
+report/*.odt
+report/*.drawio
+report/.~lock.report.odt#
+
 
 private.json
+
