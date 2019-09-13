@@ -15,6 +15,29 @@ $("#metamaskAccountUsedBtn").click(function () {
         // an AuctionHouse already exists
         auctioneerUI.setAuctionHouseAddress(data.contractAddress);
         auctioneer.connectToAuctionHouse(data.contractAddress);
+
+        // getting the subscribed sellers
+        $.ajax({
+          type: "GET",
+          url: "auctionhouse/subscribedsellers",
+          dataType: 'json',
+          success: function (data) {
+            data.sellers.forEach(function (elem) {
+              $("#subscribedSellersList").append("<li class='list-group-item'>" + elem + "</li>");
+            })
+          }
+        })
+        // getting the subscribed bidders
+        $.ajax({
+          type: "GET",
+          url: "auctionhouse/subscribedbidders",
+          dataType: 'json',
+          success: function (data) {
+            data.bidders.forEach(function (elem) {
+              $("#subscribedBiddersList").append("<li class='list-group-item'>" + elem + "</li>");
+            })
+          }
+        })
       } else {
         // the AuctionHouse needs to be deployed
         hideSpinnerNextTo("#auctionHouseContractAddressDeployBtn");

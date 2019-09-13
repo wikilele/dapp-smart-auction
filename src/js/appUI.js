@@ -328,4 +328,9 @@ $(window).on('load', function () {
     ethereum.on('accountsChanged', function (accounts) {
         $("#currentMetamaskAccount").text(ethereum.selectedAddress);
     })
+
+    ethereum.on('networkChanged', function (netID) {
+        if(netID == 3) // ropsten
+            $("#addBlockListElem").hide();
+    })
 });

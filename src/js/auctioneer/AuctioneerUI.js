@@ -5,12 +5,26 @@ class AuctioneerUI extends UserInterface {
 
     // adding an address to the sellers' list
     newSellerSubscribed(sellerAddress) {
-        //$("#subscribedSellersList").append("<li class='list-group-item'>" + sellerAddress + "</li>");
+        $("#subscribedSellersList").append("<li class='list-group-item'>" + sellerAddress + "</li>");
+        $.ajax({
+            type: "POST",
+            url: "auctionhouse/" + auctioneer.auctionHouse.contract.address  + "/seller",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({ "sellerAddress": sellerAddress })
+        })
     }
 
     // adding an address to the bidder's list
     newBidderSubscribed(bidderAddress) {
-        //$("#subscribedBiddersList").append("<li class='list-group-item'>" + bidderAddress + "</li>");
+        $("#subscribedBiddersList").append("<li class='list-group-item'>" + bidderAddress + "</li>");
+        $.ajax({
+            type: "POST",
+            url: "auctionhouse/" + auctioneer.auctionHouse.contract.address  + "/bidder",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({ "bidderAddress": bidderAddress })
+        })
     }
 
     // displaying the card to deploy a new auction
