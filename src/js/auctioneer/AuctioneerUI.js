@@ -38,8 +38,7 @@ class AuctioneerUI extends UserInterface {
 
     // both Dutch and Vickrey events
     notifyWinner(winnerAddress, bid) {
-        $("#notificationModalInfo").text(winnerAddress + " won bidding " + bid);
-        $("#notificationModal").modal("toggle");
+        addAlertElement("<strong>" + winnerAddress + "</strong> won!","success");
 
         if(auctioneer.auctionContract.type == "VickreyAuction"){
             $("#finalizeSuccess").show();
@@ -72,11 +71,10 @@ class AuctioneerUI extends UserInterface {
     escrowClosed() {
         $("#concludeEscrowResultSuccess").show();
 
-        $("#notificationModalInfo").text("Escrow Closed successfully");
-        $("#notificationModal").modal("toggle");
+        addAlertElement("Escrow Closed successfully","success");
 
         // only visible to auctionhouse
-        $("#destroyContractListElement").attr("display","block");
+        $("#destroyContractListElement").show();
     }
 
     // Dutch event
@@ -85,23 +83,28 @@ class AuctioneerUI extends UserInterface {
     // Vickrey events
 
     notifyCommittedEnvelop(bidderAddress) {
+        addAlertElement("Envelop committed by <strong>" + bidderAddress + "</strong>","secondary");
         console.log("Envelop commited " + bidderAddress);
     }
 
     notifyWithdraw(bidderAddress) {
         console.log("Withdrawal " + bidderAddress);
+        addAlertElement("Withdrawal by by <strong>" + bidderAddress + "</strong>","secondary");
     }
 
     notifyOpen(bidderAddress, value) {
         console.log("Open " + bidderAddress + " bid " + value);
+        addAlertElement("<strong>" + bidderAddress + "</strong> opened the envelop","secondary");
     }
 
     notifyFirstBid(bidderAddress, value) {
         console.log("First bid " + bidderAddress + " bid " + value);
+        addAlertElement("First bid <strong>" + bidderAddress + "</strong> bid <strong>" + value + "</strong>" ,"secondary");
     }
 
     notifySecondBid(bidderAddress, value) {
         console.log("second bid " + bidderAddress + " bid " + value);
+        addAlertElement("Second bid <strong>" + bidderAddress + "</strong> bid <strong>" + value + "</strong>" ,"secondary");
     }
 
 

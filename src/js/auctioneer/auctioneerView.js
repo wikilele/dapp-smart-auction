@@ -15,7 +15,7 @@ $("#metamaskAccountUsedBtn").click(function () {
         // an AuctionHouse already exists
         auctioneerUI.setAuctionHouseAddress(data.contractAddress);
         auctioneer.connectToAuctionHouse(data.contractAddress);
-      } else{
+      } else {
         // the AuctionHouse needs to be deployed
         hideSpinnerNextTo("#auctionHouseContractAddressDeployBtn");
         $("#auctionHouseContractAddressDeployBtn").show();
@@ -50,7 +50,7 @@ $("#deployContract").click(async function () {
   let auctionType = $("#auctionType option:selected").text();
   let objectDescription = $("#currentAuctionObjectDescription").text();
 
-  if (auctionType == "Dutch") {
+  if (auctionType == "DutchAuction") {
     // deploying DutchAuction
     let strategy = $("#decreasingStrategy option:selected").text();
     let _reservePrice = $("#_reservePrice").val();
@@ -69,7 +69,7 @@ $("#deployContract").click(async function () {
       hideSpinnerNextTo("#deployContract");
     }
 
-  } else { // deploying VickreyAuction
+  } else if (auctionType == "VickreyAuction") { // deploying VickreyAuction
     let _reservePrice = $("#_reservePrice").val();
     let _depositRequired = $("#_depositRequired").val();
     let _commitmentPhaseLength = $("#_commitmentPhaseLength").val();
@@ -87,14 +87,17 @@ $("#deployContract").click(async function () {
       $("#deployContract").show();
       hideSpinnerNextTo("#deployContract");
     }
+  } else {
+    throw "auction type " + auctionType;
   }
+
 
 });
 
-$("#finalize").click(async function(){
-  try{
+$("#finalize").click(async function () {
+  try {
     await auctioneer.finalize();
-  } catch(err) {
+  } catch (err) {
     notifyTransactionError("transaction reverted");
   }
 })

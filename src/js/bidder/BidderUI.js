@@ -34,8 +34,7 @@ class BidderUI extends UserInterface {
         hideSpinnerNextTo("#bidButton");
         console.log(winnerAddress + " won bidding " + bid);
 
-        $("#notificationModalInfo").text(winnerAddress + " won bidding " + bid);
-        $("#notificationModal").modal("toggle");
+        addAlertElement("<strong>" + winnerAddress + "</strong> won!","success");
     }
 
     // displaying the just added block number
@@ -64,8 +63,7 @@ class BidderUI extends UserInterface {
     escrowClosed() {
         $("#concludeEscrowResultSuccess").show();
 
-        $("#notificationModalInfo").text("Escrow Closed successfully");
-        $("#notificationModal").modal("toggle");
+        addAlertElement("Escrow Closed successfully","success");
     }
 
     // Dutch event
@@ -77,9 +75,8 @@ class BidderUI extends UserInterface {
             hideSpinnerNextTo("#bidButton");
             $("#bidButton").show();
             console.log("You bidded " + bidSent + " but the actual price was " + actualPrice);
-            $("#notificationModalInfo").text("You bidded " + bidSent + " but the actual price was " + actualPrice);
-        
-            $("#notificationModal").modal("toggle");
+
+            addAlertElement("You bidded <strong>" + bidSent + "</strong> but the actual price was <strong>" + actualPrice + "</strong>","warning");
         }
     }
 
@@ -88,35 +85,37 @@ class BidderUI extends UserInterface {
     notifyCommittedEnvelop(bidderAddress) {
         console.log("Envelop commited " + bidderAddress);
         if(bidderAddress.toLowerCase() == bidder.pubKey){
+            addAlertElement("Envelop committed","success");
+
             $("#withdrawButton").show();
             $("#openButton").show();
 
-            $("#biddingSpinner").hide();
         }
     }
 
     notifyWithdraw(bidderAddress) {
         console.log("Withdrawal " + bidderAddress);
         if(bidderAddress.toLowerCase() == bidder.pubKey){
-
-            $("#biddingSpinner").hide();
+            addAlertElement("Withdrawn","success");
         }
     }
 
     notifyOpen(bidderAddress, value) {
         console.log("Open " + bidderAddress + " bid " + value);
         if(bidderAddress.toLowerCase() == bidder.pubKey){
+            addAlertElement("Opened","success");
 
-            $("#biddingSpinner").hide();
         }
     }
 
     notifyFirstBid(bidderAddress, value) {
         console.log("First bid " + bidderAddress + " bid " + value);
+        addAlertElement("First bid <strong>" + bidderAddress + "</strong> bid <strong>" + value + "</strong>" ,"secondary");
     }
 
     notifySecondBid(bidderAddress, value) {
         console.log("second bid " + bidderAddress + " bid " + value);
+        addAlertElement("Second bid <strong>" + bidderAddress + "</strong> bid <strong>" + value + "</strong>" ,"secondary");
     }
 }
 

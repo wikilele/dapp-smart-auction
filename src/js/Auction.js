@@ -137,7 +137,7 @@ class DutchAuction extends Auction{
     // bidding a value to the Auction
     async bid(bidValue) {
         let overrides = {
-            gasLimit: 900000, // value based on the gas estimation done by metamask
+            gasLimit: 6000000, // value based on the gas estimation done by metamask
             value: ethers.utils.parseEther(bidValue)
         };
 

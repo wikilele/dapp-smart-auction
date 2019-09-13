@@ -72,7 +72,7 @@ class Auctioneer extends User { // auctioneer
     async destroyContracts() {
         await this.auctionContract.destroy();
         if (this.decreasingStrategy != null) 
-            await this.decreasingStrategydestroy();
+            await this.decreasingStrategy.destroy();
         await this.auctionHouse.destroy(); 
 
         $.ajax({

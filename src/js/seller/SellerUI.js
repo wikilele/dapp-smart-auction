@@ -33,8 +33,7 @@ class SellerUI extends UserInterface {
     notifyWinner(winnerAddress, bid) {
         console.log(winnerAddress + " won bidding " + bid);
 
-        $("#notificationModalInfo").text(winnerAddress + " won bidding " + bid);
-        $("#notificationModal").modal("toggle");
+        addAlertElement("<strong>" + winnerAddress + "</strong>  won!","success");
     }
 
     // displaying the just added block number
@@ -63,8 +62,7 @@ class SellerUI extends UserInterface {
     escrowClosed() {
         $("#concludeEscrowResultSuccess").show();
 
-        $("#notificationModalInfo").text("Escrow Closed successfully");
-        $("#notificationModal").modal("toggle");
+        addAlertElement("Escrow Closed successfully","success");
     }
 
     // Dutch event
@@ -73,23 +71,28 @@ class SellerUI extends UserInterface {
     // Vickrey events
 
     notifyCommittedEnvelop(bidderAddress) {
+        addAlertElement("Envelop committed by <strong>" + bidderAddress + "</strong>","secondary");
         console.log("Envelop commited " + bidderAddress);
     }
 
     notifyWithdraw(bidderAddress) {
         console.log("Withdrawal " + bidderAddress);
+        addAlertElement("Withdrawal by by <strong>" + bidderAddress + "</strong>","secondary");
     }
 
     notifyOpen(bidderAddress, value) {
         console.log("Open " + bidderAddress + " bid " + value);
+        addAlertElement("<strong>" + bidderAddress + "</strong> opened the envelop","secondary");
     }
 
     notifyFirstBid(bidderAddress, value) {
         console.log("First bid " + bidderAddress + " bid " + value);
+        addAlertElement("First bid <strong>" + bidderAddress + "</strong> bid <strong>" + value + "</strong>" ,"secondary");
     }
 
     notifySecondBid(bidderAddress, value) {
         console.log("second bid " + bidderAddress + " bid " + value);
+        addAlertElement("Second bid <strong>" + bidderAddress + "</strong> bid <strong>" + value + "</strong>" ,"secondary");
     }
 }
 

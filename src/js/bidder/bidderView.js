@@ -19,7 +19,6 @@ $("#subscribeToAuctionHouse").click(function () {
 
 $("#bidButton").click(async function () {
   // bidding
-  $("#biddingSpinner").show();
 
   $("#bidButton").hide();
   let bidValue = $("#bidValue").val();
@@ -27,21 +26,21 @@ $("#bidButton").click(async function () {
     try {
       await bidder.bid(bidValue);
     } catch (err) {
+      console.log(err);
       // "reverting the UI" if something went wrong, alerting the user
       notifyTransactionError("transaction reverted");
       $("#bidButton").show();
-      $("#biddingSpinner").hide();
     }
   } else{
     let nonce = $("#nonceChoosen").val();
     let deposit = $("#depositRequired").val();
     try {
-      await bidder.bid(bidValue,nonce,deposit);
+      await bidder.commitBid(bidValue,nonce,deposit);
     } catch (err) {
       // "reverting the UI" if something went wrong, alerting the user
       notifyTransactionError("transaction reverted");
       $("#bidButton").show();
-      $("#biddingSpinner").hide();
+
     }
   }
 
@@ -50,7 +49,6 @@ $("#bidButton").click(async function () {
 
 $("#withdrawButton").click(async function () {
   // withdrawing
-  $("#biddingSpinner").show();
 
   $("#withdrawButton").hide();
 
@@ -61,14 +59,13 @@ $("#withdrawButton").click(async function () {
     notifyTransactionError("transaction reverted");
     $("#withdrawButton").show();
 
-    $("#biddingSpinner").hide();
   }
 });
 
 
 $("#openButton").click(async function () {
   // withdrawing
-  $("#biddingSpinner").show();
+
 
   $("#openButton").hide();
   let bidValue = $("#bidValue").val();
@@ -81,7 +78,6 @@ $("#openButton").click(async function () {
     notifyTransactionError("transaction reverted");
     $("#openButton").show();
 
-    $("#biddingSpinner").hide();
   }
 });
 

@@ -8,11 +8,6 @@ function getUser() {
     }
 }
 
-// showing an alert if transaction fails
-function notifyTransactionError(err) {
-    $("#notificationModalInfo").text("Something went wrong! " + err);
-    $("#notificationModal").modal("toggle");
-}
 
 // showing/hiding a spinner next to the passed element
 function showSpinnerNextTo(element) {
@@ -49,6 +44,7 @@ function checkForAuctionHouseAddress() {
 }
 
 function changeViewBasedOn(auctionType){
+    
     if (auctionType == "VickreyAuction"){     
         $(".vickrey").show(); // or attr diplay block
         $(".dutch").hide();
@@ -57,6 +53,29 @@ function changeViewBasedOn(auctionType){
         $(".dutch").show();
     }
 }
+
+const alertHtml = function(text,type){
+    return '<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert"> <span> ' + text + 
+            '</span> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> ' +
+            '</button> </div>'; 
+}  
+
+function addAlertElement(text, type){
+    $("#alertListDiv").append(alertHtml(text,type));
+}
+
+function toggleNotificationModal(text){
+    $("#notificationModalInfo").text(text);   
+    $("#notificationModal").modal("toggle");
+}
+
+
+// showing an alert if transaction fails
+function notifyTransactionError(err) {
+    toggleNotificationModal("Something went wrong! " + err);
+}
+
+
 
 // accepting the escrow, alert is showed if the transaction is reverted
 var escrowAccepted = false;
@@ -292,9 +311,7 @@ $(".btn")
         let user = getUser();
 
         if (user.pubKey != null && user.pubKey != ethereum.selectedAddress.toLowerCase()) {
-
-            $("#notificationModalInfo").text("Before you must change the address to that one you selected at the beginning!");
-            $("#notificationModal").modal("toggle");
+            toggleNotificationModal("Before you must change the address to that one you selected at the beginning!");
         }
     });
 

@@ -88,13 +88,14 @@
             <a id="withdrawButton" class="btn btn-dark vickrey">Withdraw</a>
             <a id="openButton" class="btn btn-dark vickrey">Open</a>
 
-            <div id="biddingSpinner" class="spinner-border spinner float-right" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
           </div>
         </div>
       </div>
-
+      
+      <!-- place where all the SPECIFIC notifications will appear-->
+      <div id="alertListDiv">
+        
+      </div>
 
       <!-- List of contract's functions to interact with it -->
       <div id="contractFunctionsCard" class="card hide">
@@ -210,7 +211,7 @@
 
 
 
-  <!-- Modal for general notifications -->
+  <!-- Modal for GENERAL notifications -->
   <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalTitle"
     aria-hidden="true">
     <div class="modal-dialog" role="document">

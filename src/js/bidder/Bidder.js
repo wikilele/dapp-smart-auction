@@ -43,7 +43,7 @@ class Bidder extends User {
     async bid(bidValue) {
         await this.auctionContract.bid(bidValue);
     }
-    async bid(bidValue, nonce, deposit){
+    async commitBid(bidValue, nonce, deposit){
         await this.auctionContract.commitBid(bidValue,nonce,deposit);
     }
 
