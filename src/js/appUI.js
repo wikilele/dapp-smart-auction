@@ -162,6 +162,7 @@ $("#getCurrentPrice").click(async function () {
             let price = await user.auctionContract.getCurrentPrice()
             $("#getCurrentPriceResult").text(price.toString());
         } catch (err) {
+            // console.log(err);
             notifyTransactionError("transaction reverted");
         }
     }
@@ -196,6 +197,7 @@ $("#getOpenedFor").click(async function () {
             $("#getOpenedForDanger").hide();
             $("#getOpenedForResult").text(openedfor.toString());
         } catch (err) {
+            // console.log(err);
             $("#getOpenedForDanger").show();
             $("#getOpenedForResult").hide();
         }
@@ -329,8 +331,8 @@ $(window).on('load', function () {
         $("#currentMetamaskAccount").text(ethereum.selectedAddress);
     })
 
-    ethereum.on('networkChanged', function (netID) {
-        if(netID == 3) // ropsten
-            $("#addBlockListElem").hide();
-    })
+  
+    if(ethereum.networkVersion  == 3) // ropsten
+        $("#addBlockListElem").hide();
+   
 });
