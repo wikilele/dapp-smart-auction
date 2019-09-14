@@ -7,7 +7,7 @@ report/*.png
 report/*.odt
 report/*.drawio
 report/.~lock.report.odt#
-
+report/codetex
 
 private.json
 
