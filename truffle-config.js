@@ -23,11 +23,13 @@ const HDWalletProvider = require('truffle-hdwallet-provider');
 const file = './private.json';
 const fs = require('fs');
 
-let rawdata = fs.readFileSync(file);
-let json = JSON.parse(rawdata);
+// the lines to deploy the contract on ropsten via truffle are commented 
+// because they require a file private.json with the infuraKey amd the mnemonic phrase
+// let rawdata = fs.readFileSync(file);
+// let json = JSON.parse(rawdata);
 
-const infuraKey = json.infuraKey;
-const mnemonic = json.mnemonic;
+// const infuraKey = json.infuraKey;
+// const mnemonic = json.mnemonic;
 
 
 
@@ -67,11 +69,11 @@ module.exports = {
 
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
-    ropsten: {
-      provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/${infuraKey}`),
-      network_id: 3,       // Ropsten's id
-      gas: 5500000        // Ropsten has a lower block limit than mainnet
-    },
+    // ropsten: {
+    //  provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/${infuraKey}`),
+    //  network_id: 3,       // Ropsten's id
+    //  gas: 5500000        // Ropsten has a lower block limit than mainnet
+    // },
 
     // Useful for private networks
     // private: {
